@@ -11,8 +11,11 @@ class App extends Component {
     return(
       <div>
         <Header />
-        <br/>
-        <p>This is what the very first page of my app looks like.</p>
+        <div id="rectangle"></div>
+        <div id="circle"></div>
+        <footer>
+        <a href="./second">Safety Information</a>
+        </footer>
       </div>
     );
   }
