@@ -1,5 +1,6 @@
 import Home from "./Home/Home";
 import Safety from "./Safety/Safety";
+import Profile from './Profile';
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
@@ -8,6 +9,7 @@ const Routes = () => (
     <div>
       <Route exact path = {"/"} component = {() => <Home />}/>
       <Route exact path = {"/safety"} component = {() => <Safety />}/>
+      <Route exact path = {"/profPage"} component = {() => <Profile />}/>
     </div>
   </Router>
 );

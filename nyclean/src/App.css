@@ -1,0 +1,63 @@
+#bigHeader{
+  height:50px;
+  width:100%;
+  background-color:white;
+}
+.headerItem{
+margin-top: -1px;
+padding-top:10px;
+position:absolute;
+height:40px;
+background-color:#bbeebb;
+transition-duration: 400ms;
+}
+#search{
+width: 25%;
+}
+#logo{
+margin-left: 25%;
+width:50%;
+text-align:center;
+font-size:2.2em;
+padding-top:5px;
+height:45px;
+font-family:helvetica;
+font-weight:bold;
+}
+#login{
+margin-left:75%;
+width:25%;
+}
+#login:hover{
+background-color: #aaffaa;
+}
+#submit{
+  width:30px;
+  height:30px;
+  margin-top:0px;
+  padding-top:0px;
+  margin-left:58%;
+  position:absolute;
+  background-color:#99dd99;
+  border-style:none;
+  border-radius:100%;
+}
+#box{
+  height:20px;
+  background-color:#ddeedd;
+  border-style:none;
+  font-size:1em;
+  width:46%;
+  margin-top: 4px;
+  margin-left:10%;
+  position:absolute;
+  border-radius:5px;
+  border-width:1px;
+  border-color:black;
+  border-style:solid;
+}
+#magnifying{
+  margin-top:5px;
+  height:60%;
+  width:100%;
+}
