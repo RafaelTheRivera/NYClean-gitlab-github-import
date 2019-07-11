@@ -11,6 +11,15 @@ height:40px;
 background-color:#bbeebb;
 transition-duration: 400ms;
 }
+.editUserBar{
+margin-top: -1px;
+padding-top:10px;
+position:absolute;
+height:40px;
+background-color:#FFFFFF;
+transition-duration: 400ms;
+}
+
 #search{
 width: 25%;
 }

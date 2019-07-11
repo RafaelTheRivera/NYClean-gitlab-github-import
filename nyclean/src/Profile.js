@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Header from './Universal/header';
 import './App.css';
 
 class Profile extends Component {
@@ -9,6 +10,7 @@ class Profile extends Component {
   render(){
   return (
     <div class = "appText">
+    <Header/>
     <center><h1>Account Details</h1></center>
     <h3>Profile Picture</h3>
     <img src = "https://m.media-amazon.com/images/M/MV5BMTc0MDMyMzI2OF5BMl5BanBnXkFtZTcwMzM2OTk1MQ@@._V1_UX214_CR0,0,214,317_AL_.jpg" alt = "Morgan"/>
@@ -19,7 +21,7 @@ class Profile extends Component {
       <li>58 W 72nd Street</li>
       <li>103 E 8th Street</li>
     </ol>
-    <p>Username: {this.state.User}</p>
+    <p>Username: {this.state.User}  <a href = "/Edit">Edit Username</a></p>
     <p>Total trash picked up(lbs): {this.state.Totaltrash}</p>
     </div>
   );
