@@ -9,9 +9,14 @@ class Home extends Component {
   render(){
     return(
       <div>
-        <header>
-        NYCLEAN
-        </header>
+        <header></header>
+        <body>
+        <div id="rectangle"></div>
+        <div id="circle"></div>
+        </body>
+        <footer>
+        <a href="./second">Safety Information</a>
+        </footer>
       </div>
     );
   }
