@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Header from './Universal/header.js';
 import './App.css';
 
 class App extends Component {
@@ -7,10 +8,13 @@ class App extends Component {
     this.state = {};
   }
   render(){
-  return(
-    <div class = "appText">
-    </div>
-  );
+    return(
+      <div>
+        <Header />
+        <br/>
+        <p>This is what the very first page of my app looks like.</p>
+      </div>
+    );
   }
 }
 
