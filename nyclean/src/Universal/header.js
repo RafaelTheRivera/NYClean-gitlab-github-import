@@ -25,7 +25,7 @@ class Header extends Component {
           </div> </form>
           <div class = "headerItem" id = "logo"><a href="./">NYCLEAN</a></div>
           <a href = "./login"><div class = "headerItem" id = "login">Log in<div id="profile">
-          <img alt="" id = "profilepic" src = "https://m.media-amazon.com/images/M/MV5BMTc0MDMyMzI2OF5BMl5BanBnXkFtZTcwMzM2OTk1MQ@@._V1_UX214_CR0,0,214,317_AL_.jpg"/>
+          <img alt="" id = "profilepic" src = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"/>
           </div></div></a>
         </div>
       </div>
