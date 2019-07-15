@@ -14,7 +14,7 @@ class App extends Component {
         <div id="rectangle"></div>
         <div id="circle"></div>
         <footer>
-        <a href="./second">Safety Information</a>
+        <a href="./safety">Safety Information</a>
         </footer>
       </div>
     );
