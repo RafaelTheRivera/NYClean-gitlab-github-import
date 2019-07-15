@@ -1,0 +1,31 @@
+header {
+  font-family: canada-type-gibson, sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  text-align:center;
+  height: 50px;
+  font-size: 30px;
+}
+
+#rectangle{
+    width:200px;
+    height:675px;
+    background:lightgray;
+}
+
+#circle{
+  float: right;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: none;
+  background-color: lightgray;
+}
+
+footer {
+ position: absolute;
+ bottom: 0;
+ width: 100%;
+ padding-bottom: 10px;
+ padding-top: 10px;
+}
