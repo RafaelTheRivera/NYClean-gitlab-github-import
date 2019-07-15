@@ -41,42 +41,29 @@ padding-top: 5px;
 height: 45px;
 font-family: helvetica;
 font-weight: bold;
-<<<<<<< HEAD
-=======
 font-style: italic;
->>>>>>> debc2f45e6f0b67b63149476b44164bd96e01a06
-}
-#login{
-<<<<<<< HEAD
-width:120px;
-padding-left:10px;
-right:10px;
-border-radius:10%;
-height:30px;
-margin-top:5px;
 }
 #rogueText{
-  margin-top:-3px;
+  margin-top:0px;
   position:absolute;
-=======
+}
+#login{
 margin-right: 10px;
 font-size:1em;
 position:relative;
 float:right;
-width: 10%;
+width: 120px;
 border-radius: 5px;
 height: 35px;
 margin-top:2px;
 padding-left: 10px;
 white-space:nowrap;
 overflow:hidden;
->>>>>>> cbf6ee6f2dd4ae29f88757b0111bc0011702cd31
 }
 #login:hover{
 background-color: #aaffaa;
 }
 #submit{
-<<<<<<< HEAD
   width:30px;
   height:30px;
   margin-top:0px;
@@ -87,44 +74,20 @@ background-color: #aaffaa;
   border-style:none;
   border-radius:100%;
 }
-#box{
-  height:20px;
-  background-color:#ddeedd;
-  border-style:none;
-  font-size:1em;
-  width:200px;
-  margin-top: 4px;
-  margin-left:15px;
-  position:absolute;
-  border-radius:5px;
-  border-width:1px;
-  border-color:black;
-  border-style:solid;
-=======
-  width: 30px;
-  height: 30px;
-  margin-top: 0px;
-  padding-top: 0px;
-  margin-left: 58%;
-  position: absolute;
-  background-color: #99dd99;
-  border-style: none;
-  border-radius: 100%;
-}
+
 #box{
   height: 20px;
   background-color: #ddeedd;
   border-style: none;
   font-size: 1em;
-  width: 46%;
+  width: 200px;
   margin-top: 4px;
-  margin-left: 10%;
+  margin-left: 10px;
   position: absolute;
   border-radius: 5px;
   border-width: 1px;
   border-color: black;
   border-style: solid;
->>>>>>> cbf6ee6f2dd4ae29f88757b0111bc0011702cd31
 }
 #magnifying{
   margin-top: 5px;
@@ -140,11 +103,6 @@ background-color: #aaffaa;
   right:0px;
   top:8px;
   margin-right: 10%;
-}
-#profilepic{
-  height:100%;
-  width:100%;
-  border-radius:100%;
 }
 
 #rectangle{
@@ -170,8 +128,6 @@ background-color: #aaffaa;
   height:30px;
   width:30px;
   position:absolute;
-  right:10px;
-  top:5px;
 }
 
 footer {
