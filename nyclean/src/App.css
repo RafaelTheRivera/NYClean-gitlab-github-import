@@ -44,7 +44,6 @@ font-weight: bold;
 font-style: italic;
 }
 #login{
-<<<<<<< HEAD
 width:120px;
 padding-left:10px;
 right:10px;
@@ -53,9 +52,8 @@ height:30px;
 margin-top:5px;
 }
 #rogueText{
-  margin-top:-3px;
-  position:absolute;
-=======
+margin-top:-3px;
+position:absolute;
 margin-right: 10px;
 font-size:1em;
 position:relative;
@@ -67,61 +65,48 @@ margin-top:2px;
 padding-left: 10px;
 white-space:nowrap;
 overflow:hidden;
->>>>>>> cbf6ee6f2dd4ae29f88757b0111bc0011702cd31
 }
 #login:hover{
 background-color: #aaffaa;
 }
 #submit{
-<<<<<<< HEAD
-  width:30px;
-  height:30px;
-  margin-top:0px;
-  padding-top:0px;
-  margin-left:230px;
-  position:absolute;
-  background-color:#99dd99;
-  border-style:none;
-  border-radius:100%;
+width:30px;
+height:30px;
+margin-top:0px;
+padding-top:0px;
+margin-left:230px;
+position:absolute;
+background-color:#99dd99;
+border-style:none;
+border-radius:100%;
 }
 #box{
-  height:20px;
-  background-color:#ddeedd;
-  border-style:none;
-  font-size:1em;
-  width:200px;
-  margin-top: 4px;
-  margin-left:15px;
-  position:absolute;
-  border-radius:5px;
-  border-width:1px;
-  border-color:black;
-  border-style:solid;
-=======
-  width: 30px;
-  height: 30px;
-  margin-top: 0px;
-  padding-top: 0px;
-  margin-left: 58%;
-  position: absolute;
-  background-color: #99dd99;
-  border-style: none;
-  border-radius: 100%;
+height:20px;
+background-color:#ddeedd;
+border-style:none;
+font-size:1em;
+width:200px;
+margin-top: 4px;
+margin-left:15px;
+position:absolute;
+border-radius:5px;
+border-width:1px;
+border-color:black;
+border-style:solid;
 }
 #box{
-  height: 20px;
-  background-color: #ddeedd;
-  border-style: none;
-  font-size: 1em;
-  width: 46%;
-  margin-top: 4px;
-  margin-left: 10%;
-  position: absolute;
-  border-radius: 5px;
-  border-width: 1px;
-  border-color: black;
-  border-style: solid;
->>>>>>> cbf6ee6f2dd4ae29f88757b0111bc0011702cd31
+height: 20px;
+background-color: #ddeedd;
+border-style: none;
+font-size: 1em;
+width: 46%;
+margin-top: 4px;
+margin-left: 10%;
+position: absolute;
+border-radius: 5px;
+border-width: 1px;
+border-color: black;
+border-style: solid;
 }
 #magnifying{
   margin-top: 5px;
