@@ -103,65 +103,48 @@ border-style:solid;
 
 #rectangle{
     width:200px;
-<<<<<<< HEAD
     height:650px;
     background:lightgray;
-=======
-    height:680px;
-    background-color:lightgray;
->>>>>>> e098fbd89f31f65fa0a3300525aaf5b57e2c3a2e
 }
 
-#circle-1{
+#pin{
   position: absolute;
-  right:0px;
-  top: -3px;
+  right:0;
+  top: 0;
   margin-top: 75px;
   margin-right: 25px;
   height: 40px;
-  width: 40px;
-  border-radius: 50%;
-  border: none;
-  background-color: lightgray;
+  width: auto;
 }
 
-#circle-2{
+#feed{
   position: absolute;
   right:0;
   top: 0;
   margin-top: 140px;
   margin-right: 25px;
   height: 40px;
-  width: 40px;
-  border-radius: 50%;
-  border: none;
-  background-color: lightgray;
+  width: auto;
 }
 
-#circle-3{
+#leader{
   position: absolute;
   right:0;
   top: 0;
   margin-top: 205px;
   margin-right: 25px;
   height: 40px;
-  width: 40px;
-  border-radius: 50%;
-  border: none;
-  background-color: lightgray;
+  width: auto;
 }
 
-#circle-4{
+#friends{
   position: absolute;
   right:0;
   top: 0;
   margin-top: 635px;
   margin-right: 25px;
   height: 40px;
-  width: 40px;
-  border-radius: 50%;
-  border: none;
-  background-color: lightgray;
+  width: auto;
 }
 
 #profilepic{
