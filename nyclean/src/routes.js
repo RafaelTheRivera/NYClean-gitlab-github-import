@@ -10,11 +10,11 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 const Routes = () => (
     <Router>
       <div>
-        <Route exact path = {"/"} component = {() => <Login />}/>
+        <Route exact path = {"/"} component = {() => <App />}/>
         <Route exact path = {"/profPage"} component = {() => <Profile />}/>
         <Route exact path = {"/edit"} component = {() => <Edit />}/>
         <Route exact path = {"/safety"} component = {() => <Safety />}/>
-        <Route exact path = {"/app"} component = {() => <App />}/>
+        <Route exact path = {"/Login"} component = {() => <Login />}/>
       </div>
     </Router>
 
