@@ -11,24 +11,24 @@ class Header extends Component {
       [e.target.name]: e.target.value
     });
   }
-  checkPageID(){
+  checkPageID = e => {
     //if not at home page, cover search bar
     //note: if someone wants to, you can skip this step by copying this header object and recreating it without a search bar, then specifically calling it on other pages.
   }
-  checkLoginStatus(){
+  checkLoginStatus = e => {
     //redirect to log in page if not logged in.
   }
-  getProfilePicture(){
+  getProfilePicture = e => {
     //find user's profile photo
   }
-  getSearch(){
+  getSearch = e => {
     //find search results based on updateSearchBar
     //note: must call the search results bar
   }
-  checkPageID(){
+  checkPageID = e => {
 
   }
-  checkLoginStatus(){
+  checkLoginStatus = e => {
 
   }
   render(){
@@ -60,7 +60,8 @@ class Header extends Component {
               </div>
             </div>
           </a>
-        </div></div>
+        </div>
+      </div>
     )
   }
 }
