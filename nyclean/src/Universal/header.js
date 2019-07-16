@@ -45,25 +45,12 @@ class Header extends Component {
     const url = window.location.href;
     const length = url.length;
     var output;
-    console.log(length);
-    console.log(url);
-    if (length > 23){
+    if (length > 23 && url.indexOf("search") < 0){
       output = "visible";
       return(output);
     }else{
       output = "hidden";
       return(output);
-    }
-  }
-  componentDidMount(){
-    if(this.isAtHome()){
-      console.log("success");
-      return(
-        <div>
-          <div id = "sneaky">
-          </div>
-        </div>
-      );
     }
   }
   render(){
