@@ -14,7 +14,7 @@ const Routes = () => (
         <Route exact path = {"/profPage"} component = {() => <Profile />}/>
         <Route exact path = {"/edit"} component = {() => <Edit />}/>
         <Route exact path = {"/safety"} component = {() => <Safety />}/>
-        <Route exact path = {"/login"} component = {() => <App />}/>
+        <Route exact path = {"/app"} component = {() => <App />}/>
       </div>
     </Router>
 
