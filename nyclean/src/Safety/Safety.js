@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import Header from './../Universal/header.js'
+
 
 class Safety extends Component {
   constructor(){
@@ -8,6 +10,7 @@ class Safety extends Component {
   render(){
     return(
       <div>
+        <Header />
         <header>
         <a href=".">BACK</a>
         Safety Information

@@ -61,6 +61,15 @@ white-space:nowrap;
 #login:hover{
 background-color: #aaffaa;
 }
+#sneaky{
+  position:absolute;
+  height:50px;
+  width:300px;
+  margin-left:0px;
+  margin-top:0px;
+  background-color:#bbeebb;
+  z-index:2;
+}
 #submit{
 width:30px;
 height:30px;
