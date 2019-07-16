@@ -12,7 +12,10 @@ class App extends Component {
       <div>
         <Header />
         <div id="rectangle"></div>
-        <div id="circle"></div>
+        <div class = "circle" id="circle-1"></div>
+        <div class = "circle" id="circle-2"></div>
+        <div class = "circle" id="circle-3"></div>
+        <div class = "circle" id="circle-4"></div>
         <footer>
         <a href="./safety">Safety Information</a>
         </footer>
