@@ -74,7 +74,7 @@ class Header extends Component {
             </div>
           </form>
           <div class = "headerItem" id = "logo">
-            <a href="./app">NYCLEAN</a>
+            <a href="./">NYCLEAN</a>
           </div>
           <a href = "./login">
             <div class = "headerItem" id = "login">
