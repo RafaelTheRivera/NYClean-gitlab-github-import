@@ -2,9 +2,9 @@ import Safety from "./Safety/Safety";
 import Profile from './Profile';
 import App from './App';
 import Edit from './Edit';
-import React from "react";
 import User from './User';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import React from 'react';
+import {BrowserRouter as Router, Route} from 'react-router-dom';
 
 const Routes = () => (
   <Router>
@@ -17,5 +17,4 @@ const Routes = () => (
     </div>
   </Router>
 );
-
 export default Routes;

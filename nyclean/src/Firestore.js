@@ -1,14 +1,15 @@
 import firebase from 'firebase';
-var firebaseConfig = {
-  apiKey: "AIzaSyBhg39z6Z2C7mdyOmzHKp2R6Nuj-0ibqlc",
-  authDomain: "fir-xample-32786.firebaseapp.com",
-  databaseURL: "https://fir-xample-32786.firebaseio.com",
-  projectId: "fir-xample-32786",
-  storageBucket: "",
-  messagingSenderId: "409061518915",
-  appId: "1:409061518915:web:7abe76413db59a02"
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
 
-export default firebase;
+  var firebaseConfig = {
+    apiKey: "AIzaSyBDb9uAt7yL4NRP9RXssJLDNZcTkZkgvXk",
+    authDomain: "logbag-da7d6.firebaseapp.com",
+    databaseURL: "https://logbag-da7d6.firebaseio.com",
+    projectId: "logbag-da7d6",
+    storageBucket: "",
+    messagingSenderId: "540407765535",
+    appId: "1:540407765535:web:0e1aac9e47e0a4de"
+  };
+// Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  export default firebase;
