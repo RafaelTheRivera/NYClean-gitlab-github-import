@@ -11,31 +11,68 @@ class Header extends Component {
       [e.target.name]: e.target.value
     });
   }
-  checkPageID(){
+  checkPageID = e => {
     //if not at home page, cover search bar
     //note: if someone wants to, you can skip this step by copying this header object and recreating it without a search bar, then specifically calling it on other pages.
+
   }
-  checkLoginStatus(){
+  checkLoginStatus = e => {
     //redirect to log in page if not logged in.
   }
-  getProfilePicture(){
+  getProfilePicture = e => {
     //find user's profile photo
   }
-  getSearch(){
+  getSearch = e => {
     //find search results based on updateSearchBar
     //note: must call the search results bar
+    e.preventDefault();
+    //const db = firebase.firestore();
+    /*let reviewBase = db.collection(open this database later);
+    //program function to find distances based on an inputted location and search coordinates
+    let query = reviewBase.where(/*query within);
+    console.log(query);
+    //program function to display results based on search criteria
+    */
   }
-  checkPageID(){
+  checkPageID = e => {
 
   }
-  checkLoginStatus(){
+  checkLoginStatus = e => {
 
+  }
+  isAtHome() {
+    console.log("running");
+    const url = window.location.href;
+    const length = url.length;
+    var output;
+    console.log(length);
+    console.log(url);
+    if (length > 23){
+      output = "visible";
+      return(output);
+    }else{
+      output = "hidden";
+      return(output);
+    }
+  }
+  componentDidMount(){
+    if(this.isAtHome()){
+      console.log("success");
+      return(
+        <div>
+          <div id = "sneaky">
+          </div>
+        </div>
+      );
+    }
   }
   render(){
     return(
       <div>
         <div id="bigHeader">
           <form>
+            <div id = "sneaky" style = {{visibility: this.isAtHome()}}>
+            </div>
             <div class = "headerItem" id = "search">
               <input
                 type = "text"
@@ -60,7 +97,8 @@ class Header extends Component {
               </div>
             </div>
           </a>
-        </div></div>
+        </div>
+      </div>
     )
   }
 }

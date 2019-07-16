@@ -1,5 +1,6 @@
 import React from 'react';
 import firebase from "./Firestore";
+
 class User extends React.Component{
   constructor() {
    super();
