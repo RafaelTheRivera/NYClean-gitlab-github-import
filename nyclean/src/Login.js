@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
 import firebase from './Firestore';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import { Redirect } from 'react-router-dom'
 
 const uiConfig = {
   signInFlow: 'popup' ,   //or can be redirect instead
-  signInSuccessfulUrl: '/' ,    //once ur signed in u will b redirected back to link of choice
+  //signInSuccessfulUrl: '/' ,    //once ur signed in u will b redirected back to link of choice
   callbacks: {
     signInSuccessWithAuthResult: () => false      //avoiding redirects after sign in
   },
@@ -23,12 +24,15 @@ class Login extends Component {
 
   constructor(){
     super();
-    this.state = {signedIn: false, currentUser: null};
+    this.state = {signedIn:false, currentUser: null};
   }
-
+  renderRedirect = () => {
+      return <Redirect to='/' />
+  }
   componentWillMount(){
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
+        console.log('yes')
         this.setState({
           signedIn: true,
           currentUser: user
@@ -49,7 +53,9 @@ class Login extends Component {
             });
           }
         });
-      }
+      } else {
+        console.log('no')
+    }
     });
   }
 
@@ -62,13 +68,16 @@ class Login extends Component {
 
   render(){
     if(this.state.signedIn) {
+      console.log('true')
       return(
         <div>
-          <p>Hello {this.state.currentUser.displayName}.</p>
-          <a href = "/"><p class = "linkText">Homepage</p></a>
+        {this.renderRedirect()}
+        <p>loggedin</p>
+        <button onClick = {this.signOut}>Sign Out</button>
         </div>
       );
     }else {
+      console.log('false')
       return(
         <div>
           <h1>Please sign in</h1>
