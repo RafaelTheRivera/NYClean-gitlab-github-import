@@ -1,6 +1,4 @@
-body{
-  overflow:hidden;
-}
+
 #bigHeader{
   height:50px;
   width:100%;
@@ -346,4 +344,38 @@ footer {
   right:48px;
   position:absolute;
   z-index:4;
+}
+
+#profilecircle {
+  margin-left: 100px;
+}
+
+#profileimg {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+
+  object-fit: cover;
+  object-position: center right;
+}
+
+#username {
+  position: absolute;
+  top: 0;
+  margin-top: 185px;
+  margin-left: 400px;
+}
+
+#bio {
+  position: absolute;
+  top: 0;
+  margin-top: 250px;
+  margin-left: 400px;
+  margin-right: 200px;
+
+}
+
+#profilepin {
+  margin-top: 50px;
+  margin-left: 150px;
 }
