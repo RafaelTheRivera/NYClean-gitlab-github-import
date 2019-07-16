@@ -14,6 +14,12 @@ class App extends Component {
     super();
     this.state = {signedIn:true};
   }
+  signOut = () => firebase.auth().signOut().then( () => {
+    this.setState({
+      signedIn: false,
+      currentUser: null
+    });
+  });
   componentWillMount(){
 
     firebase.auth().onAuthStateChanged(user => {
@@ -60,6 +66,7 @@ class App extends Component {
           <img id = "leader" src = {leader} alt = {"leaderboard"}/>
           <img id = "friends" src = {friends} alt = {"friends"}/>
           <footer>
+         <button onClick = {this.signOut}>Sign Out</button>
           <a href="./safety">Safety Information</a>
           </footer>
         </div>
