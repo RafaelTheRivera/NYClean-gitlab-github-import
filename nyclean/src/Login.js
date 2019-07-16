@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import firebase from './firestore';
+import firebase from './Firestore';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
 const uiConfig = {
@@ -44,12 +44,11 @@ class Login extends Component {
         userRef.doc(user.uid).get().then(getDoc => {
           if (!getDoc.exists){
             userRef.doc(user.uid).set({
-              fullName: user.displayName,
+              fullname: user.displayName,
               email: user.email
             });
           }
         });
-
       }
     });
   }
@@ -66,7 +65,7 @@ class Login extends Component {
       return(
         <div>
           <p>Hello {this.state.currentUser.displayName}.</p>
-          <button onClick = {this.signOut}>Sign Out</button>
+          <a href = "/"><p class = "linkText">Homepage</p></a>
         </div>
       );
     }else {
