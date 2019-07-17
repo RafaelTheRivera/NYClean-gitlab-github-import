@@ -4,8 +4,8 @@ import './App.css';
 
 
 import Bubble from './Universal/bubble.js';
-import { Redirect } from 'react-router-dom'
-import firebase from './Firestore'
+import { Redirect } from 'react-router-dom';
+import firebase from './Firestore';
 
 class App extends Component {
   constructor(){
