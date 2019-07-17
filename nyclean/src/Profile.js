@@ -16,7 +16,7 @@ class Profile extends Component {
     <a href=".">BACK</a>
     </header>
 
-    <center><h1>Account Details</h1></center>
+    <center><h1>My Profile</h1></center>
 
     <div id="profilecircle">
     <img id = "profileimg" src = "https://m.media-amazon.com/images/M/MV5BMTc0MDMyMzI2OF5BMl5BanBnXkFtZTcwMzM2OTk1MQ@@._V1_UX214_CR0,0,214,317_AL_.jpg" alt = "Morgan"/>
