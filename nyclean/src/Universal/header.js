@@ -60,7 +60,7 @@ class Header extends Component {
           <form>
             <div id = "sneaky" style = {{visibility: this.isAtHome()}}>
             </div>
-            <div class = "headerItem" id = "search">
+            <div className= "headerItem" id = "search">
               <input
                 type = "text"
                 id="box"
@@ -68,16 +68,16 @@ class Header extends Component {
                 placeholder = " Search..."
                 onChange = {this.updateSearchBar}
                 value = {this.state.search}></input>
-              <button type = "submit" id="submit" class = "headerItem">
+              <button type = "submit" id="submit" className= "headerItem">
                 <img alt="" src="https://images.vexels.com/media/users/3/143356/isolated/preview/64e14fe0195557e3f18ea3becba3169b-search-magnifying-glass-by-vexels.png" id="magnifying"/>
               </button>
             </div>
           </form>
-          <div class = "headerItem" id = "logo">
+          <div className= "headerItem" id = "logo">
             <a href="./">NYCLEAN</a>
           </div>
           <a href = "./login">
-            <div class = "headerItem" id = "login">
+            <div className= "headerItem" id = "login">
               <span id="rogueText">My Profile</span>
               <div id="profile">
                 <img alt="" id = "profilepic" src = /*should actually link to individual profiles*/"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"/>
