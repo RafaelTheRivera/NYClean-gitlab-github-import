@@ -181,7 +181,8 @@ border-style:solid;
   height:30px;
   width:30px;
   position:absolute;
-  top:0px;
+  top:5px;
+  right:10px;
 }
 
 footer {
