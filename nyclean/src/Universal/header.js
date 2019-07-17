@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './../App.css';
+import headergradient from './../images/headergradient.png';
 
 class Header extends Component {
   constructor(){
@@ -56,7 +57,7 @@ class Header extends Component {
   render(){
     return(
       <div>
-        <div id="bigHeader">
+        <img id = "bigHeader" src = {headergradient} alt = {"topgradient"}/>
           <form>
             <div id = "sneaky" style = {{visibility: this.isAtHome()}}>
             </div>
@@ -84,7 +85,7 @@ class Header extends Component {
               </div>
             </div>
           </a>
-        </div>
+
       </div>
     )
   }

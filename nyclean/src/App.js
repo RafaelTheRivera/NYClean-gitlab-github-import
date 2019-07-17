@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Header from './Universal/header.js';
 import './App.css';
+import map from './images/map.png';
 import pin from './images/pinicon.png';
 import feed from './images/feedicon.png';
 import leader from './images/leadericon.png';
@@ -52,9 +53,12 @@ class App extends Component {
     if (this.state.signedIn){
       return(
         <div>
+
           <Header />
-          <div id="rectangle"></div>
+
           <Bubble />
+
+          <div id="rectangle"></div>
           <img id = "pin" src = {pin} alt = {"pin"}/>
           <img id = "feed" src = {feed} alt = {"feed"}/>
           <img id = "leader" src = {leader} alt = {"leaderboard"}/>
@@ -62,6 +66,8 @@ class App extends Component {
           <footer>
           <a href="./safety">Safety Information</a>
           </footer>
+
+
         </div>
       );
     }
