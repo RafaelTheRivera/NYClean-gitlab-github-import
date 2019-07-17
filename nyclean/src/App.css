@@ -183,6 +183,7 @@ footer {
   border-bottom-style:solid;
   border-color:#f25822;
   border-width:2px;
+  z-index:-1;
 }
 #con1{
   top: 75px;
