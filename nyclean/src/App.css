@@ -199,6 +199,7 @@ footer {
   border-bottom-style:solid;
   border-color:#f25822;
   border-width:2px;
+  z-index:-1;
 }
 #con1{
   top: 75px;
@@ -254,114 +255,6 @@ footer {
 }
 #bub4{
   top:371px;
-}
-#icoTop1{
-  height:7px;
-  width:20px;
-  background-color:white;
-  top:77.5px;
-  right:48px;
-  position:absolute;
-  z-index:4;
-}
-#icoMid1{
-  height:30px;
-  width:15px;
-  background-color:white;
-  top:77.5px;
-  right:55px;
-  position:absolute;
-  z-index:5;
-}
-#icoBot1{
-  height:7px;
-  width:20px;
-  background-color:white;
-  top:106px;
-  right:48px;
-  position:absolute;
-  z-index:4;
-}
-#icoTop2{
-  height:7px;
-  width:20px;
-  background-color:white;
-  top:142.5px;
-  right:48px;
-  position:absolute;
-  z-index:4;
-}
-#icoMid2{
-  height:30px;
-  width:15px;
-  background-color:white;
-  top:142.5px;
-  right:57px;
-  position:absolute;
-  z-index:4;
-}
-#icoBot2{
-  height:7px;
-  width:20px;
-  background-color:white;
-  top:170.5px;
-  right:48px;
-  position:absolute;
-  z-index:4;
-}
-#icoTop3{
-  height:7px;
-  width:20px;
-  background-color:white;
-  top:207.5px;
-  right:48px;
-  position:absolute;
-  z-index:4;
-}
-#icoMid3{
-  height:30px;
-  width:15px;
-  background-color:white;
-  top:207.5px;
-  right:56px;
-  position:absolute;
-  z-index:5;
-}
-#icoBot3{
-  height:7px;
-  width:20px;
-  background-color:white;
-  top:235px;
-  right:48px;
-  position:absolute;
-  z-index:4;
-}
-#icoTop4{
-  height:7px;
-  width:20px;
-  background-color:white;
-  top:637.5px;
-  right:48px;
-  position:absolute;
-  z-index:4;
-}
-#icoMid4{
-  height:35px;
-  width:15px;
-  background-color:white;
-  top:637.5px;
-  right:55px;
-  position:absolute;
-  z-index:5;
-}
-#icoBot4{
-  height:4px;
-  width:20px;
-  background-color:white;
-  top:668.5px;
-  right:48px;
-  position:absolute;
-  z-index:4;
 }
 
 #profilecircle {

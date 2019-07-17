@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
 import Header from './Universal/header.js';
 import './App.css';
+<<<<<<< HEAD
 import map from './images/map.png';
 import pin from './images/pinicon.png';
 import feed from './images/feedicon.png';
 import leader from './images/leadericon.png';
 import friends from './images/friendsicon.png';
+=======
+>>>>>>> e97f4f1014369555832032c6c1a5dd22c9ffec26
 import Bubble from './Universal/bubble.js';
 import { Redirect } from 'react-router-dom'
 import firebase from './Firestore'
@@ -15,6 +18,12 @@ class App extends Component {
     super();
     this.state = {signedIn:true};
   }
+  signOut = () => firebase.auth().signOut().then( () => {
+    this.setState({
+      signedIn: false,
+      currentUser: null
+    });
+  });
   componentWillMount(){
 
     firebase.auth().onAuthStateChanged(user => {
@@ -59,11 +68,9 @@ class App extends Component {
           <Bubble />
 
           <div id="rectangle"></div>
-          <img id = "pin" src = {pin} alt = {"pin"}/>
-          <img id = "feed" src = {feed} alt = {"feed"}/>
-          <img id = "leader" src = {leader} alt = {"leaderboard"}/>
-          <img id = "friends" src = {friends} alt = {"friends"}/>
+
           <footer>
+         <button onClick = {this.signOut}>Sign Out</button>
           <a href="./safety">Safety Information</a>
           </footer>
 
