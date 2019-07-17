@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import Header from './Universal/header.js';
 import './App.css';
-import map from './images/map.png';
+
+
 import Bubble from './Universal/bubble.js';
 import { Redirect } from 'react-router-dom';
 import firebase from './Firestore';
