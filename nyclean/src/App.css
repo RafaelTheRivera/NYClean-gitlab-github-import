@@ -14,11 +14,25 @@
   color: #000000;
 }
 #bigHeader{
-  height:50px;
+  position: absolute;
   width:100%;
-  background-color:#bbeebb;
+  height:90px;
+
 }
+
+h1{
+  margin-top: 70px;
+}
+
+body{
+  background-color: lightgray;
+}
+
 a{
+  color:black;
+  text-decoration:none;
+}
+a:hover{
   color:black;
   text-decoration:none;
 }
@@ -27,16 +41,14 @@ margin-top: -1px;
 padding-top: 10px;
 position: absolute;
 height: 40px;
-background-color: #bbeebb;
-transition-duration: 400ms;
+
 }
 .editUserBar{
 margin-top: -1px;
 padding-top:10px;
 position:absolute;
 height:40px;
-background-color:#FFFFFF;
-transition-duration: 400ms;
+
 }
 
 #search{
@@ -49,18 +61,18 @@ margin-left: 25%;
 width: 50%;
 text-align: center;
 font-size: 2.2em;
-padding-top: 5px;
-height: 45px;
+padding-top: 0px;
+height: 50px;
 font-family: helvetica;
 font-weight: bold;
 font-style: italic;
 }
 #login{
-width:120px;
+width:130px;
 padding-left:10px;
 right:10px;
 border-radius:10px;
-height:30px;
+height:40px;
 margin-top:5px;
 }
 #rogueText{
@@ -75,11 +87,11 @@ background-color: #aaffaa;
 }
 #sneaky{
   position:absolute;
-  height:50px;
+  height:40px;
   width:300px;
   margin-left:0px;
   margin-top:0px;
-  background-color:#bbeebb;
+  background-color: white;
   z-index:2;
 }
 #submit{
@@ -94,11 +106,11 @@ border-style:none;
 border-radius:100%;
 }
 #box{
-height:20px;
+height:25px;
 background-color:#ddeedd;
 border-style:none;
 font-size:1em;
-width:200px;
+width:190px;
 margin-top: 4px;
 margin-left:15px;
 position:absolute;
@@ -108,7 +120,7 @@ border-color:black;
 border-style:solid;
 }
 #magnifying{
-  margin-top: 5px;
+  margin-top: -5px;
   height: 60%;
   width: 100%;
 }
@@ -123,9 +135,9 @@ border-style:solid;
 }
 
 #rectangle{
-    width:200px;
-    height:650px;
-    background:lightgray;
+    width:225px;
+    height:700px;
+    background:white;
 }
 
 #pin{
@@ -173,7 +185,8 @@ border-style:solid;
   height:30px;
   width:30px;
   position:absolute;
-  top:0px;
+  top:5px;
+  right:10px;
 }
 
 footer {
@@ -186,7 +199,7 @@ footer {
  background-color:#bbeebb;
 }
 .connector{
-  height:36px;
+  height:40px;
   width:50px;
   background-color:white;
   position:absolute;
@@ -195,6 +208,7 @@ footer {
   border-bottom-style:solid;
   border-color:#f25822;
   border-width:2px;
+  z-index:-1;
 }
 #con1{
   top: 75px;
@@ -249,115 +263,25 @@ footer {
   top:205px;
 }
 #bub4{
-  top:371px;
+  top:375px;
 }
-#icoTop1{
-  height:7px;
-  width:20px;
-  background-color:white;
-  top:77.5px;
-  right:48px;
-  position:absolute;
-  z-index:4;
+
+#add{
+  position: absolute;
+  right:0;
+  top: 0;
+  margin-right: 25px;
+  margin-top: 10px;
+  height: 15px;
+  width: auto;
 }
-#icoMid1{
-  height:30px;
-  width:15px;
-  background-color:white;
-  top:77.5px;
-  right:55px;
-  position:absolute;
-  z-index:5;
-}
-#icoBot1{
-  height:7px;
-  width:20px;
-  background-color:white;
-  top:106px;
-  right:48px;
-  position:absolute;
-  z-index:4;
-}
-#icoTop2{
-  height:7px;
-  width:20px;
-  background-color:white;
-  top:142.5px;
-  right:48px;
-  position:absolute;
-  z-index:4;
-}
-#icoMid2{
-  height:30px;
-  width:15px;
-  background-color:white;
-  top:142.5px;
-  right:57px;
-  position:absolute;
-  z-index:4;
-}
-#icoBot2{
-  height:7px;
-  width:20px;
-  background-color:white;
-  top:170.5px;
-  right:48px;
-  position:absolute;
-  z-index:4;
-}
-#icoTop3{
-  height:7px;
-  width:20px;
-  background-color:white;
-  top:207.5px;
-  right:48px;
-  position:absolute;
-  z-index:4;
-}
-#icoMid3{
-  height:30px;
-  width:15px;
-  background-color:white;
-  top:207.5px;
-  right:56px;
-  position:absolute;
-  z-index:5;
-}
-#icoBot3{
-  height:7px;
-  width:20px;
-  background-color:white;
-  top:235px;
-  right:48px;
-  position:absolute;
-  z-index:4;
-}
-#icoTop4{
-  height:7px;
-  width:20px;
-  background-color:white;
-  top:637.5px;
-  right:48px;
-  position:absolute;
-  z-index:4;
-}
-#icoMid4{
-  height:35px;
-  width:15px;
-  background-color:white;
-  top:637.5px;
-  right:55px;
-  position:absolute;
-  z-index:5;
-}
-#icoBot4{
-  height:4px;
-  width:20px;
-  background-color:white;
-  top:668.5px;
-  right:48px;
-  position:absolute;
-  z-index:4;
+
+#insertimage{
+  width:200px;
+  height:200px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  background:gray;
 }
 
 #profilecircle {

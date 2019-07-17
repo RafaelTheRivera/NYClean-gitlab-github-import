@@ -1,23 +1,26 @@
 import React, {Component} from 'react';
 import './../App.css';
+import headergradient from './../images/headergradient.png';
+import firebase from './../Firestore';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
 class Header extends Component {
   constructor(){
     super();
-    this.state = {search:""};
+    this.state = {search: "",
+                  username: "",
+                  profileWidth: ""};
+  }
+  componentWillMount(){
+    firebase.auth().onAuthStateChanged(user => {
+      this.setState({username: user.displayName,
+                    profileWidth: user.displayName.length * 8.5 + 50 + "px"});
+    });
   }
   updateSearchBar = e => {
     this.setState({
       [e.target.name]: e.target.value
     });
-  }
-  checkPageID = e => {
-    //if not at home page, cover search bar
-    //note: if someone wants to, you can skip this step by copying this header object and recreating it without a search bar, then specifically calling it on other pages.
-
-  }
-  checkLoginStatus = e => {
-    //redirect to log in page if not logged in.
   }
   getProfilePicture = e => {
     //find user's profile photo
@@ -33,9 +36,6 @@ class Header extends Component {
     console.log(query);
     //program function to display results based on search criteria
     */
-  }
-  checkPageID = e => {
-
   }
   checkLoginStatus = e => {
 
@@ -56,11 +56,11 @@ class Header extends Component {
   render(){
     return(
       <div>
-        <div id="bigHeader">
+        <img id = "bigHeader" src = {headergradient} alt = {"topgradient"}/>
           <form>
             <div id = "sneaky" style = {{visibility: this.isAtHome()}}>
             </div>
-            <div class = "headerItem" id = "search">
+            <div className= "headerItem" id = "search">
               <input
                 type = "text"
                 id="box"
@@ -68,23 +68,30 @@ class Header extends Component {
                 placeholder = " Search..."
                 onChange = {this.updateSearchBar}
                 value = {this.state.search}></input>
-              <button type = "submit" id="submit" class = "headerItem">
+              <button type = "submit" id="submit" className= "headerItem">
                 <img alt="" src="https://images.vexels.com/media/users/3/143356/isolated/preview/64e14fe0195557e3f18ea3becba3169b-search-magnifying-glass-by-vexels.png" id="magnifying"/>
               </button>
             </div>
           </form>
-          <div class = "headerItem" id = "logo">
+          <div className= "headerItem" id = "logo">
             <a href="./">NYCLEAN</a>
           </div>
+<<<<<<< HEAD
           <a href = "./profpage">
             <div class = "headerItem" id = "login">
               <span id="rogueText">My Profile</span>
               <div id="profile">
                 <img alt="" id = "profilepic" src = /*should actually link to individual profiles*/"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"/>
               </div>
+=======
+          <a href = ".">
+            <div className= "headerItem" id = "login" style = {{width: this.state.profileWidth}}>
+              <span id="rogueText">{this.state.username}</span>
+              <img alt="" id = "profilepic" src = /*should actually link to individual profiles*/"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"/>
+>>>>>>> f88963b6973f7baef56b9b11a537e32e79d62839
             </div>
+  
           </a>
-        </div>
       </div>
     )
   }
