@@ -56,6 +56,12 @@ width: 25%;
 background-color:transparent;
 z-index:1;
 }
+
+#greenyc {
+height: 35px;
+width: auto;
+}
+
 #logo{
 margin-left: 25%;
 width: 50%;
