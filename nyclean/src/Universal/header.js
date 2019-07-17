@@ -76,7 +76,7 @@ class Header extends Component {
           <div class = "headerItem" id = "logo">
             <a href="./">NYCLEAN</a>
           </div>
-          <a href = "./login">
+          <a href = "./profpage">
             <div class = "headerItem" id = "login">
               <span id="rogueText">My Profile</span>
               <div id="profile">
