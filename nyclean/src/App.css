@@ -110,7 +110,7 @@ height:25px;
 background-color:#ddeedd;
 border-style:none;
 font-size:1em;
-width:200px;
+width:190px;
 margin-top: 4px;
 margin-left:15px;
 position:absolute;
@@ -264,6 +264,24 @@ footer {
 }
 #bub4{
   top:375px;
+}
+
+#add{
+  position: absolute;
+  right:0;
+  top: 0;
+  margin-right: 25px;
+  margin-top: 10px;
+  height: 15px;
+  width: auto;
+}
+
+#insertimage{
+  width:200px;
+  height:200px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  background:gray;
 }
 
 #profilecircle {

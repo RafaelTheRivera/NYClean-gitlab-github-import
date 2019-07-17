@@ -4,6 +4,7 @@ import pin from './../images/pinicon.png';
 import feed from './../images/feedicon.png';
 import leader from './../images/leadericon.png';
 import friends from './../images/friendsicon.png';
+import add from './../images/add.png';
 
 class Bubble extends Component{
   constructor(props){
@@ -72,6 +73,11 @@ class Bubble extends Component{
             <div className = "blocker" id = "blo1">
             </div>
             <div className = "bubble" id = "bub1">
+              Post by: paige
+              <img id = "add" src = {add} alt = "addposter"/>
+              <center><div id="insertimage"></div></center>
+              Insert caption here
+
             </div>
           </span>
         <img id = "feed" src = {feed} alt = {"feed"} onClick = {this.openFeed}/>
@@ -90,6 +96,16 @@ class Bubble extends Component{
             <div className = "blocker" id = "blo3">
             </div>
             <div className = "bubble" id = "bub3">
+            Total count: 12,345 lbs <br />
+            <center>Weekly Leaderboard</center>
+            <ol>
+              <li>user 123 lbs</li>
+              <li>user 123 lbs</li>
+              <li>user 123 lbs</li>
+              <li>user 123 lbs</li>
+              <li>user 123 lbs</li>
+            </ol>
+
             </div>
           </span>
         <img id = "friends" src = {friends} alt = {"friends"} onClick = {this.openFriends}/>
