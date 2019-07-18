@@ -62,7 +62,14 @@ height: 35px;
 width: auto;
 }
 
-
+#footergradient{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width:100%;
+  height:70px;
+  z-index: -1;
+}
 
 #logo{
 margin-left: 25%;
@@ -204,7 +211,6 @@ footer {
  width: 100%;
  padding-bottom: 10px;
  padding-top: 10px;
- background-color:#bbeebb;
 }
 .connector{
   height:40px;

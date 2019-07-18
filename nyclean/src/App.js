@@ -65,9 +65,9 @@ class App extends Component {
           <div id="rectangle"></div>
 
           <footer>
-         <button onClick = {this.signOut}>Sign Out</button>
-          
-          <a href="./safety">Safety Information</a>
+            <img id = "footergradient" src = {footergradient} alt = {"footergradient"}/>
+            <button onClick = {this.signOut}>Sign Out</button>
+            <a id = "safety" href="./safety">Safety Information</a>
           </footer>
 
 
