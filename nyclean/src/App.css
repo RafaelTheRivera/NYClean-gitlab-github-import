@@ -15,9 +15,10 @@
 }
 #bigHeader{
   position: absolute;
+  top: 0;
   width:100%;
   height:90px;
-
+  z-index: -2;
 }
 
 h1{
@@ -53,8 +54,8 @@ height:40px;
 
 #search{
 width: 25%;
-background-color:transparent;
-z-index:1;
+background-color: transparent;
+top: 0;
 }
 
 #greenyc {
@@ -81,7 +82,9 @@ height: 50px;
 font-family: helvetica;
 font-weight: bold;
 font-style: italic;
+top: 0;
 }
+
 #login{
 width:130px;
 padding-left:10px;
@@ -89,7 +92,9 @@ right:10px;
 border-radius:10px;
 height:40px;
 margin-top:5px;
+top: 0;
 }
+
 #rogueText{
 margin-top:-3px;
 position:absolute;
@@ -97,17 +102,19 @@ font-size:1em;
 padding-left: 0px;
 white-space:nowrap;
 }
+
 #login:hover{
 background-color: #aaffaa;
 }
+
 #sneaky{
   position:absolute;
   height:40px;
   width:300px;
   margin-left:0px;
-  margin-top:0px;
+  top: 0;
   background-color: white;
-  z-index:2;
+  z-index:-1;
 }
 #submit{
 width:30px;
@@ -116,13 +123,13 @@ margin-top:0px;
 padding-top:0px;
 margin-left:230px;
 position:absolute;
-background-color:#99dd99;
+background-color:#28BBB4;
 border-style:none;
 border-radius:100%;
 }
 #box{
 height:25px;
-background-color:#ddeedd;
+background-color:#DAF2F2;
 border-style:none;
 font-size:1em;
 width:190px;
@@ -231,7 +238,7 @@ footer {
   right:45px;
   border-top-style:solid;
   border-bottom-style:solid;
-  border-color:#f25822;
+  border-color:#black;
   border-width:2px;
   z-index:-1;
 }
@@ -270,7 +277,7 @@ footer {
 .bubble{
   height:300px;
   width:250px;
-  border-color:#f25822;
+  border-color: black;
   border-style:solid;
   border-width:2px;
   border-radius:10px;

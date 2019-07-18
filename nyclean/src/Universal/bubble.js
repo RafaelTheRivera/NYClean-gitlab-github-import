@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import './../App.css';
-import pin from './../images/pinicon.png';
-import feed from './../images/feedicon.png';
-import leader from './../images/leadericon.png';
-import friends from './../images/friendsicon.png';
+import pin from './../images/pinicon1.png';
+import feed from './../images/feedicon1.png';
+import leader from './../images/leadericon1.png';
+import friends from './../images/friendsicon1.png';
 import emptypinicon from './../images/emptypinicon.png';
 import add from './../images/add.png';
 
