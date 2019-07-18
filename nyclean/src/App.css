@@ -56,6 +56,14 @@ width: 25%;
 background-color:transparent;
 z-index:1;
 }
+
+#greenyc {
+height: 35px;
+width: auto;
+}
+
+
+
 #logo{
 margin-left: 25%;
 width: 50%;
@@ -148,6 +156,17 @@ border-style:solid;
   margin-right: 25px;
   height: 40px;
   width: auto;
+}
+
+#emptypinicon{
+  position: absolute;
+  right:0;
+  top: 0;
+  margin-top: 75px;
+  margin-right: 25px;
+  height: 40px;
+  width: auto;
+  z-index:1;
 }
 
 #feed{

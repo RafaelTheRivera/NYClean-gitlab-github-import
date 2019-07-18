@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './../App.css';
 import headergradient from './../images/headergradient.png';
+import greenyc from './../images/greenyc.png';
 import firebase from './../Firestore';
 
 class Header extends Component {
@@ -73,9 +74,10 @@ class Header extends Component {
             </div>
           </form>
           <div className= "headerItem" id = "logo">
-            <a href="./">NYCLEAN</a>
+            <a href = "/"> <img id = "greenyc" src = {greenyc} alt= "logo"/> </a>
           </div>
           <a href = "./profpage">
+<<<<<<< HEAD
             <div class = "headerItem" id = "login">
               <span id="rogueText">My Profile</span>
               <div>
@@ -83,6 +85,18 @@ class Header extends Component {
               </div>
             </div>
             </a>
+=======
+=======
+          <a href = "./profPage">
+>>>>>>> d41906c3c7f325b469e3c00655468a20284a60ef
+            <div className= "headerItem" id = "login" style = {{width: this.state.profileWidth}}>
+              <span id="rogueText">{this.state.username}</span>
+              <img alt="" id = "profilepic" src = /*should actually link to individual profiles*/"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"/>
+
+            </div>
+
+          </a>
+>>>>>>> 0b117362e6938efc594e7d0bf03459c8136afabd
       </div>
     )
   }

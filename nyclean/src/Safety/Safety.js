@@ -11,9 +11,7 @@ class Safety extends Component {
     return(
       <div>
         <Header />
-        <header>
-        <a href=".">BACK</a>
-        </header>
+      
         <center><h1>Safety Information</h1></center>
 
         <div id = "safetycontent">
