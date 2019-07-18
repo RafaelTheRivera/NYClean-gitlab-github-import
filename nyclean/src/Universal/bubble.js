@@ -4,6 +4,7 @@ import pin from './../images/pinicon.png';
 import feed from './../images/feedicon.png';
 import leader from './../images/leadericon.png';
 import friends from './../images/friendsicon.png';
+import emptypinicon from './../images/emptypinicon.png';
 
 class Bubble extends Component{
   constructor(props){
@@ -12,12 +13,47 @@ class Bubble extends Component{
                   feedIsOpen: "hidden",
                   leaderIsOpen: "hidden",
                   friendsIsOpen: "hidden",
+                  unmergedImages: "hidden",
+                  mouseOutPin: false,
+                  mouseDown: false
                 }
+      this.checkPinStatus = this.checkPinStatus.bind(this);
+      this.mouseIsUp = this.mouseIsUp.bind(this);
+      this.mouseIsDown = this.mouseIsDown.bind(this);
+      this.mouseEnterPin = this.mouseEnterPin.bind(this);
+      this.mouseExitPin = this.mouseExitPin.bind(this);
       this.openPin = this.openPin.bind(this);
       this.openFeed = this.openFeed.bind(this);
       this.openLeader = this.openLeader.bind(this);
       this.openFriends = this.openFriends.bind(this);
     }
+  checkPinStatus(){
+    if(this.state.mouseDown === true && this.state.mouseOutPin === true && this.state.pinIsOpen === "hidden"){
+
+      console.log("pin set");
+      this.setState({mouseDown: false, mouseOutPin: false})
+    }
+  }
+  mouseIsUp(){
+    this.setState({mouseDown: false});
+    console.log("up");
+    this.checkPinStatus();
+  }
+  mouseIsDown(){
+    this.setState({mouseDown: true});
+    console.log("down");
+    this.checkPinStatus();
+  }
+  mouseEnterPin(){
+    this.setState({mouseOutPin: true});
+    console.log("in" + this.state.mouseOutPin);
+    this.checkPinStatus();
+  }
+  mouseExitPin(){
+    this.setState({mouseOutPin: false});
+    console.log("out" + this.state.mouseOutPin);
+    this.checkPinStatus();
+  }
   openPin(){
 
     if (this.state.pinIsOpen === "hidden"){
@@ -65,7 +101,9 @@ class Bubble extends Component{
   render(){
     return(
       <div>
-        <img id = "pin" src = {pin} alt = {"pin"} onClick = {this.openPin}/>
+        <img id = "emptypinicon" src = {emptypinicon} alt = {"empty pin"} style = {{visibility: this.state.unmergedImages}}/>
+        <img id = "pin" src = {pin} alt = {"pin"} draggable = "true"
+        onMouseEnter = {this.mouseEnterPin} onMouseLeave = {this.mouseExitPin} onMouseDown = {this.mouseIsDown} onMouseUp = {this.mouseIsUp} onClick = {this.openPin}/>
           <span style = {{visibility: this.state.pinIsOpen}}>
             <div className = "connector" id = "con1">
             </div>

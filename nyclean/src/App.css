@@ -150,6 +150,17 @@ border-style:solid;
   width: auto;
 }
 
+#emptypinicon{
+  position: absolute;
+  right:0;
+  top: 0;
+  margin-top: 75px;
+  margin-right: 25px;
+  height: 40px;
+  width: auto;
+  z-index:1;
+}
+
 #feed{
   position: absolute;
   right:0;
