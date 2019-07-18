@@ -3,10 +3,10 @@ import './App.css';
 import Header from './Universal/header'
 import firebase from './Firestore'
 
-class Edit extends Component {
+class EditPass extends Component {
   constructor(){
     super();
-    this.state = {userName:"", currentUser:""};
+    this.state = {Pass:"", currentUser:""};
   }
   componentWillMount(){
     firebase.auth().onAuthStateChanged(user => {
@@ -39,9 +39,9 @@ class Edit extends Component {
   }
   handleChange = (event) => {
       this.setState({
-        userName:event.target.value
+        Pass:event.target.value
       });
-      this.changeEmail("rtdrtd", this.state.userName)
+      this.changePassword("rtdrtd", this.state.Pass)
   }
   reauthenticate = (currentPassword) => {
   var user = firebase.auth().currentUser;
@@ -57,19 +57,11 @@ class Edit extends Component {
       }).catch((error) => { console.log(error); });
     }).catch((error) => { console.log(error); });
   }
-  changeEmail = (currentPassword, newEmail) => {
-    this.reauthenticate(currentPassword).then(() => {
-      var user = firebase.auth().currentUser;
-      user.updateEmail(newEmail).then(() => {
-        console.log("Email updated!");
-      }).catch((error) => { console.log(error); });
-    }).catch((error) => { console.log(error); });
-  }
   render(){
   return (
     <div class = "appText">
-    <Header />
-    <form class = "editUserBar" onSubmit={e=>{e.preventDefault();}}>New Username: <input type = "text" onChange = {this.handleChange} value = {this.state.userName}></input>
+    <Header /><br></br><br></br>
+    <form class = "editUserBar" onSubmit={e=>{e.preventDefault();}}>New Password: <input type = "text" onChange = {this.handleChange} value = {this.state.Pass}></input>
     <button type = "submit">Change</button>
     </form>
     </div>
@@ -77,4 +69,4 @@ class Edit extends Component {
   }
 }
 
-export default Edit;
+export default EditPass;

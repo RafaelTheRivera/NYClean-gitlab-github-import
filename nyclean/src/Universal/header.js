@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import './../App.css';
 import headergradient from './../images/headergradient.png';
 import firebase from './../Firestore';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
 class Header extends Component {
   constructor(){
@@ -76,22 +75,14 @@ class Header extends Component {
           <div className= "headerItem" id = "logo">
             <a href="./">NYCLEAN</a>
           </div>
-<<<<<<< HEAD
           <a href = "./profpage">
             <div class = "headerItem" id = "login">
               <span id="rogueText">My Profile</span>
-              <div id="profile">
+              <div>
                 <img alt="" id = "profilepic" src = /*should actually link to individual profiles*/"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"/>
               </div>
-=======
-          <a href = ".">
-            <div className= "headerItem" id = "login" style = {{width: this.state.profileWidth}}>
-              <span id="rogueText">{this.state.username}</span>
-              <img alt="" id = "profilepic" src = /*should actually link to individual profiles*/"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"/>
->>>>>>> f88963b6973f7baef56b9b11a537e32e79d62839
             </div>
-  
-          </a>
+            </a>
       </div>
     )
   }
