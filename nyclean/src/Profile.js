@@ -5,7 +5,7 @@ import './App.css';
 class Profile extends Component {
   constructor(){
     super();
-    this.state = {User:"Morgan_Freeman", Totaltrash:20};
+    this.state = {User:"username", Totaltrash:20};
   }
   render(){
   return (
@@ -22,7 +22,7 @@ class Profile extends Component {
     <img id = "profileimg" src = "https://m.media-amazon.com/images/M/MV5BMTc0MDMyMzI2OF5BMl5BanBnXkFtZTcwMzM2OTk1MQ@@._V1_UX214_CR0,0,214,317_AL_.jpg" alt = "Morgan"/>
     </div>
 
-    <h2 id = "username">username</h2>
+    <h2 id = "username">{this.state.User}</h2><a href = "/edit"><h6>Change User<br></br>Change Password</h6></a>
 
     <p id = "bio">This is my bio. I'm really cool and I like to pick up trash.
                   I have a dog named Dog and I like chocolate ice cream.</p>

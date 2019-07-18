@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Header from './Universal/header.js';
 import './App.css';
+import footergradient from './images/footergradient.png';
 
 
 import Bubble from './Universal/bubble.js';
@@ -65,6 +66,7 @@ class App extends Component {
 
           <footer>
          <button onClick = {this.signOut}>Sign Out</button>
+          
           <a href="./safety">Safety Information</a>
           </footer>
 

@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import firebase from './Firestore';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { Redirect } from 'react-router-dom'
+import Header from './Universal/header'
+import './App.css'
 
 const uiConfig = {
   signInFlow: 'popup' ,   //or can be redirect instead
@@ -72,15 +74,14 @@ class Login extends Component {
       return(
         <div>
         {this.renderRedirect()}
-        <p>loggedin</p>
-        <button onClick = {this.signOut}>Sign Out</button>
         </div>
       );
     }else {
       console.log('false')
       return(
         <div>
-          <h1>Please sign in</h1>
+        <Header />
+          <br></br><h1><center class = "normalText">Please Log In/Sign Up</center></h1>
           <StyledFirebaseAuth uiConfig = {uiConfig} firebaseAuth = {firebase.auth()}/>
         </div>
       );
