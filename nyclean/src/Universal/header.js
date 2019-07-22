@@ -75,8 +75,7 @@ class Header extends Component {
           </form>
           <div className= "headerItem" id = "logo">
             <a href = "/"> <img id = "greenyc" src = {greenyc} alt= "logo"/> </a>
-          </div>
-          <a href = "./profpage">
+          </div>          <a href = "./profpage">
             <div class = "headerItem" id = "login">
               <span id="rogueText">My Profile</span>
               <div>
@@ -94,7 +93,7 @@ class Header extends Component {
 
             </div>
 
-  
+
           </a>
       </div>
     )
