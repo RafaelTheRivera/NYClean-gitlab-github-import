@@ -128,8 +128,8 @@ class Bubble extends Component{
             <div className = "blocker" id = "blo3">
             </div>
             <div className = "bubble" id = "bub3">
-            Total count: 12,345 lbs <br />
-            <center>Weekly Leaderboard</center>
+            <center><p id = "totalcount">TOTAL COUNT</p> <p id = "livecount">12,345 lbs</p> <br />
+            Weekly Leaderboard</center>
             <ol>
               <li>user 123 lbs</li>
               <li>user 123 lbs</li>

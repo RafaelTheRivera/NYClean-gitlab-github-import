@@ -18,11 +18,8 @@
   top: 0;
   width:100%;
   height:90px;
-<<<<<<< HEAD
   z-index: -2;
-=======
   z-index:1;
->>>>>>> da4480adc9659a49cdb464927f41e08b330e417f
 }
 
 h1{
@@ -67,13 +64,23 @@ height: 35px;
 width: auto;
 }
 
-#footergradient{
+#safetytab{
+  height:300px;
+  width:250px;
+  border-color: black;
+  border-style:solid;
+  border-width:1px;
+  border-radius:10px;
   position: absolute;
   left: 0;
-  bottom: 0;
-  width:100%;
-  height:70px;
-  z-index: -1;
+right: 0;
+margin: auto;
+  background-color:white;
+  z-index:1;
+}
+
+#safety{
+  z-index: 2;
 }
 
 #logo{
@@ -86,11 +93,8 @@ height: 50px;
 font-family: helvetica;
 font-weight: bold;
 font-style: italic;
-<<<<<<< HEAD
 top: 0;
-=======
 z-index:2;
->>>>>>> da4480adc9659a49cdb464927f41e08b330e417f
 }
 
 #login{
@@ -100,11 +104,8 @@ right:10px;
 border-radius:10px;
 height:40px;
 margin-top:5px;
-<<<<<<< HEAD
 top: 0;
-=======
 z-index:2;
->>>>>>> da4480adc9659a49cdb464927f41e08b330e417f
 }
 
 #rogueText{
@@ -254,6 +255,7 @@ footer {
  width: 100%;
  padding-bottom: 10px;
  padding-top: 10px;
+ z-index: 3;
 }
 .connector{
   height:40px;
@@ -313,12 +315,19 @@ footer {
 }
 #bub1{
   top:75px;
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 #bub2{
   top:140px;
 }
 #bub3{
   top:205px;
+  padding-top: 20px;
+  padding-left:15px;
+  padding-right: 15px;
+
 }
 #bub4{
   top:375px;
@@ -329,7 +338,7 @@ footer {
   right:0;
   top: 0;
   margin-right: 25px;
-  margin-top: 10px;
+  margin-top: 17px;
   height: 15px;
   width: auto;
 }
@@ -379,4 +388,14 @@ footer {
 #safetycontent{
   margin-left: 100px;
   margin-right: 100px;
+}
+
+#livecount{
+  font-size: 30px;
+  margin-top: 0px;
+}
+
+#totalcount{
+  font-size: 10px;
+  margin-bottom: 0px;
 }

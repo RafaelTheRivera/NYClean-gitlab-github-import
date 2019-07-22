@@ -11,7 +11,7 @@ class Safety extends Component {
     return(
       <div>
         <Header />
-      
+
         <center><h1>Safety Information</h1></center>
 
         <div id = "safetycontent">

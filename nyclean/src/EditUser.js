@@ -3,10 +3,10 @@ import './App.css';
 import Header from './Universal/header'
 import firebase from './Firestore'
 
-class Edit extends Component {
+class EditUser extends Component {
   constructor(){
     super();
-    this.state = {userName:"", currentUser:""};
+    this.state = {userName:"", currentUser:null};
   }
   componentWillMount(){
     firebase.auth().onAuthStateChanged(user => {
@@ -41,40 +41,32 @@ class Edit extends Component {
       this.setState({
         userName:event.target.value
       });
-      this.changeEmail("rtdrtd", this.state.userName)
+      this.changeEmail(this.state.userName)
   }
-  reauthenticate = (currentPassword) => {
-  var user = firebase.auth().currentUser;
-  var cred = firebase.auth.EmailAuthProvider.credential(
-      user.email, currentPassword);
-  return user.reauthenticateWithCredential(cred);
-  }
-  changePassword = (currentPassword, newPassword) => {
-    this.reauthenticate(currentPassword).then(() => {
-      var user = firebase.auth().currentUser;
-      user.updatePassword(newPassword).then(() => {
-        console.log("Password updated!");
-      }).catch((error) => { console.log(error); });
-    }).catch((error) => { console.log(error); });
-  }
-  changeEmail = (currentPassword, newEmail) => {
-    this.reauthenticate(currentPassword).then(() => {
-      var user = firebase.auth().currentUser;
+
+  changeEmail = (newEmail) => {
+    const user = firebase.auth().currentUser;
+    const credential = firebase.auth.EmailAuthProvider.credential(
+        user.email,
+        'rtdrtd'
+    );
+    user.reauthenticate(credential).then(() => {
       user.updateEmail(newEmail).then(() => {
         console.log("Email updated!");
       }).catch((error) => { console.log(error); });
     }).catch((error) => { console.log(error); });
+
   }
   render(){
   return (
     <div class = "appText">
-    <Header />
-    <form class = "editUserBar" onSubmit={e=>{e.preventDefault();}}>New Username: <input type = "text" onChange = {this.handleChange} value = {this.state.userName}></input>
+    <Header /><br></br><br></br>
+    <center><form class = "editUserBar" onSubmit={e=>{e.preventDefault();}}>New Username: <input type = "text" onChange = {this.handleChange} value = {this.state.userName}></input>
     <button type = "submit">Change</button>
-    </form>
+    </form></center>
     </div>
   );
   }
 }
 
-export default Edit;
+export default EditUser;
