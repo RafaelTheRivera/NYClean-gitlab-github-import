@@ -62,7 +62,7 @@ class Bubble extends Component{
   }
   mouseDown(e){
     this.setState({mouseDown: 1});
-    this.setState({x: e.screenX - 7, y: e.screenY - 95});
+    this.setState({x: e.screenX - 7, y: e.screenY - 96});
     console.log(this.state.mouseDown);
     if (this.state.mouseLeavePin === false ){
       this.setState({dragEvent: true, unmergedImages: "visible"});
@@ -80,7 +80,7 @@ class Bubble extends Component{
     }else if (this.state.dragEvent === false){
       this.setState({dragEvent: false, unmergedImages: "hidden"});
       console.log("dragEvent = " + this.state.dragEvent);
-    }else{
+    }else if (this.state.mouseLeavePin === false){
       this.openPin();
       this.setState({dragEvent: false, unmergedImages: "hidden"});
       console.log("dragEvent = " + this.state.dragEvent);
@@ -141,8 +141,8 @@ class Bubble extends Component{
   render(){
     return(
       <div>
-        <img id = "emptypin" src = {emptypin} draggable = "false" alt = {"solo pin"} onMouseLeave = {this.mouseExitPin} onMouseOver = {this.mouseEnterPin} style = {{visibility: this.state.unmergedImages, top: this.state.y, left: this.state.x}}/>
-        <img id = "emptypinicon" src = {emptypinicon} draggable = "false" alt = {"empty pin"} onMouseLeave = {this.mouseExitPin} onMouseOver = {this.mouseEnterPin} style = {{visibility: this.state.unmergedImages}}/>
+        <img id = "emptypin" src = {emptypin} draggable = "false" alt = {"solo pin"} style = {{visibility: this.state.unmergedImages, top: this.state.y, left: this.state.x}}/>
+        <img id = "emptypinicon" src = {emptypinicon} draggable = "false" onMouseLeave = {this.mouseExitPin} onMouseOver = {this.mouseEnterPin} alt = {"empty pin"} style = {{visibility: this.state.unmergedImages}}/>
         <img id = "pin" src = {pin} alt = {"pin"} draggable = "false" onMouseLeave = {this.mouseExitPin} onMouseOver = {this.mouseEnterPin}/>
           <span style = {{visibility: this.state.pinIsOpen}}>
             <div className = "connector" id = "con1">
