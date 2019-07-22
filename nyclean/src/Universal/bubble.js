@@ -15,13 +15,11 @@ class Bubble extends Component{
                   leaderIsOpen: "hidden",
                   friendsIsOpen: "hidden",
                   unmergedImages: "hidden",
-                  mouseOutPin: false,
-                  mouseDown: false
+                  mouseLeavePin: false,
+                  mouseUp: true
                 }
       this.checkPinStatus = this.checkPinStatus.bind(this);
-      this.mouseIsUp = this.mouseIsUp.bind(this);
       this.mouseIsDown = this.mouseIsDown.bind(this);
-      this.mouseEnterPin = this.mouseEnterPin.bind(this);
       this.mouseExitPin = this.mouseExitPin.bind(this);
       this.openPin = this.openPin.bind(this);
       this.openFeed = this.openFeed.bind(this);
@@ -29,34 +27,31 @@ class Bubble extends Component{
       this.openFriends = this.openFriends.bind(this);
     }
   checkPinStatus(){
-    if(this.state.mouseDown === true && this.state.mouseOutPin === true && this.state.pinIsOpen === "hidden"){
+    if(this.state.mouseUp === true && this.state.mouseLeavePin === true && this.state.pinIsOpen === "hidden"){
 
       console.log("pin set");
-      this.setState({mouseDown: false, mouseOutPin: false})
+      this.setState({mouseUp: true, mouseLeavePin: false})
     }
   }
-  mouseIsUp(){
-    this.setState({mouseDown: false});
+  mouseIsDown(){
+    this.setState({mouseUp: false});
+    setTimeout(function () {
+      this.setState({mouseUp: true});
+      console.log("yes");
+    }.bind(this), 400);
     console.log("up");
     this.checkPinStatus();
   }
-  mouseIsDown(){
-    this.setState({mouseDown: true});
-    console.log("down");
-    this.checkPinStatus();
-  }
-  mouseEnterPin(){
-    this.setState({mouseOutPin: true});
-    console.log("in" + this.state.mouseOutPin);
-    this.checkPinStatus();
-  }
   mouseExitPin(){
-    this.setState({mouseOutPin: false});
-    console.log("out" + this.state.mouseOutPin);
+    this.setState({mouseLeavePin: true});
+    setTimeout(function () {
+      this.setState({mouseLeavePin: false});
+      console.log("no");
+    }.bind(this), 400);
+    console.log("out" + this.state.mouseLeavePin);
     this.checkPinStatus();
   }
   openPin(){
-
     if (this.state.pinIsOpen === "hidden"){
       this.setState({pinIsOpen: "visible",
                     feedIsOpen: "hidden",
@@ -103,8 +98,7 @@ class Bubble extends Component{
     return(
       <div>
         <img id = "emptypinicon" src = {emptypinicon} alt = {"empty pin"} style = {{visibility: this.state.unmergedImages}}/>
-        <img id = "pin" src = {pin} alt = {"pin"} draggable = "true"
-        onMouseEnter = {this.mouseEnterPin} onMouseLeave = {this.mouseExitPin} onMouseDown = {this.mouseIsDown} onMouseUp = {this.mouseIsUp} onClick = {this.openPin}/>
+        <img id = "pin" src = {pin} alt = {"pin"} draggable = "true" onMouseLeave = {this.mouseExitPin} onMouseDown = {this.mouseIsDown} onClick = {this.openPin}/>
           <span style = {{visibility: this.state.pinIsOpen}}>
             <div className = "connector" id = "con1">
             </div>

@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import Header from './Universal/header.js';
 import './App.css';
 import footergradient from './images/footergradient.png';
-
-
+import Map from './Universal/map.js'
 import Bubble from './Universal/bubble.js';
 import { Redirect } from 'react-router-dom';
 import firebase from './Firestore';
@@ -20,7 +19,7 @@ class App extends Component {
     });
   });
   componentWillMount(){
-
+ 
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({
@@ -63,11 +62,17 @@ class App extends Component {
           <Bubble />
 
           <div id="rectangle"></div>
-
+          <Map />
           <footer>
+<<<<<<< HEAD
+         <button onClick = {this.signOut}>Sign Out</button>
+
+          <a href="./safety">Safety Information</a>
+=======
             <img id = "footergradient" src = {footergradient} alt = {"footergradient"}/>
             <button onClick = {this.signOut}>Sign Out</button>
             <a id = "safety" href="./safety">Safety Information</a>
+>>>>>>> 7c3ed9cc342e9b432ff11989de41e0c9ddb30bb5
           </footer>
 
 

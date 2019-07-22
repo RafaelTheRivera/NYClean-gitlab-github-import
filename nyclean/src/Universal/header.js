@@ -77,11 +77,15 @@ class Header extends Component {
           <div className= "headerItem" id = "logo">
             <a href = "/"> <img id = "greenyc" src = {greenyc} alt= "logo"/> </a>
           </div>
+<<<<<<< HEAD
 
           <a href = "./profpage">
 
           <a href = "./profPage">
 
+=======
+          <a href = "./profPage">
+>>>>>>> da4480adc9659a49cdb464927f41e08b330e417f
             <div className= "headerItem" id = "login" style = {{width: this.state.profileWidth}}>
               <span id="rogueText">{this.state.username}</span>
               <img alt="" id = "profilepic" src = /*should actually link to individual profiles*/"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"/>
