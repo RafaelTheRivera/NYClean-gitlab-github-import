@@ -15,7 +15,7 @@ class Map extends Component{
     this.map = L.map('map', {
       center: [40.7280822, -73.9937973],
       zoom: 17,
-      minZoom:11,
+      minZoom:10,
       maxBounds: this.bounds,
       layers: [
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {

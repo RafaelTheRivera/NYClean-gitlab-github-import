@@ -21,15 +21,6 @@ class App extends Component {
 
   componentWillMount(){
     document.body.style.overflow = "hidden";
-    var mouseDown = 0;
-    document.body.onmousedown = function() {
-      ++mouseDown;
-      console.log(mouseDown);
-    }
-    document.body.onmouseup = function() {
-      --mouseDown;
-      console.log(mouseDown);
-    }
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({

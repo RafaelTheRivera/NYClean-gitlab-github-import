@@ -1,4 +1,8 @@
-
+.signOut {
+  position:absolute;
+  left: 1135px;
+  top: 5px;
+}
 .linkText {
   font-family: Helvetica, Sans-serif;
   color: #1000A4;
@@ -15,8 +19,10 @@
 }
 #bigHeader{
   position: absolute;
+  top: 0;
   width:100%;
   height:90px;
+  z-index: -2;
   z-index:1;
 }
 
@@ -53,8 +59,8 @@ height:40px;
 
 #search{
 width: 25%;
-background-color:transparent;
-z-index:1;
+background-color: transparent;
+top: 0;
 }
 
 #greenyc {
@@ -62,13 +68,23 @@ height: 35px;
 width: auto;
 }
 
-#footergradient{
+#safetytab{
+  height:300px;
+  width:250px;
+  border-color: black;
+  border-style:solid;
+  border-width:1px;
+  border-radius:10px;
   position: absolute;
   left: 0;
-  bottom: 0;
-  width:100%;
-  height:70px;
-  z-index: -1;
+right: 0;
+margin: auto;
+  background-color:white;
+  z-index:1;
+}
+
+#safety{
+  z-index: 2;
 }
 
 #logo{
@@ -81,13 +97,25 @@ height: 50px;
 font-family: helvetica;
 font-weight: bold;
 font-style: italic;
+top: 0;
 z-index:2;
 }
+
 #login{
 width:130px;
 padding-left:10px;
 right:10px;
 border-radius:10px;
+height:40px;
+margin-top:5px;
+top: 0;
+z-index:2;
+}
+
+#login2{
+width:130px;
+padding-left:10px;
+right:10px;
 height:40px;
 margin-top:5px;
 z-index:2;
@@ -99,17 +127,19 @@ font-size:1em;
 padding-left: 0px;
 white-space:nowrap;
 }
+
 #login:hover{
 background-color: #aaffaa;
 }
+
 #sneaky{
   position:absolute;
   height:40px;
   width:300px;
   margin-left:0px;
-  margin-top:0px;
+  top: 0;
   background-color: white;
-  z-index:2;
+  z-index:-1;
 }
 #submit{
 width:30px;
@@ -118,13 +148,13 @@ margin-top:0px;
 padding-top:0px;
 margin-left:230px;
 position:absolute;
-background-color:#99dd99;
+background-color:#28BBB4;
 border-style:none;
 border-radius:100%;
 }
 #box{
 height:25px;
-background-color:#ddeedd;
+background-color:#DAF2F2;
 border-style:none;
 font-size:1em;
 width:190px;
@@ -254,7 +284,7 @@ footer {
   right:45px;
   border-top-style:solid;
   border-bottom-style:solid;
-  border-color:#f25822;
+  border-color:#black;
   border-width:2px;
   z-index:1;
 }
@@ -293,7 +323,7 @@ footer {
 .bubble{
   height:300px;
   width:250px;
-  border-color:#f25822;
+  border-color: black;
   border-style:solid;
   border-width:2px;
   border-radius:10px;
@@ -304,12 +334,19 @@ footer {
 }
 #bub1{
   top:75px;
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 #bub2{
   top:140px;
 }
 #bub3{
   top:205px;
+  padding-top: 20px;
+  padding-left:15px;
+  padding-right: 15px;
+
 }
 #bub4{
   top:375px;
@@ -320,7 +357,7 @@ footer {
   right:0;
   top: 0;
   margin-right: 25px;
-  margin-top: 10px;
+  margin-top: 17px;
   height: 15px;
   width: auto;
 }
@@ -370,4 +407,14 @@ footer {
 #safetycontent{
   margin-left: 100px;
   margin-right: 100px;
+}
+
+#livecount{
+  font-size: 30px;
+  margin-top: 0px;
+}
+
+#totalcount{
+  font-size: 10px;
+  margin-bottom: 0px;
 }
