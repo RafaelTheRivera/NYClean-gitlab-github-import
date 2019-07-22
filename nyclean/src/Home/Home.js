@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import Header from './Universal/header.js';
-import './App.css';
+import './Home.css';
 
-class App extends Component {
+class Home extends Component {
   constructor(){
     super();
     this.state = {};
@@ -10,9 +9,11 @@ class App extends Component {
   render(){
     return(
       <div>
-        <Header />
+        <header></header>
+        <body>
         <div id="rectangle"></div>
         <div id="circle"></div>
+        </body>
         <footer>
         <a href="./second">Safety Information</a>
         </footer>
@@ -21,4 +22,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Home;
