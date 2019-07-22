@@ -187,7 +187,14 @@ border-style:solid;
   width: auto;
   z-index:3;
 }
-
+#emptypin{
+  position:absolute;
+  top:84px;
+  right:37.5px;
+  height:24px;
+  width: auto;
+  z-index:4;
+}
 #feed{
   position: absolute;
   right:0;
