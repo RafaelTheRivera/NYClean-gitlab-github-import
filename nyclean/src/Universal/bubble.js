@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import './../App.css';
-import pin from './../images/pinicon.png';
-import feed from './../images/feedicon.png';
-import leader from './../images/leadericon.png';
-import friends from './../images/friendsicon.png';
+import pin from './../images/pinicon1.png';
+import feed from './../images/feedicon1.png';
+import leader from './../images/leadericon1.png';
+import friends from './../images/friendsicon1.png';
 import emptypinicon from './../images/emptypinicon.png';
 import add from './../images/add.png';
 
@@ -25,7 +25,27 @@ class Bubble extends Component{
       this.openFeed = this.openFeed.bind(this);
       this.openLeader = this.openLeader.bind(this);
       this.openFriends = this.openFriends.bind(this);
+      this.updateDimensions = this.updateDimensions.bind(this);
     }
+
+  componentDidMount(){
+    window.addEventListener("resize", this.updateDimensions);
+  }
+  componentWillMount(){
+    this.updateDimensions();
+  }
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions);
+  }
+  updateDimensions() {
+   var w = window;
+   var d = document;
+   var documentElement = d.documentElement;
+   var body = d.getElementsByTagName('body')[0];
+   var height = w.innerHeight|| documentElement.clientHeight|| body.clientHeight;
+   this.setState({height: height});
+   console.log(this.state.height);
+ }
   checkPinStatus(){
     if(this.state.mouseUp === true && this.state.mouseLeavePin === true && this.state.pinIsOpen === "hidden"){
 
@@ -128,8 +148,8 @@ class Bubble extends Component{
             <div className = "blocker" id = "blo3">
             </div>
             <div className = "bubble" id = "bub3">
-            Total count: 12,345 lbs <br />
-            <center>Weekly Leaderboard</center>
+            <center><p id = "totalcount">TOTAL COUNT</p> <p id = "livecount">12,345 lbs</p> <br />
+            Weekly Leaderboard</center>
             <ol>
               <li>user 123 lbs</li>
               <li>user 123 lbs</li>
@@ -140,13 +160,13 @@ class Bubble extends Component{
 
             </div>
           </span>
-        <img id = "friends" src = {friends} alt = {"friends"} onClick = {this.openFriends}/>
+        <img id = "friends" src = {friends} alt = {"friends"} onClick = {this.openFriends}  style = {{"margin-top": this.state.height - 119}}/>
           <span style = {{visibility: this.state.friendsIsOpen}}>
-            <div className = "connector" id = "con4">
+            <div className = "connector" id = "con4" style = {{top: this.state.height - 119}}>
             </div>
-            <div className = "blocker" id = "blo4">
+            <div className = "blocker" id = "blo4" style = {{top: this.state.height - 116.5}}>
             </div>
-            <div className = "bubble" id = "bub4">
+            <div className = "bubble" id = "bub4" style = {{top: this.state.height - 379}}>
             </div>
           </span>
       </div>

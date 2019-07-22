@@ -18,8 +18,21 @@ class App extends Component {
       currentUser: null
     });
   });
-  componentWillMount(){
 
+  componentWillMount(){
+<<<<<<< HEAD
+
+=======
+<<<<<<< HEAD
+
+=======
+<<<<<<< HEAD
+
+=======
+    document.body.style.overflow = "hidden";
+>>>>>>> e0d9b67d5882adfff29a42245f9c525b9fa3e2a6
+>>>>>>> c0d69099b2b033901bf3d7f828c40f77f36a990a
+>>>>>>> 0b4b3a7ac94e62ae1142c5f5833ff7bf81148626
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({
@@ -55,7 +68,8 @@ class App extends Component {
   render(){
     if (this.state.signedIn){
       return(
-        <div>
+
+        <div style = {{overflow: "hidden"}}>
 
           <Header />
 
@@ -64,9 +78,15 @@ class App extends Component {
           <div id="rectangle"></div>
           <Map />
           <footer>
+<<<<<<< HEAD
             <img id = "footergradient" src = {footergradient} alt = {"footergradient"}/>
             <button onClick = {this.signOut}>Sign Out</button>
             <a class = "linkText" id = "safety" href="./safety">Safety Information</a>
+=======
+            <div id = "safetytab"></div>
+            <button onClick = {this.signOut}>Sign Out</button>
+            <a id = "safety" href="./safety">Safety Information</a>
+>>>>>>> 0b4b3a7ac94e62ae1142c5f5833ff7bf81148626
           </footer>
 
 
