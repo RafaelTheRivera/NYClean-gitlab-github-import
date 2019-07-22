@@ -20,11 +20,7 @@ class App extends Component {
   });
 
   componentWillMount(){
-
     document.body.style.overflow = "hidden";
-
-    document.body.style.overflow = "hidden";
-
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({
@@ -72,11 +68,17 @@ class App extends Component {
           <div id="rectangle"></div>
           <Map />
           <footer>
+<<<<<<< HEAD
+         <button onClick = {this.signOut}>Sign Out</button>
+
+          <a href="./safety">Safety Information</a>
+=======
 
             <div id = "safetytab"></div>
             <button onClick = {this.signOut}>Sign Out</button>
             <a id = "safety" href="./safety">Safety Information</a>
 
+>>>>>>> 58e8b5166a788f6edc59ac733a0129b87fa5b54a
           </footer>
 
 

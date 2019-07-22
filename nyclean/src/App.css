@@ -141,7 +141,10 @@ height:40px;
 margin-top:5px;
 z-index:2;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3163a9100b083cf3c956d8fe979c3d3ba9a69a5c
 #rogueText{
 margin-top:-3px;
 position:absolute;
@@ -239,7 +242,14 @@ border-style:solid;
   width: auto;
   z-index:3;
 }
-
+#emptypin{
+  position:absolute;
+  top:84px;
+  right:37.5px;
+  height:24px;
+  width: auto;
+  z-index:4;
+}
 #feed{
   position: absolute;
   right:0;
