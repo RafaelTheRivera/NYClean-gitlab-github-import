@@ -18,8 +18,13 @@ class App extends Component {
       currentUser: null
     });
   });
-  componentWillMount(){
 
+  componentWillMount(){
+<<<<<<< HEAD
+
+=======
+    document.body.style.overflow = "hidden";
+>>>>>>> e0d9b67d5882adfff29a42245f9c525b9fa3e2a6
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({
@@ -55,7 +60,8 @@ class App extends Component {
   render(){
     if (this.state.signedIn){
       return(
-        <div>
+
+        <div style = {{overflow: "hidden"}}>
 
           <Header />
 
@@ -64,6 +70,7 @@ class App extends Component {
           <div id="rectangle"></div>
           <Map />
           <footer>
+<<<<<<< HEAD
 
          <button onClick = {this.signOut}>Sign Out</button>
 
@@ -73,6 +80,11 @@ class App extends Component {
             <button onClick = {this.signOut}>Sign Out</button>
             <a id = "safety" href="./safety">Safety Information</a>
 
+=======
+         <button onClick = {this.signOut}>Sign Out</button>
+
+          <a href="./safety">Safety Information</a>
+>>>>>>> e0d9b67d5882adfff29a42245f9c525b9fa3e2a6
           </footer>
 
 
