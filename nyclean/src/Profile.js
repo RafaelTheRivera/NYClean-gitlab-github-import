@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Header from './Universal/header';
 import './App.css';
+import back from './images/back.png';
+import greenyclogo from './images/greenyclogo.png';
 
 class Profile extends Component {
   constructor(){
@@ -24,11 +26,11 @@ class Profile extends Component {
   render(){
   return (
     <div class = "appText">
-    <Header/>
 
-    <header>
-    <a href=".">BACK</a>
-    </header>
+    <a href = "/"> <img id = "back" src = {back} alt= "back"/>
+    <img id = "greenyclogo" src = {greenyclogo} alt= "logo"/>
+    </a>
+
 
     <center><h1>My Profile</h1></center>
 
