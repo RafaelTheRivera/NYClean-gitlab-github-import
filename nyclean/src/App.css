@@ -1,76 +1,198 @@
+.signOut {
+  position:absolute;
+  left: 1135px;
+  top: 5px;
+}
+.linkText {
+  font-family: Helvetica, Sans-serif;
+  color: #1000A4;
+  font-size: 100%;
+  letter-spacing: 1px;
+  word-spacing: 2px;
+}
+.normalText{
+  font-family: Helvetica, sans-serif;
+  font-size: 100%;
+  letter-spacing: 1px;
+  word-spacing: 2px;
+  color: #000000;
+}
+#bigHeader{
+  position: absolute;
+  top: 0;
+  width:100%;
+  height:90px;
+  z-index: -2;
+  z-index:1;
+}
+
+body{
+  background-color: white;
+}
+
 a{
   color:black;
   text-decoration:none;
 }
-#bigHeader{
-  height: 50px;
-  width: 100%;
-  background-color: #bbeebb;
+a:hover{
+  color:black;
+  text-decoration:none;
 }
 .headerItem{
 margin-top: -1px;
 padding-top: 10px;
 position: absolute;
 height: 40px;
-background-color: #bbeebb;
-transition-duration: 400ms;
 }
+
+p{
+  font-family: 'Roboto', sans-serif;
+}
+
+.editUserBar{
+margin-top: -1px;
+padding-top:10px;
+position:absolute;
+height:40px;
+
+}
+
 #search{
 width: 25%;
+background-color: transparent;
+top: 0;
 }
+
+#greenyc {
+height: 33px;
+width: auto;
+}
+
+#safetytab{
+  height:50px;
+  width:250px;
+  border-color: black;
+  border-style:solid;
+  border-width:1px;
+  border-top-left-radius:10px;
+  border-top-right-radius:10px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  background-color:white;
+  z-index:-1;
+}
+
+#safety{
+  z-index: 3;
+}
+
+#back{
+  height: 25px;
+  width: auto;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+#greenyclogo{
+  height: 40px;
+  width: auto;
+  margin-top: 20px;
+  margin-left: 5px;
+}
+
+#pindeco{
+  height: 30px;
+  width: auto;
+  margin-right: 7px;
+  margin-bottom: 10px;
+}
+
 #logo{
 margin-left: 25%;
 width: 50%;
 text-align: center;
-font-size: 2.2em;
-padding-top: 5px;
-height: 45px;
+padding-top: 8px;
+height: 50px;
 font-family: helvetica;
 font-weight: bold;
+font-style: italic;
+top: 0;
+z-index:2;
 }
+
 #login{
-margin-right: 10px;
-font-size:1em;
-position:relative;
-float:right;
-width: 10%;
-border-radius: 5px;
-height: 35px;
-margin-top:2px;
-padding-left: 10px;
-white-space:nowrap;
-overflow:hidden;
+width:130px;
+padding-left:10px;
+right:10px;
+border-radius:10px;
+height:40px;
+margin-top:5px;
+top: 0;
+z-index:2;
 }
+
+#login2{
+width:130px;
+padding-left:10px;
+right:10px;
+height:40px;
+margin-top:5px;
+z-index:2;
+}
+<<<<<<< HEAD
+
+=======
+>>>>>>> 3163a9100b083cf3c956d8fe979c3d3ba9a69a5c
+#rogueText{
+margin-top:-3px;
+position:absolute;
+font-size:1em;
+padding-left: 0px;
+white-space:nowrap;
+}
+
 #login:hover{
 background-color: #aaffaa;
 }
+
+#sneaky{
+  position:absolute;
+  height:40px;
+  width:300px;
+  margin-left:0px;
+  top: 0;
+  background-color: white;
+  z-index:-1;
+}
 #submit{
-  width: 30px;
-  height: 30px;
-  margin-top: 0px;
-  padding-top: 0px;
-  margin-left: 58%;
-  position: absolute;
-  background-color: #99dd99;
-  border-style: none;
-  border-radius: 100%;
+width:30px;
+height:30px;
+margin-top:0px;
+padding-top:0px;
+margin-left:230px;
+position:absolute;
+background-color:#28BBB4;
+border-style:none;
+border-radius:100%;
 }
 #box{
-  height: 20px;
-  background-color: #ddeedd;
-  border-style: none;
-  font-size: 1em;
-  width: 46%;
-  margin-top: 4px;
-  margin-left: 10%;
-  position: absolute;
-  border-radius: 5px;
-  border-width: 1px;
-  border-color: black;
-  border-style: solid;
+height:25px;
+background-color:#DAF2F2;
+border-style:none;
+font-size:1em;
+width:190px;
+margin-top: 4px;
+margin-left:15px;
+position:absolute;
+border-radius:5px;
+border-width:1px;
+border-color:black;
+border-style:solid;
 }
 #magnifying{
-  margin-top: 5px;
+  margin-top: -5px;
   height: 60%;
   width: 100%;
 }
@@ -80,34 +202,95 @@ background-color: #aaffaa;
   background-color: black;
   border-radius: 100%;
   position:absolute;
-  right:0px;
-  top:8px;
-  margin-right: 10%;
-}
-#profilepic{
-  height:100%;
-  width:100%;
-  border-radius:100%;
+  right:10px;
+  top:5px;
 }
 
 #rectangle{
-    width:200px;
-    height:680px;
-    background:lightgray;
+    width:225px;
+    height:700px;
+    background:white;
+    visibility: hidden;
 }
 
-#circle{
+#pin{
   position: absolute;
   right:0;
   top: 0;
   margin-top: 75px;
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-  border: none;
-  background-color: lightgray;
+  margin-right: 25px;
+  height: 40px;
+  width: auto;
+  z-index:2;
+}
+#map{
+  height:1000px;
+  width: 100%;
+  position:absolute;
+  top:40px;
+  left:0px;
+  z-index:0;
+  filter: grayscale(100%);
+}
+#emptypinicon{
+  position: absolute;
+  right:0;
+  top: 0;
+  margin-top: 75px;
+  margin-right: 25px;
+  height: 40px;
+  width: auto;
+  z-index:3;
+}
+#emptypin{
+  position:absolute;
+  top:84px;
+  right:37.5px;
+  height:24px;
+  width: auto;
+  z-index:4;
+}
+#feed{
+  position: absolute;
+  right:0;
+  top: 0;
+  margin-top: 140px;
+  margin-right: 25px;
+  height: 40px;
+  width: auto;
+  z-index:2;
 }
 
+#leader{
+  position: absolute;
+  right:0;
+  top: 0;
+  margin-top: 205px;
+  margin-right: 25px;
+  height: 40px;
+  width: auto;
+  z-index:2;
+}
+
+#friends{
+  position: absolute;
+  right:0;
+  top: 0;
+  margin-top: 635px;
+  margin-right: 25px;
+  height: 40px;
+  width: auto;
+  z-index:2;
+}
+
+#profilepic{
+  border-radius:100%;
+  height:30px;
+  width:30px;
+  position:absolute;
+  top:5px;
+  right:10px;
+}
 
 footer {
  position: absolute;
@@ -116,4 +299,147 @@ footer {
  width: 100%;
  padding-bottom: 10px;
  padding-top: 10px;
+ height:50px;
+}
+.connector{
+  height:40px;
+  width:50px;
+  background-color:white;
+  position:absolute;
+  right:45px;
+  border-top-style:solid;
+  border-bottom-style:solid;
+  border-color:#black;
+  border-width:2px;
+  z-index:1;
+}
+#con1{
+  top: 75px;
+}
+#con2{
+  top:140px;
+}
+#con3{
+  top:205px;
+}
+#con4{
+  top:635px;
+}
+.blocker{
+  height:35.5px;
+  width:20px;
+  background-color:white;
+  right:70px;
+  position:absolute;
+  z-index:3;
+}
+#blo1{
+  top:77.5px;
+}
+#blo2{
+  top: 142px;
+}
+#blo3{
+  top: 207px;
+}
+#blo4{
+  top: 637.5px;
+}
+.bubble{
+  height:300px;
+  width:250px;
+  border-color: black;
+  border-style:solid;
+  border-width:2px;
+  border-radius:10px;
+  position:absolute;
+  right:80px;
+  background-color:white;
+  z-index:1;
+}
+#bub1{
+  top:75px;
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+#bub2{
+  top:140px;
+}
+#bub3{
+  top:205px;
+  padding-top: 20px;
+  padding-left:15px;
+  padding-right: 15px;
+
+}
+#bub4{
+  top:375px;
+}
+
+#add{
+  position: absolute;
+  right:0;
+  top: 0;
+  margin-right: 25px;
+  margin-top: 17px;
+  height: 15px;
+  width: auto;
+}
+
+#insertimage{
+  width:200px;
+  height:200px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  background:gray;
+}
+
+#profilecircle {
+  margin-left: 100px;
+}
+
+#profileimg {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+
+  object-fit: cover;
+  object-position: center right;
+}
+
+#username {
+  position: absolute;
+  top: 0;
+  margin-top: 185px;
+  margin-left: 400px;
+}
+
+#bio {
+  position: absolute;
+  top: 0;
+  margin-top: 250px;
+  margin-left: 400px;
+  margin-right: 200px;
+
+}
+
+#profilepin {
+  margin-top: 50px;
+  margin-left: 150px;
+}
+
+#safetycontent{
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+#livecount{
+  font-size: 30px;
+  margin-top: 0px;
+}
+
+#totalcount{
+  font-size: 10px;
+  margin-bottom: 0px;
 }
