@@ -25,7 +25,6 @@ class Map extends Component{
     });
     window.addEventListener("resize", this.updateDimensions);
   }
-
   componentWillMount(){
       this.updateDimensions();
   }

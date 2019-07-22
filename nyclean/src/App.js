@@ -18,8 +18,9 @@ class App extends Component {
       currentUser: null
     });
   });
-  componentWillMount(){
 
+  componentWillMount(){
+    document.body.style.overflow = "hidden";
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({
@@ -55,8 +56,8 @@ class App extends Component {
   render(){
     if (this.state.signedIn){
       return(
-        
-        <div>
+
+        <div style = {{overflow: "hidden"}}>
 
           <Header />
 
