@@ -6,11 +6,11 @@ import firebase from './Firestore'
 class EditUser extends Component {
   constructor(){
     super();
-    this.state = {userName:"", currentUser:null};
+    this.state = {passWord:"", userName:"", currentUser:null};
   }
   componentWillMount(){
     firebase.auth().onAuthStateChanged(user => {
-      if (this.state.signedIn) {
+      if (user) {
         console.log('yes')
         this.setState({
           signedIn: true,
@@ -41,29 +41,44 @@ class EditUser extends Component {
       this.setState({
         userName:event.target.value
       });
-      this.changeEmail(this.state.userName)
   }
-
-  changeEmail = (newEmail) => {
+  handleChangePass = (event) => {
+      this.setState({
+        passWord:event.target.value
+      });
+  }
+  changeEmail = () => {
+    // e.preventDefault();
     const user = firebase.auth().currentUser;
+    console.log(user.displayName)
+    console.log(this.state.passWord);
     const credential = firebase.auth.EmailAuthProvider.credential(
         user.email,
-        'rtdrtd'
+        this.state.passWord
     );
-    user.reauthenticate(credential).then(() => {
-      user.updateEmail(newEmail).then(() => {
+    user.reauthenticateWithCredential(credential).then(() => {
+      user.updateEmail(this.state.userName).then(() => {
         console.log("Email updated!");
       }).catch((error) => { console.log(error); });
     }).catch((error) => { console.log(error); });
-
   }
   render(){
   return (
     <div class = "appText">
-    <Header /><br></br><br></br>
-    <center><form class = "editUserBar" onSubmit={e=>{e.preventDefault();}}>New Username: <input type = "text" onChange = {this.handleChange} value = {this.state.userName}></input>
-    <button type = "submit">Change</button>
-    </form></center>
+    <br></br><br></br>
+    <form class = "editUserBar" onSubmit={e=>e.preventDefault()}>
+    New Email:
+    <input type = "text"
+    onChange = {this.handleChange}
+    value = {this.state.userName}
+    />
+    Re-ender Current Password:
+    <input type = "text"
+    onChange = {this.handleChangePass}
+    value = {this.state.passWord}
+    />
+    <button onClick={this.changeEmail}>Change</button>
+    </form>
     </div>
   );
   }
