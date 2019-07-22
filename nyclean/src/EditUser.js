@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import './App.css';
-import Header from './Universal/header'
 import firebase from './Firestore'
 import back from './images/back.png';
 

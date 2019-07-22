@@ -7,6 +7,8 @@ import friends from './../images/friendsicon1.png';
 import emptypinicon from './../images/emptypinicon.png';
 import emptypin from './../images/pin.png';
 import add from './../images/add.png';
+import cover from './../images/cover.png';
+import Tabs from 'react-bootstrap/Tabs';
 
 class Bubble extends Component{
   constructor(props){
@@ -149,11 +151,10 @@ class Bubble extends Component{
             </div>
             <div className = "bubble" id = "bub1">
               Post by: paige
-              <img id = "add" src = {add} alt = "addposter"/>
               <center><div id="insertimage"></div></center>
               Insert caption here
-
             </div>
+            <img className = "cover" id = "cover1" src = {cover} alt = "cover"/>
           </span>
         <img id = "feed" src = {feed} alt = {"feed"} onClick = {this.openFeed}/>
           <span style = {{visibility: this.state.feedIsOpen}}>
@@ -163,7 +164,10 @@ class Bubble extends Component{
             </div>
             <div className = "bubble" id = "bub2">
             </div>
+            <img id = "add" src = {add} alt = "addposter"/>
+            <img className = "cover" id = "cover2" src = {cover} alt = "cover"/>
           </span>
+
         <img id = "leader" src = {leader} alt = {"leaderboard"} onClick = {this.openLeader}/>
           <span style = {{visibility: this.state.leaderIsOpen}}>
             <div className = "connector" id = "con3">
@@ -180,8 +184,8 @@ class Bubble extends Component{
               <li>user 123 lbs</li>
               <li>user 123 lbs</li>
             </ol>
-
             </div>
+            <img className = "cover" id = "cover3" src = {cover} alt = "cover"/>
           </span>
         <img id = "friends" src = {friends} alt = {"friends"} onClick = {this.openFriends}  style = {{marginTop: this.state.height - 119}}/>
           <span style = {{visibility: this.state.friendsIsOpen}}>
@@ -191,7 +195,9 @@ class Bubble extends Component{
             </div>
             <div className = "bubble" id = "bub4" style = {{top: this.state.height - 379}}>
             </div>
+            <img className = "cover" id = "cover4" src = {cover} alt = "cover"/>
           </span>
+
       </div>
     );
   }

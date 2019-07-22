@@ -4,6 +4,7 @@ import headergradient from './../images/headergradient.png';
 import greenyc from './../images/greenyc.png';
 import firebase from './../Firestore';
 
+
 class Header extends Component {
   constructor(){
     super();
@@ -58,8 +59,6 @@ class Header extends Component {
       <div>
         <img id = "bigHeader" src = {headergradient} alt = {"topgradient"}/>
           <form>
-            <div id = "sneaky" style = {{visibility: this.isAtHome()}}>
-            </div>
             <div className= "headerItem" id = "search">
               <input
                 type = "text"
@@ -79,7 +78,6 @@ class Header extends Component {
           <a href = "./profpage">
             <div className= "headerItem" id = "login" style = {{width: this.state.profileWidth}}>
               <span id="rogueText">{this.state.username}</span>
-              <img alt="" id = "profilepic" src = /*should actually link to individual profiles*/"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"/>
             </div>
 
           </a>
