@@ -5,7 +5,21 @@ import './App.css';
 class Profile extends Component {
   constructor(){
     super();
-    this.state = {User:"username", Totaltrash:20};
+    this.state = {User:"username",
+    Totaltrash:20,
+    imageSrc: "https://m.media-amazon.com/images/M/MV5BMTc0MDMyMzI2OF5BMl5BanBnXkFtZTcwMzM2OTk1MQ@@._V1_UX214_CR0,0,214,317_AL_.jpg",
+    imageInput: ''};
+  }
+  updateInput = e => {
+      this.setState({
+        imageInput: e.target.value
+      });
+    }
+  submitInput = e => {
+    e.preventDefault();
+    this.setState({
+      imageSrc: this.state.imageInput
+    })
   }
   render(){
   return (
@@ -19,7 +33,17 @@ class Profile extends Component {
     <center><h1>My Profile</h1></center>
 
     <div id="profilecircle">
-    <img id = "profileimg" src = "https://m.media-amazon.com/images/M/MV5BMTc0MDMyMzI2OF5BMl5BanBnXkFtZTcwMzM2OTk1MQ@@._V1_UX214_CR0,0,214,317_AL_.jpg" alt = "Morgan"/>
+    <img src = {this.state.imageSrc}/>
+          <form onSubmit = {this.submitInput}>
+          <input
+          type = "images"
+          name = "profilePic"
+          placeholder = "Image URL"
+          onChange = {this.updateInput}
+          value = {this.state.imageSrc}
+          />
+          <button type = "submit">Submit</button>
+          </form>
     </div>
 
     <h2 id = "username">{this.state.User}</h2><h6><a href = "/EditUser">Change User</a><br></br><a href = "/EditPass">Change Password</a></h6>
