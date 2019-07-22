@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 import Header from './Universal/header'
 import firebase from './Firestore'
+import back from './images/back.png';
 
 class EditUser extends Component {
   constructor(){
@@ -64,6 +65,8 @@ class EditUser extends Component {
   }
   render(){
   return (
+    <div>
+    <a href = "/profpage"> <img id = "back" src = {back} alt= "back"/></a>
     <div class = "appText">
     <br></br><br></br>
     <form class = "editUserBar" onSubmit={e=>e.preventDefault()}>
@@ -79,6 +82,7 @@ class EditUser extends Component {
     />
     <button onClick={this.changeEmail}>Change</button>
     </form>
+    </div>
     </div>
   );
   }

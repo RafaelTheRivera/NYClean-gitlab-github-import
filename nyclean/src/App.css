@@ -43,8 +43,12 @@ margin-top: -1px;
 padding-top: 10px;
 position: absolute;
 height: 40px;
-
 }
+
+p{
+  font-family: 'Roboto', sans-serif;
+}
+
 .editUserBar{
 margin-top: -1px;
 padding-top:10px;
@@ -137,6 +141,10 @@ height:40px;
 margin-top:5px;
 z-index:2;
 }
+<<<<<<< HEAD
+
+=======
+>>>>>>> 3163a9100b083cf3c956d8fe979c3d3ba9a69a5c
 #rogueText{
 margin-top:-3px;
 position:absolute;
