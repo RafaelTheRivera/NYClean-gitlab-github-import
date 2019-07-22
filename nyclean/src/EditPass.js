@@ -61,9 +61,9 @@ class EditPass extends Component {
   return (
     <div class = "appText">
     <Header /><br></br><br></br>
-    <form class = "editUserBar" onSubmit={e=>{e.preventDefault();}}>New Password: <input type = "text" onChange = {this.handleChange} value = {this.state.Pass}></input>
+    <center><form class = "editUserBar" onSubmit={e=>{e.preventDefault();}}>New Password: <input type = "text" onChange = {this.handleChange} value = {this.state.Pass}></input>
     <button type = "submit">Change</button>
-    </form>
+    </form></center>
     </div>
   );
   }
