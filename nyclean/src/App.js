@@ -19,7 +19,7 @@ class App extends Component {
     });
   });
   componentWillMount(){
- 
+
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({
@@ -55,6 +55,7 @@ class App extends Component {
   render(){
     if (this.state.signedIn){
       return(
+        
         <div>
 
           <Header />
@@ -64,15 +65,9 @@ class App extends Component {
           <div id="rectangle"></div>
           <Map />
           <footer>
-<<<<<<< HEAD
          <button onClick = {this.signOut}>Sign Out</button>
 
           <a href="./safety">Safety Information</a>
-=======
-            <img id = "footergradient" src = {footergradient} alt = {"footergradient"}/>
-            <button onClick = {this.signOut}>Sign Out</button>
-            <a id = "safety" href="./safety">Safety Information</a>
->>>>>>> 7c3ed9cc342e9b432ff11989de41e0c9ddb30bb5
           </footer>
 
 
