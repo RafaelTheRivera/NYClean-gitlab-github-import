@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 import Header from './Universal/header'
 import firebase from './Firestore'
+import back from './images/back.png';
 
 class EditPass extends Component {
   constructor(){
@@ -63,7 +64,9 @@ class EditPass extends Component {
   }
   render(){
   return (
+
     <div class = "appText">
+    <a href = "/profpage"> <img id = "back" src = {back} alt= "back"/></a>
     <br></br><br></br>
     <form class = "editUserBar" onSubmit={e=>e.preventDefault()}>
     New Password:

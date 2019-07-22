@@ -12,7 +12,8 @@ class Safety extends Component {
   render(){
     return(
       <div>
-        <a href = "/"> <img id = "back" src = {back} alt= "back"/> 
+        
+        <a href = "/"> <img id = "back" src = {back} alt= "back"/>
         <img id = "greenyclogo" src = {greenyclogo} alt= "logo"/>
         </a>
 
@@ -23,6 +24,7 @@ class Safety extends Component {
           <p>It can be dangerous to handle waste without taking important safety precautions. To avoid
           injuries and harmful chemicals, please follow the safety tips below.
           Happy cleaning! :-)</p>
+          <br />
           <br />
           <h3><img id = "pindeco" src = {pin} alt= "pin"/>Protect Yourself</h3>
           <ol>
@@ -36,6 +38,7 @@ class Safety extends Component {
             <li>Protect yourself from the sun with hats and sunscreen.</li>
             <li>Have a first aid kit.</li>
           </ol>
+          <br />
           <h3><img id = "pindeco" src = {pin} alt= "pin"/>Cleaning Safely</h3>
           <ol>
             <li>Always have an adult (18 or older) in the group.</li>
@@ -46,6 +49,7 @@ class Safety extends Component {
             <li>Use a box to carry sharp objects.</li>
             <li>Always wash hands after cleaning.</li>
           </ol>
+          <br />
           <h3><img id = "pindeco" src = {pin} alt= "pin"/>Watch Out!</h3>
           <ol>
             <li>Be aware of your surroundings in any vegetation.</li>
@@ -57,7 +61,8 @@ class Safety extends Component {
           </ol>
           <br />
           <br />
-          <center>In case of emergency, please </center>
+          <br />
+          <br />
         </div>
 
     </div>
