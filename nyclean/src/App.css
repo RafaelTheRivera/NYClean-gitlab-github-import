@@ -1,4 +1,8 @@
-
+.signOut {
+  position:absolute;
+  left: 1135px;
+  top: 5px;
+}
 .linkText {
   font-family: Helvetica, Sans-serif;
   color: #1000A4;
@@ -124,7 +128,18 @@ margin-top:5px;
 top: 0;
 z-index:2;
 }
+<<<<<<< HEAD
+#login2{
+width:130px;
+padding-left:10px;
+right:10px;
+height:40px;
+margin-top:5px;
+z-index:2;
+}
+=======
 
+>>>>>>> 0b4b3a7ac94e62ae1142c5f5833ff7bf81148626
 #rogueText{
 margin-top:-3px;
 position:absolute;

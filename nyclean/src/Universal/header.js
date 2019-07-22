@@ -75,6 +75,11 @@ class Header extends Component {
           </form>
           <div className= "headerItem" id = "logo">
             <a href = "/"> <img id = "greenyc" src = {greenyc} alt= "logo"/> </a>
+<<<<<<< HEAD
+          </div>
+          <a href = "./profpage">
+            </a>
+=======
           </div>          <a href = "./profpage">
             <div class = "headerItem" id = "login">
               <span id="rogueText">My Profile</span>
@@ -84,16 +89,19 @@ class Header extends Component {
             </div>
             </a>
 
+>>>>>>> 0b4b3a7ac94e62ae1142c5f5833ff7bf81148626
           <a href = "./profPage">
 
 
             <div className= "headerItem" id = "login" style = {{width: this.state.profileWidth}}>
               <span id="rogueText">{this.state.username}</span>
               <img alt="" id = "profilepic" src = /*should actually link to individual profiles*/"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"/>
-
             </div>
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> 0b4b3a7ac94e62ae1142c5f5833ff7bf81148626
           </a>
       </div>
     )

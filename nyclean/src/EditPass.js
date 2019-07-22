@@ -6,11 +6,11 @@ import firebase from './Firestore'
 class EditPass extends Component {
   constructor(){
     super();
-    this.state = {Pass:"", currentUser:""};
+    this.state = {passWord:"", newPass:"", currentUser:null};
   }
   componentWillMount(){
     firebase.auth().onAuthStateChanged(user => {
-      if (this.state.signedIn) {
+      if (user) {
         console.log('yes')
         this.setState({
           signedIn: true,
@@ -39,31 +39,45 @@ class EditPass extends Component {
   }
   handleChange = (event) => {
       this.setState({
-        Pass:event.target.value
+        newPass:event.target.value
       });
-      this.changePassword("rtdrtd", this.state.Pass)
   }
-  reauthenticate = (currentPassword) => {
-  var user = firebase.auth().currentUser;
-  var cred = firebase.auth.EmailAuthProvider.credential(
-      user.email, currentPassword);
-  return user.reauthenticateWithCredential(cred);
+  handleChangePass = (event) => {
+      this.setState({
+        passWord:event.target.value
+      });
   }
-  changePassword = (currentPassword, newPassword) => {
-    this.reauthenticate(currentPassword).then(() => {
-      var user = firebase.auth().currentUser;
-      user.updatePassword(newPassword).then(() => {
-        console.log("Password updated!");
+  changePass = () => {
+    // e.preventDefault();
+    const user = firebase.auth().currentUser;
+    console.log(this.state.passWord);
+    const credential = firebase.auth.EmailAuthProvider.credential(
+        user.email,
+        this.state.passWord
+    );
+    user.reauthenticateWithCredential(credential).then(() => {
+      user.updatePassword(this.state.newPass).then(() => {
+        console.log("Pass updated!");
       }).catch((error) => { console.log(error); });
     }).catch((error) => { console.log(error); });
   }
   render(){
   return (
     <div class = "appText">
-    <Header /><br></br><br></br>
-    <center><form class = "editUserBar" onSubmit={e=>{e.preventDefault();}}>New Password: <input type = "text" onChange = {this.handleChange} value = {this.state.Pass}></input>
-    <button type = "submit">Change</button>
-    </form></center>
+    <br></br><br></br>
+    <form class = "editUserBar" onSubmit={e=>e.preventDefault()}>
+    New Password:
+    <input type = "text"
+    onChange = {this.handleChange}
+    value = {this.state.newPass}
+    />
+    Re-ender Current Password:
+    <input type = "text"
+    onChange = {this.handleChangePass}
+    value = {this.state.passWord}
+    />
+    <button onClick={this.changePass}>Change</button>
+    </form>
     </div>
   );
   }
