@@ -76,6 +76,7 @@ class Header extends Component {
           <div className= "headerItem" id = "logo">
             <a href = "/"> <img id = "greenyc" src = {greenyc} alt= "logo"/> </a>
           </div>
+<<<<<<< HEAD
           <a href = "./profpage">
             <div class = "headerItem" id = "login">
               <span id="rogueText">My Profile</span>
@@ -84,6 +85,8 @@ class Header extends Component {
               </div>
             </div>
             </a>
+=======
+>>>>>>> da4480adc9659a49cdb464927f41e08b330e417f
           <a href = "./profPage">
             <div className= "headerItem" id = "login" style = {{width: this.state.profileWidth}}>
               <span id="rogueText">{this.state.username}</span>

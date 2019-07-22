@@ -17,7 +17,7 @@
   position: absolute;
   width:100%;
   height:90px;
-
+  z-index:1;
 }
 
 h1{
@@ -62,7 +62,14 @@ height: 35px;
 width: auto;
 }
 
-
+#footergradient{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width:100%;
+  height:70px;
+  z-index: -1;
+}
 
 #logo{
 margin-left: 25%;
@@ -74,6 +81,7 @@ height: 50px;
 font-family: helvetica;
 font-weight: bold;
 font-style: italic;
+z-index:2;
 }
 #login{
 width:130px;
@@ -82,6 +90,7 @@ right:10px;
 border-radius:10px;
 height:40px;
 margin-top:5px;
+z-index:2;
 }
 #rogueText{
 margin-top:-3px;
@@ -146,6 +155,7 @@ border-style:solid;
     width:225px;
     height:700px;
     background:white;
+    visibility: hidden;
 }
 
 #pin{
@@ -156,8 +166,17 @@ border-style:solid;
   margin-right: 25px;
   height: 40px;
   width: auto;
+  z-index:2;
 }
-
+#map{
+  height:1000px;
+  width: 100%;
+  position:absolute;
+  top:40px;
+  left:0px;
+  z-index:0;
+  filter: grayscale(100%);
+}
 #emptypinicon{
   position: absolute;
   right:0;
@@ -166,7 +185,7 @@ border-style:solid;
   margin-right: 25px;
   height: 40px;
   width: auto;
-  z-index:1;
+  z-index:3;
 }
 
 #feed{
@@ -177,6 +196,7 @@ border-style:solid;
   margin-right: 25px;
   height: 40px;
   width: auto;
+  z-index:2;
 }
 
 #leader{
@@ -187,6 +207,7 @@ border-style:solid;
   margin-right: 25px;
   height: 40px;
   width: auto;
+  z-index:2;
 }
 
 #friends{
@@ -197,6 +218,7 @@ border-style:solid;
   margin-right: 25px;
   height: 40px;
   width: auto;
+  z-index:2;
 }
 
 #profilepic{
@@ -215,7 +237,6 @@ footer {
  width: 100%;
  padding-bottom: 10px;
  padding-top: 10px;
- background-color:#bbeebb;
 }
 .connector{
   height:40px;
@@ -227,7 +248,7 @@ footer {
   border-bottom-style:solid;
   border-color:#f25822;
   border-width:2px;
-  z-index:-1;
+  z-index:1;
 }
 #con1{
   top: 75px;
@@ -247,7 +268,7 @@ footer {
   background-color:white;
   right:70px;
   position:absolute;
-  z-index:2;
+  z-index:3;
 }
 #blo1{
   top:77.5px;
@@ -271,6 +292,7 @@ footer {
   position:absolute;
   right:80px;
   background-color:white;
+  z-index:1;
 }
 #bub1{
   top:75px;
