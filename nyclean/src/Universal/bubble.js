@@ -33,7 +33,8 @@ class Bubble extends Component{
                   height:null,
                   search: "",
                   lat: 40.5,
-                  long: -74
+                  long: -74,
+                  imgsrc:""
                 }
       this.mouseDown = this.mouseDown.bind(this);
       this.mouseUp = this.mouseUp.bind(this);
@@ -77,6 +78,26 @@ class Bubble extends Component{
       ]
     });
     window.addEventListener("resize", this.updateDimensions);
+    firebase.auth().onAuthStateChanged(user => {
+      if(user){
+      this.setState({username: user.displayName,
+                    profileWidth: user.displayName.length * 8.5 + 50 + "px"});
+    }
+    else {
+      this.setState({profileWidth: user.displayName.length * 8.5 + 50 + "px"});
+    }
+    const db = firebase.firestore();
+
+    const userRef = db.collection("users");
+
+    userRef.doc(user.uid).get().then(getDoc => {
+        this.setState({
+          imgsrc: getDoc.data().imageSrc
+        })
+        console.log("srcset")
+        console.log(this.state.imgsrc)
+    })
+    });
   }
    handleMouseMove(e){
      if(this.state.dragEvent === true){
@@ -219,7 +240,7 @@ class Bubble extends Component{
           <a href = "./profpage">
             <div className= "headerItem" id = "login" style = {{width: this.state.profileWidth}}>
               <span id="rogueText">{this.state.username}</span>
-              <img alt="" id = "profilepic" src = /*should actually link to individual profiles*/"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"/>
+              <img alt="" id = "profilepic" src = {this.state.imgsrc}/>
             </div>
 
           </a>
