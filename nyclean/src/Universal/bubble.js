@@ -172,6 +172,7 @@ class Bubble extends Component{
           </span>
         <img id = "feed" src = {feed} alt = {"feed"} onClick = {this.openFeed}/>
           <span style = {{visibility: this.state.feedIsOpen}}>
+
             <div className = "connector" id = "con2">
             </div>
             <div className = "blocker" id = "blo2">
