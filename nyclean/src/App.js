@@ -74,15 +74,10 @@ class App extends Component {
 
           <footer>
             <div id = "safetytab"></div>
-<<<<<<< HEAD
-=======
 
->>>>>>> 9ae38f19707bb79119575e47bd2b3087bd8adbcf
             <button onClick = {this.signOut}>Sign Out</button>
-<<<<<<< HEAD
+
             <a id = "safety" href="./safety" class = "linkText">Safety Information</a>
-=======
->>>>>>> 06502d7f80f790829718b5a2c652d2e8477e57fe
           </footer>
 
 

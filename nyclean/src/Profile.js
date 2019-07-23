@@ -5,17 +5,15 @@ import firebase from './Firestore'
 import { Redirect } from 'react-router-dom';
 import back from './images/back.png';
 import greenyclogo from './images/greenyclogo.png';
-<<<<<<< HEAD
-=======
 const db = firebase.firestore();
->>>>>>> 9ae38f19707bb79119575e47bd2b3087bd8adbcf
+
 
 class Profile extends Component {
   constructor(){
     super();
-    this.state = {userName:"username",
+    this.state = {userName:"",
     Totaltrash:20,
-    imageSrc: "",
+    imageSrc: null,
     imageInput: '',
     userBio:'',
     signedIn:true};
@@ -60,9 +58,16 @@ class Profile extends Component {
         const userRef = db.collection("users");
 
         userRef.doc(user.uid).get().then(getDoc => {
+          if(getDoc.data().imageSrc == null) {
+            userRef.doc(user.uid).update({
+              imageSrc: "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
+            })
+          }
+
           this.setState({
             imageSrc: getDoc.data().imageSrc
           })
+        console.log(this.state.imageSrc);
           if (!getDoc.exists){
             userRef.doc(user.uid).set({
               fullname: user.displayName,
