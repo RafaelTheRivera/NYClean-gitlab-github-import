@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Header from './../Universal/header.js'
 import back from './../images/back.png';
 import greenyclogo from './../images/greenyclogo.png';
 import pin from './../images/pin.png';

@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import './App.css';
-import Header from './Universal/header'
 import firebase from './Firestore'
 import { Redirect } from 'react-router-dom';
 import back from './images/back.png';
+
 
 class EditPass extends Component {
   constructor(){

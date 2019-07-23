@@ -1,3 +1,4 @@
+
 .signOut {
   position:absolute;
   left: 1135px;
@@ -26,7 +27,7 @@
 }
 #Indent1{
   position:absolute;
-  left:120px; 
+  left:120px;
 }
 #bigHeader{
   position: absolute;
@@ -74,6 +75,8 @@ padding-top: 8px;
 #greenyc {
 height: 42px;
 width: auto;
+filter: grayscale(0%);
+-webkit-filter: (0%);
 }
 
 #back{
@@ -127,6 +130,21 @@ right:10px;
 height:40px;
 margin-top:5px;
 z-index:2;
+}
+#login2{
+width:130px;
+padding-left:10px;
+right: 10px;
+height:40px;
+margin-top:5px;
+z-index:2;
+}
+#rightside{
+  position:absolute;
+  left:1145px;
+}
+a:hover{
+  color:blue;
 }
 
 #rogueText{
@@ -198,7 +216,7 @@ z-index:2;
   position: absolute;
   right:0;
   top: 0;
-  margin-top: 85px;
+  margin-top: 100px;
   margin-right: 25px;
   height: 40px;
   width: auto;
@@ -211,13 +229,19 @@ z-index:2;
   top:40px;
   left:0px;
   z-index:0;
-  filter: grayscale(100%);
+}
+#emptypin{
+  z-index:1000;
+  position:absolute;
+  height: 25px;
+  width: auto;
+  z-index:4;
 }
 #emptypinicon{
   position: absolute;
   right:0;
   top: 0;
-  margin-top: 85px;
+  margin-top: 100px;
   margin-right: 25px;
   height: 40px;
   width: auto;
@@ -228,7 +252,7 @@ z-index:2;
   position: absolute;
   right:0;
   top: 0;
-  margin-top: 150px;
+  margin-top: 165px;
   margin-right: 25px;
   height: 40px;
   width: auto;
@@ -239,7 +263,7 @@ z-index:2;
   position: absolute;
   right:0;
   top: 0;
-  margin-top: 215px;
+  margin-top: 230px;
   margin-right: 25px;
   height: 40px;
   width: auto;
@@ -250,11 +274,11 @@ z-index:2;
   position: absolute;
   right:0;
   top: 0;
-  margin-top: 575px;
+  margin-top: 555px;
   margin-right: 25px;
   height: 40px;
   width: auto;
-  z-index:2;
+  z-index:4;
 }
 
 #friends{
@@ -299,16 +323,16 @@ footer {
   z-index:1;
 }
 #con1{
-  top: 75px;
+  top: 100px;
 }
 #con2{
-  top:140px;
+  top:165px;
 }
 #con3{
-  top:205px;
+  top:230px;
 }
 #con4{
-  top:635px;
+  top:660px;
 }
 .blocker{
   height:35.5px;
@@ -319,16 +343,16 @@ footer {
   z-index:3;
 }
 #blo1{
-  top:77.5px;
+  top:102.5px;
 }
 #blo2{
-  top: 142px;
+  top: 167px;
 }
 #blo3{
-  top: 207px;
+  top: 232px;
 }
 #blo4{
-  top: 637.5px;
+  top: 662.5px;
 }
 .bubble{
   height:300px;
@@ -356,8 +380,8 @@ footer {
   padding-top: 20px;
   padding-left:15px;
   padding-right: 15px;
-
 }
+
 #bub4{
   top:375px;
 }
@@ -372,19 +396,19 @@ footer {
 }
 
 #cover1{
-  margin-top: 77px;
+  margin-top: 102px;
   margin-right: 44px;
 }
 #cover2{
-  margin-top: 142px;
+  margin-top: 167px;
   margin-right: 44px;
 }
 #cover3{
-  margin-top: 207px;
+  margin-top: 232px;
   margin-right: 44px;
 }
 #cover4{
-  margin-top: 645px;
+  margin-top: 620px;
   margin-right: 44px;
 }
 
@@ -445,7 +469,6 @@ footer {
   margin-top: 50px;
   margin-left: 150px;
 }
-
 #safetycontent{
   margin-left: 100px;
   margin-right: 100px;
@@ -468,4 +491,15 @@ footer {
 
 .small{
   font-size: 12px;
+}
+
+#signout{
+  background-color: white;
+  border-color: black;
+  border-radius: 5px;
+}
+
+.edit{
+  height: 15px;
+  width: auto;
 }
