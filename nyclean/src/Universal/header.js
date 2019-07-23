@@ -14,8 +14,13 @@ class Header extends Component {
   }
   componentWillMount(){
     firebase.auth().onAuthStateChanged(user => {
+      if(user){
       this.setState({username: user.displayName,
                     profileWidth: user.displayName.length * 8.5 + 50 + "px"});
+    }
+    else {
+      this.setState({profileWidth: user.displayName.length * 8.5 + 50 + "px"});
+    }
     });
   }
   updateSearchBar = e => {
@@ -75,12 +80,19 @@ class Header extends Component {
           <div className= "headerItem" id = "logo">
             <a href = "/"> <img id = "greenyc" src = {greenyc} alt= "logo"/> </a>
           </div>
+<<<<<<< HEAD
+            <div className= "headerItem" id = "login" style = {{width: this.state.profileWidth}}>
+              <a href = "./profpage"><span id="rogueText">{this.state.username}</span></a>
+              <img alt="" id = "profilepic" src = /*should actually link to individual profiles*/"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"/>
+            </div>
+=======
           <a href = "./profpage">
             <div className= "headerItem" id = "login" style = {{width: this.state.profileWidth}}>
               <span id="rogueText">{this.state.username}</span>
             </div>
 
           </a>
+>>>>>>> 28f1325f0801ffbf8c4d1f90f1014a35578756d6
       </div>
     )
   }
