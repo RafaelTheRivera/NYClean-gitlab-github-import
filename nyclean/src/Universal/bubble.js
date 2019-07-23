@@ -5,7 +5,10 @@ import feed from './../images/feedicon1.png';
 import leader from './../images/leadericon1.png';
 import friends from './../images/friendsicon1.png';
 import emptypinicon from './../images/emptypinicon.png';
+import emptypin from './../images/pin.png';
 import add from './../images/add.png';
+import cover from './../images/cover.png';
+import Tabs from 'react-bootstrap/Tabs';
 
 class Bubble extends Component{
   constructor(props){
@@ -15,11 +18,15 @@ class Bubble extends Component{
                   leaderIsOpen: "hidden",
                   friendsIsOpen: "hidden",
                   unmergedImages: "hidden",
-                  mouseLeavePin: false,
-                  mouseUp: true
+                  mouseLeavePin: true,
+                  dragEvent: false,
+                  mouseDown: 0,
+                  x: 0,
+                  y: 0
                 }
-      this.checkPinStatus = this.checkPinStatus.bind(this);
-      this.mouseIsDown = this.mouseIsDown.bind(this);
+      this.mouseDown = this.mouseDown.bind(this);
+      this.mouseUp = this.mouseUp.bind(this);
+      this.mouseEnterPin = this.mouseEnterPin.bind(this);
       this.mouseExitPin = this.mouseExitPin.bind(this);
       this.openPin = this.openPin.bind(this);
       this.openFeed = this.openFeed.bind(this);
@@ -32,6 +39,9 @@ class Bubble extends Component{
     window.addEventListener("resize", this.updateDimensions);
   }
   componentWillMount(){
+    document.body.onmousedown = this.mouseDown;
+    document.body.onmouseup = this.mouseUp;
+    document.body.onmousemove = this.handleMouseMove.bind(this);
     this.updateDimensions();
   }
   componentWillUnmount() {
@@ -44,32 +54,46 @@ class Bubble extends Component{
    var body = d.getElementsByTagName('body')[0];
    var height = w.innerHeight|| documentElement.clientHeight|| body.clientHeight;
    this.setState({height: height});
-   console.log(this.state.height);
  }
-  checkPinStatus(){
-    if(this.state.mouseUp === true && this.state.mouseLeavePin === true && this.state.pinIsOpen === "hidden"){
-
-      console.log("pin set");
-      this.setState({mouseUp: true, mouseLeavePin: false})
+  handleMouseMove(e){
+    if(this.state.dragEvent === true){
+      this.setState({x: e.screenX - 7, y: e.screenY - 95});
     }
   }
-  mouseIsDown(){
-    this.setState({mouseUp: false});
-    setTimeout(function () {
-      this.setState({mouseUp: true});
-      console.log("yes");
-    }.bind(this), 400);
+  mouseDown(e){
+    this.setState({mouseDown: 1});
+    this.setState({x: e.screenX - 7, y: e.screenY - 96});
+    console.log(this.state.mouseDown);
+    if (this.state.mouseLeavePin === false ){
+      this.setState({dragEvent: true, unmergedImages: "visible"});
+      console.log("dragEvent = " + this.state.dragEvent);
+    }
+    console.log("down");
+  }
+  mouseUp(){
+    this.setState({mouseDown: 0});
+    console.log(this.state.mouseDown);
+    if (this.state.mouseLeavePin === true && this.state.dragEvent === true){
+      console.log("pinned");
+      this.setState({dragEvent: false, unmergedImages: "hidden"});
+      console.log("dragEvent = " + this.state.dragEvent);
+    }else if (this.state.dragEvent === false){
+      this.setState({dragEvent: false, unmergedImages: "hidden"});
+      console.log("dragEvent = " + this.state.dragEvent);
+    }else if (this.state.mouseLeavePin === false){
+      this.openPin();
+      this.setState({dragEvent: false, unmergedImages: "hidden"});
+      console.log("dragEvent = " + this.state.dragEvent);
+    }
     console.log("up");
-    this.checkPinStatus();
+  }
+  mouseEnterPin(){
+    this.setState({mouseLeavePin: false});
+    console.log("in pin");
   }
   mouseExitPin(){
     this.setState({mouseLeavePin: true});
-    setTimeout(function () {
-      this.setState({mouseLeavePin: false});
-      console.log("no");
-    }.bind(this), 400);
-    console.log("out" + this.state.mouseLeavePin);
-    this.checkPinStatus();
+    console.log("out of pin");
   }
   openPin(){
     if (this.state.pinIsOpen === "hidden"){
@@ -117,8 +141,9 @@ class Bubble extends Component{
   render(){
     return(
       <div>
-        <img id = "emptypinicon" src = {emptypinicon} alt = {"empty pin"} style = {{visibility: this.state.unmergedImages}}/>
-        <img id = "pin" src = {pin} alt = {"pin"} draggable = "true" onMouseLeave = {this.mouseExitPin} onMouseDown = {this.mouseIsDown} onClick = {this.openPin}/>
+        <img id = "emptypin" src = {emptypin} draggable = "false" alt = {"solo pin"} style = {{visibility: this.state.unmergedImages, top: this.state.y, left: this.state.x}}/>
+        <img id = "emptypinicon" src = {emptypinicon} draggable = "false" onMouseLeave = {this.mouseExitPin} onMouseOver = {this.mouseEnterPin} alt = {"empty pin"} style = {{visibility: this.state.unmergedImages}}/>
+        <img id = "pin" src = {pin} alt = {"pin"} draggable = "false" onMouseLeave = {this.mouseExitPin} onMouseOver = {this.mouseEnterPin}/>
           <span style = {{visibility: this.state.pinIsOpen}}>
             <div className = "connector" id = "con1">
             </div>
@@ -126,11 +151,10 @@ class Bubble extends Component{
             </div>
             <div className = "bubble" id = "bub1">
               Post by: paige
-              <img id = "add" src = {add} alt = "addposter"/>
               <center><div id="insertimage"></div></center>
               Insert caption here
-
             </div>
+            <img className = "cover" id = "cover1" src = {cover} alt = "cover"/>
           </span>
         <img id = "feed" src = {feed} alt = {"feed"} onClick = {this.openFeed}/>
           <span style = {{visibility: this.state.feedIsOpen}}>
@@ -140,7 +164,10 @@ class Bubble extends Component{
             </div>
             <div className = "bubble" id = "bub2">
             </div>
+            <img id = "add" src = {add} alt = "addposter"/>
+            <img className = "cover" id = "cover2" src = {cover} alt = "cover"/>
           </span>
+
         <img id = "leader" src = {leader} alt = {"leaderboard"} onClick = {this.openLeader}/>
           <span style = {{visibility: this.state.leaderIsOpen}}>
             <div className = "connector" id = "con3">
@@ -157,10 +184,10 @@ class Bubble extends Component{
               <li>user 123 lbs</li>
               <li>user 123 lbs</li>
             </ol>
-
             </div>
+            <img className = "cover" id = "cover3" src = {cover} alt = "cover"/>
           </span>
-        <img id = "friends" src = {friends} alt = {"friends"} onClick = {this.openFriends}  style = {{"margin-top": this.state.height - 119}}/>
+        <img id = "friends" src = {friends} alt = {"friends"} onClick = {this.openFriends}  style = {{marginTop: this.state.height - 119}}/>
           <span style = {{visibility: this.state.friendsIsOpen}}>
             <div className = "connector" id = "con4" style = {{top: this.state.height - 119}}>
             </div>
@@ -168,7 +195,9 @@ class Bubble extends Component{
             </div>
             <div className = "bubble" id = "bub4" style = {{top: this.state.height - 379}}>
             </div>
+            <img className = "cover" id = "cover4" src = {cover} alt = "cover"/>
           </span>
+
       </div>
     );
   }

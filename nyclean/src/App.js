@@ -66,8 +66,14 @@ class App extends Component {
           <Bubble />
 
           <div id="rectangle"></div>
+
           <Map />
+
           <footer>
+<<<<<<< HEAD
+=======
+            <div id = "safetytab"></div>
+>>>>>>> 28f1325f0801ffbf8c4d1f90f1014a35578756d6
             <button onClick = {this.signOut}>Sign Out</button>
             <a id = "safety" href="./safety">Safety Information</a>
           </footer>

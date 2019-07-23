@@ -1,8 +1,13 @@
 import React, {Component} from 'react';
 import Header from './Universal/header';
 import './App.css';
+<<<<<<< HEAD
 import firebase from './Firestore'
 import { Redirect } from 'react-router-dom';
+=======
+import back from './images/back.png';
+import greenyclogo from './images/greenyclogo.png';
+>>>>>>> 28f1325f0801ffbf8c4d1f90f1014a35578756d6
 
 class Profile extends Component {
   constructor(){
@@ -72,11 +77,11 @@ class Profile extends Component {
       else {
   return (
     <div class = "appText">
-    <Header/>
 
-    <header>
-    <a href=".">BACK</a>
-    </header>
+    <a href = "/"> <img id = "back" src = {back} alt= "back"/>
+    <img id = "greenyclogo" src = {greenyclogo} alt= "logo"/>
+    </a>
+
 
     <center><h1>My Profile</h1></center>
 

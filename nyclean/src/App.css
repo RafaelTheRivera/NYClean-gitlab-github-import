@@ -22,16 +22,11 @@
   top: 0;
   width:100%;
   height:90px;
-  z-index: -2;
-  z-index:1;
-}
-
-h1{
-  margin-top: 70px;
+  z-index: 2;
 }
 
 body{
-  background-color: lightgray;
+  background-color: white;
 }
 
 a{
@@ -47,8 +42,8 @@ margin-top: -1px;
 padding-top: 10px;
 position: absolute;
 height: 40px;
-
 }
+
 .editUserBar{
 margin-top: -1px;
 padding-top:10px;
@@ -61,38 +56,61 @@ height:40px;
 width: 25%;
 background-color: transparent;
 top: 0;
+z-index: 3;
+padding-top: 8px;
 }
 
 #greenyc {
-height: 35px;
+height: 37px;
 width: auto;
 }
 
 #safetytab{
-  height:300px;
+  height:50px;
   width:250px;
   border-color: black;
   border-style:solid;
   border-width:1px;
-  border-radius:10px;
+  border-top-left-radius:10px;
+  border-top-right-radius:10px;
   position: absolute;
   left: 0;
-right: 0;
-margin: auto;
+  right: 0;
+  bottom: 0;
+  margin: auto;
   background-color:white;
-  z-index:1;
+  z-index:-1;
 }
 
 #safety{
-  z-index: 2;
+  z-index: 3;
+}
+
+#back{
+  height: 25px;
+  width: auto;
+  margin-top: 20px;
+  margin-left: 20px;
+}
+#greenyclogo{
+  height: 40px;
+  width: auto;
+  margin-top: 20px;
+  margin-left: 5px;
+}
+
+#pindeco{
+  height: 30px;
+  width: auto;
+  margin-right: 7px;
+  margin-bottom: 10px;
 }
 
 #logo{
 margin-left: 25%;
 width: 50%;
 text-align: center;
-font-size: 2.2em;
-padding-top: 0px;
+padding-top: 9px;
 height: 50px;
 font-family: helvetica;
 font-weight: bold;
@@ -106,12 +124,12 @@ width:130px;
 padding-left:10px;
 right:10px;
 border-radius:10px;
-height:40px;
+height:30px;
 margin-top:5px;
 top: 0;
 z-index:2;
 }
-<<<<<<< HEAD
+
 #login2{
 width:130px;
 padding-left:10px;
@@ -120,11 +138,9 @@ height:40px;
 margin-top:5px;
 z-index:2;
 }
-=======
 
->>>>>>> 0b4b3a7ac94e62ae1142c5f5833ff7bf81148626
 #rogueText{
-margin-top:-3px;
+margin-top:-7px;
 position:absolute;
 font-size:1em;
 padding-left: 0px;
@@ -135,39 +151,32 @@ white-space:nowrap;
 background-color: #aaffaa;
 }
 
-#sneaky{
-  position:absolute;
-  height:40px;
-  width:300px;
-  margin-left:0px;
-  top: 0;
-  background-color: white;
-  z-index:-1;
-}
 #submit{
-width:30px;
-height:30px;
-margin-top:0px;
+width:25px;
+height:25px;
+margin-top: 4px;
 padding-top:0px;
-margin-left:230px;
+margin-left:215px;
 position:absolute;
 background-color:#28BBB4;
 border-style:none;
 border-radius:100%;
+z-index:2;
 }
 #box{
-height:25px;
+height:23px;
 background-color:#DAF2F2;
 border-style:none;
-font-size:1em;
+font-size:10px;
 width:190px;
-margin-top: 4px;
-margin-left:15px;
+margin-top: 5px;
+margin-left:20px;
 position:absolute;
 border-radius:5px;
 border-width:1px;
 border-color:black;
 border-style:solid;
+z-index:2;
 }
 #magnifying{
   margin-top: -5px;
@@ -175,8 +184,8 @@ border-style:solid;
   width: 100%;
 }
 #profile{
-  height: 30px;
-  width: 30px;
+  height: 20px;
+  width: 20px;
   background-color: black;
   border-radius: 100%;
   position:absolute;
@@ -185,10 +194,14 @@ border-style:solid;
 }
 
 #rectangle{
-    width:225px;
+    width:255px;
     height:700px;
     background:white;
-    visibility: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin-top: 40px;
+    z-index: 3;
 }
 
 #pin{
@@ -256,10 +269,10 @@ border-style:solid;
 
 #profilepic{
   border-radius:100%;
-  height:30px;
-  width:30px;
+  height:25px;
+  width:25px;
   position:absolute;
-  top:5px;
+  top:2.5px;
   right:10px;
 }
 
@@ -346,6 +359,32 @@ footer {
 }
 #bub4{
   top:375px;
+}
+
+.cover{
+  position: absolute;
+  right:0;
+  top: 0;
+  height: 36px;
+  width: auto;
+  z-index:4;
+}
+
+#cover1{
+  margin-top: 77px;
+  margin-right: 44px;
+}
+#cover2{
+  margin-top: 142px;
+  margin-right: 44px;
+}
+#cover3{
+  margin-top: 207px;
+  margin-right: 44px;
+}
+#cover4{
+  margin-top: 620px;
+  margin-right: 44px;
 }
 
 #add{

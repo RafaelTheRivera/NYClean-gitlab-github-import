@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import Header from './../Universal/header.js'
-
+import back from './../images/back.png';
+import greenyclogo from './../images/greenyclogo.png';
+import pin from './../images/pin.png';
 
 class Safety extends Component {
   constructor(){
@@ -10,16 +12,21 @@ class Safety extends Component {
   render(){
     return(
       <div>
-        <Header />
+        
+        <a href = "/"> <img id = "back" src = {back} alt= "back"/>
+        <img id = "greenyclogo" src = {greenyclogo} alt= "logo"/>
+        </a>
 
         <center><h1>Safety Information</h1></center>
+        <br />
 
         <div id = "safetycontent">
           <p>It can be dangerous to handle waste without taking important safety precautions. To avoid
           injuries and harmful chemicals, please follow the safety tips below.
           Happy cleaning! :-)</p>
           <br />
-          <h3>Protect Yourself</h3>
+          <br />
+          <h3><img id = "pindeco" src = {pin} alt= "pin"/>Protect Yourself</h3>
           <ol>
             <li>Make sure to dress appropriately to ensure that you are as protected as possible.</li>
             <li>Wear long sleeves and long pants.</li>
@@ -31,7 +38,8 @@ class Safety extends Component {
             <li>Protect yourself from the sun with hats and sunscreen.</li>
             <li>Have a first aid kit.</li>
           </ol>
-          <h3>Cleaning Safely</h3>
+          <br />
+          <h3><img id = "pindeco" src = {pin} alt= "pin"/>Cleaning Safely</h3>
           <ol>
             <li>Always have an adult (18 or older) in the group.</li>
             <li>Check the weather to make sure conditions will be safe and prepare accordingly.</li>
@@ -41,7 +49,8 @@ class Safety extends Component {
             <li>Use a box to carry sharp objects.</li>
             <li>Always wash hands after cleaning.</li>
           </ol>
-          <h3>Watch Out!</h3>
+          <br />
+          <h3><img id = "pindeco" src = {pin} alt= "pin"/>Watch Out!</h3>
           <ol>
             <li>Be aware of your surroundings in any vegetation.</li>
             <li>Do not carry dangerous items like knives and axes.</li>
@@ -50,6 +59,10 @@ class Safety extends Component {
             <li>Do not clean suspicious liquids that may be toxic chemicals or hazardous substances.</li>
             <li>Do not ingest any substances, and avoid inhaling chemicals. </li>
           </ol>
+          <br />
+          <br />
+          <br />
+          <br />
         </div>
 
     </div>
