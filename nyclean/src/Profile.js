@@ -5,17 +5,40 @@ import firebase from './Firestore'
 import { Redirect } from 'react-router-dom';
 import back from './images/back.png';
 import greenyclogo from './images/greenyclogo.png';
+<<<<<<< HEAD
+=======
+const db = firebase.firestore();
+>>>>>>> 9ae38f19707bb79119575e47bd2b3087bd8adbcf
 
 class Profile extends Component {
   constructor(){
     super();
     this.state = {userName:"username",
     Totaltrash:20,
-    imageSrc: "https://m.media-amazon.com/images/M/MV5BMTc0MDMyMzI2OF5BMl5BanBnXkFtZTcwMzM2OTk1MQ@@._V1_UX214_CR0,0,214,317_AL_.jpg",
+    imageSrc: "",
     imageInput: '',
     userBio:'',
     signedIn:true};
   }
+  updateInput = e => {
+      this.setState({
+        imageInput: e.target.value
+      });
+    }
+  submitInput = e => {
+    e.preventDefault();
+    this.setState({
+      imageSrc: this.state.imageInput,
+  })
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        const userRef = db.collection("users");
+        userRef.doc(user.uid).update({
+          imageSrc: this.state.imageSrc
+        })
+      }
+      });
+    }
   componentWillMount(){
     firebase.auth().onAuthStateChanged(user => {
       this.setState({userName: user.displayName,
@@ -37,6 +60,9 @@ class Profile extends Component {
         const userRef = db.collection("users");
 
         userRef.doc(user.uid).get().then(getDoc => {
+          this.setState({
+            imageSrc: getDoc.data().imageSrc
+          })
           if (!getDoc.exists){
             userRef.doc(user.uid).set({
               fullname: user.displayName,
@@ -56,17 +82,7 @@ class Profile extends Component {
       }
     });
   }
-  updateInput = e => {
-      this.setState({
-        imageInput: e.target.value
-      });
-    }
-  submitInput = e => {
-    e.preventDefault();
-    this.setState({
-      imageSrc: this.state.imageInput
-    })
-  }
+
   renderRedirect = () => {
       return <Redirect to='/Login' />
   }
@@ -95,7 +111,7 @@ class Profile extends Component {
     <p>{this.state.userBio}</p>
     </h6>
     <div id="profilecircle">
-    <img src = {this.state.imageSrc}/>
+    <img src = {this.state.imageSrc} id = "profileimg"/>
           <form onSubmit = {this.submitInput}>
           <input
           type = "images"
