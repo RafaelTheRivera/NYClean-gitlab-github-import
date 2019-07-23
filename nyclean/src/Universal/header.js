@@ -10,7 +10,8 @@ class Header extends Component {
     super();
     this.state = {search: "",
                   username: "",
-                  profileWidth: ""};
+                  profileWidth: "",
+                  imgsrc:""};
   }
   componentWillMount(){
     firebase.auth().onAuthStateChanged(user => {
@@ -21,6 +22,18 @@ class Header extends Component {
     else {
       this.setState({profileWidth: user.displayName.length * 8.5 + 50 + "px"});
     }
+    const db = firebase.firestore();
+    db.settings ({
+      timestampsInSnapshots: true
+    });
+
+    const userRef = db.collection("users");
+
+    userRef.doc(user.uid).get().then(getDoc => {
+        this.setState({
+          imgsrc: getDoc.data().imageSrc
+        })
+    })
     });
   }
   updateSearchBar = e => {
@@ -80,28 +93,16 @@ class Header extends Component {
           <div className= "headerItem" id = "logo">
             <a href = "/"> <img id = "greenyc" src = {greenyc} alt= "logo"/> </a>
           </div>
-<<<<<<< HEAD
-=======
-
->>>>>>> 9ae38f19707bb79119575e47bd2b3087bd8adbcf
-            <div className= "headerItem" id = "login" style = {{width: this.state.profileWidth}}>
+            <div className= "headerItem" id = "login2" style = {{width: this.state.profileWidth}}>
               <a href = "./profpage"><span id="rogueText">{this.state.username}</span></a>
-              <img alt="" id = "profilepic" src = /*should actually link to individual profiles*/"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"/>
-            </div>
-<<<<<<< HEAD
-=======
-
->>>>>>> 9ae38f19707bb79119575e47bd2b3087bd8adbcf
+              <img alt="" id = "profilepic" src ={this.state.imgsrc}/>
+              </div>
           <a href = "./profpage">
-            <div className= "headerItem" id = "login" style = {{width: this.state.profileWidth}}>
+            <div className= "headerItem" id = "login2" style = {{width: this.state.profileWidth}}>
               <span id="rogueText">{this.state.username}</span>
             </div>
 
           </a>
-<<<<<<< HEAD
-=======
-
->>>>>>> 9ae38f19707bb79119575e47bd2b3087bd8adbcf
       </div>
     )
   }

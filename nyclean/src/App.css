@@ -26,7 +26,7 @@
 }
 #Indent1{
   position:absolute;
-  left:120px; 
+  left:120px;
 }
 #bigHeader{
   position: absolute;
@@ -127,6 +127,21 @@ right:10px;
 height:40px;
 margin-top:5px;
 z-index:2;
+}
+#login2{
+width:130px;
+padding-left:10px;
+right: 10px;
+height:40px;
+margin-top:5px;
+z-index:2;
+}
+#rightside{
+  position:absolute;
+  left:1145px;
+}
+a:hover{
+  color:blue;
 }
 
 #rogueText{
