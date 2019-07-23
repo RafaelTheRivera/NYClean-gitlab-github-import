@@ -14,11 +14,15 @@ const uiConfig = {
 
   signInOptions: [        //options to sign in thru other platforms
     firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+    firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+    firebase.auth.GithubAuthProvider.PROVIDER_ID
   ]
 };
 
 
-class Login extends Component {
+class LoginPassEdit extends Component {
 
   constructor(){
     super();
@@ -77,7 +81,7 @@ class Login extends Component {
       return(
         <div>
         <Header />
-          <br></br><h1><center class = "normalText">Please Log In/Sign Up</center></h1>
+          <br></br><h1><center class = "normalText">Please Relog after a password change.</center></h1>
           <StyledFirebaseAuth uiConfig = {uiConfig} firebaseAuth = {firebase.auth()}/>
         </div>
       );
@@ -85,4 +89,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default LoginPassEdit;

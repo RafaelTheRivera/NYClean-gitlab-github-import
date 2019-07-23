@@ -11,6 +11,8 @@ import friends from './../images/friendsicon1.png';
 import emptypinicon from './../images/emptypinicon.png';
 import emptypin from './../images/pin.png';
 import add from './../images/add.png';
+import cover from './../images/cover.png';
+import Tabs from 'react-bootstrap/Tabs';
 
 class Bubble extends Component{
   constructor(props){
@@ -19,7 +21,7 @@ class Bubble extends Component{
                   feedIsOpen: "hidden",
                   leaderIsOpen: "hidden",
                   friendsIsOpen: "hidden",
-                  unmergedImages: "hidden",
+                  unmergedImages: "visible",
                   mouseLeavePin: true,
                   dragEvent: false,
                   mouseDown: 0,
@@ -61,8 +63,9 @@ class Bubble extends Component{
                   ];
     this.map = L.map('map', {
       center: [40.7280822, -73.9937973],
-      zoom: 17,
+      zoom: 16,
       minZoom:11,
+      maxZoom: 16,
       maxBounds: this.bounds,
       zoomSnap: 0.2,
       layers: [
@@ -74,14 +77,19 @@ class Bubble extends Component{
     });
     window.addEventListener("resize", this.updateDimensions);
   }
+   handleMouseMove(e){
+     if(this.state.dragEvent === true){
+       this.setState({x: e.screenX - 7, y: e.screenY - 95});
+     }
+   }
   componentWillMount(){
+    document.body.onmousedown = this.mouseDown;
+    document.body.onmouseup = this.mouseUp;
+    document.body.onmousemove = this.handleMouseMove.bind(this);
     firebase.auth().onAuthStateChanged(user => {
       this.setState({username: user.displayName,
                     profileWidth: user.displayName.length * 8.5 + 50 + "px"});
     });
-    document.body.onmousedown = this.mouseDown;
-    document.body.onmouseup = this.mouseUp;
-    document.body.onmousemove = this.handleMouseMove.bind(this);
     this.updateDimensions();
   }
   componentWillUnmount() {
@@ -115,11 +123,6 @@ class Bubble extends Component{
    var height = w.innerHeight|| documentElement.clientHeight|| body.clientHeight;
    this.setState({height: height});
  }
-  handleMouseMove(e){
-    if(this.state.dragEvent === true){
-      this.setState({x: e.screenX - 7, y: e.screenY - 95});
-    }
-  }
   mouseDown(e){
     this.setState({mouseDown: 1});
     this.setState({x: e.screenX - 7, y: e.screenY - 96});
@@ -220,7 +223,7 @@ class Bubble extends Component{
 
           </a>
 
-        <img id = "emptypin" src = {emptypin} draggable = "false" alt = {"solo pin"} style = {{visibility: this.state.unmergedImages, top: this.state.y, left: this.state.x}}/>
+        <img id = "emptypin" src = {emptypin} draggable = "false" alt = {"solopin"} style = {{visibility: this.state.unmergedImages, top: this.state.y, left: this.state.x, zIndex: 1000}}/>
         <img id = "emptypinicon" src = {emptypinicon} draggable = "false" onMouseLeave = {this.mouseExitPin} onMouseOver = {this.mouseEnterPin} alt = {"empty pin"} style = {{visibility: this.state.unmergedImages}}/>
         <img id = "pin" src = {pin} alt = {"pin"} draggable = "false" onMouseLeave = {this.mouseExitPin} onMouseOver = {this.mouseEnterPin}/>
           <span style = {{visibility: this.state.pinIsOpen}}>
@@ -229,11 +232,25 @@ class Bubble extends Component{
             <div className = "blocker" id = "blo1">
             </div>
             <div className = "bubble" id = "bub1">
-              Post by: paige
-              <img id = "add" src = {add} alt = "addposter"/>
-              <center><div id="insertimage"></div></center>
-              Insert caption here
+              <p className = "small">Post by: paige
+              <center><div id="insertimage">
+
+              <img src = {this.state.imageSrc} alt = {"profile"}/>
+                    <form onSubmit = {this.submitInput}>
+                    <input
+                    type = "images"
+                    name = "profilePic"
+                    placeholder = "Image URL"
+                    onChange = {this.updateInput}
+                    value = {this.state.imageSrc}
+                    />
+                    <button type = "submit">Submit</button>
+                    </form>
+              </div></center>
+              Insert caption here</p>
+              <img id = "add" src = {add} alt = "add poster"/>
             </div>
+            <img className = "cover" id = "cover1" src = {cover} alt = "cover"/>
           </span>
         <img id = "feed" src = {feed} alt = {"feed"} onClick = {this.openFeed}/>
           <span style = {{visibility: this.state.feedIsOpen}}>
@@ -243,7 +260,10 @@ class Bubble extends Component{
             </div>
             <div className = "bubble" id = "bub2">
             </div>
+            <img className = "cover" id = "cover2" src = {cover} alt = "cover"/>
+
           </span>
+
         <img id = "leader" src = {leader} alt = {"leaderboard"} onClick = {this.openLeader}/>
           <span style = {{visibility: this.state.leaderIsOpen}}>
             <div className = "connector" id = "con3">
@@ -251,16 +271,18 @@ class Bubble extends Component{
             <div className = "blocker" id = "blo3">
             </div>
             <div className = "bubble" id = "bub3">
-            <center><p id = "totalcount">TOTAL COUNT</p> <p id = "livecount">12,345 lbs</p> <br />
+            <center><p id = "totalcount">TOTAL COUNT</p> <p id = "livecount"><b>12,345</b> lbs</p> <br />
             Weekly Leaderboard</center>
-            <ol>
+            <br />
+            <p className = "small"><ol>
               <li>user 123 lbs</li>
               <li>user 123 lbs</li>
               <li>user 123 lbs</li>
               <li>user 123 lbs</li>
               <li>user 123 lbs</li>
-            </ol>
+            </ol></p>
             </div>
+            <img className = "cover" id = "cover3" src = {cover} alt = "cover"/>
           </span>
         <img id = "friends" src = {friends} alt = {"friends"} onClick = {this.openFriends}  style = {{marginTop: this.state.height - 119}}/>
           <span style = {{visibility: this.state.friendsIsOpen}}>
@@ -270,6 +292,7 @@ class Bubble extends Component{
             </div>
             <div className = "bubble" id = "bub4" style = {{top: this.state.height - 379}}>
             </div>
+            <img className = "cover" id = "cover4" src = {cover} alt = "cover"/>
           </span>
 
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
