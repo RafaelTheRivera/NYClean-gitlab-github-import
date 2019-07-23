@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Header from './Universal/header';
 import './App.css';
 import firebase from './Firestore'
 import { Redirect } from 'react-router-dom';
@@ -7,9 +6,7 @@ import back from './images/back.png';
 import edit from './images/edit.png';
 
 import greenyclogo from './images/greenyclogo.png';
-
 const db = firebase.firestore();
-
 
 class Profile extends Component {
   constructor(){
@@ -115,7 +112,7 @@ class Profile extends Component {
     </h6>
     <div id="profilecircle">
     <img src = {this.state.imageSrc} id = "profileimg"/>
-          <form onSubmit = {this.submitInput}>
+          <p>Change Profile Picture:</p><form onSubmit = {this.submitInput}>
           <input
           type = "images"
           name = "profilePic"

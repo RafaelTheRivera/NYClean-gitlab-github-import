@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-import Header from './Universal/header.js';
 import './App.css';
 import footergradient from './images/footergradient.png';
-import Map from './Universal/map.js'
 import Bubble from './Universal/bubble.js';
 import { Redirect } from 'react-router-dom';
 import firebase from './Firestore';
@@ -59,15 +57,9 @@ class App extends Component {
 
         <div style = {{overflow: "hidden"}}>
 
-          <Header />
-
-          <div id = "safetytab"></div>
-
           <Bubble />
 
           <div id="rectangle"></div>
-
-          <Map />
 
 
 
