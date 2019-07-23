@@ -21,7 +21,7 @@ class Bubble extends Component{
                   feedIsOpen: "hidden",
                   leaderIsOpen: "hidden",
                   friendsIsOpen: "hidden",
-                  unmergedImages: "visible",
+                  unmergedImages: "hidden",
                   mouseLeavePin: true,
                   dragEvent: false,
                   mouseDown: 0,
@@ -223,7 +223,7 @@ class Bubble extends Component{
 
           </a>
 
-        <img id = "emptypin" src = {emptypin} draggable = "false" alt = {"solopin"} style = {{visibility: this.state.unmergedImages, top: this.state.y, left: this.state.x, zIndex: 1000}}/>
+        <img id = "emptypin" src = {emptypin} draggable = "false" alt = {"solopin"} style = {{visibility: this.state.unmergedImages, top: this.state.y, left: this.state.x}}/>
         <img id = "emptypinicon" src = {emptypinicon} draggable = "false" onMouseLeave = {this.mouseExitPin} onMouseOver = {this.mouseEnterPin} alt = {"empty pin"} style = {{visibility: this.state.unmergedImages}}/>
         <img id = "pin" src = {pin} alt = {"pin"} draggable = "false" onMouseLeave = {this.mouseExitPin} onMouseOver = {this.mouseEnterPin}/>
           <span style = {{visibility: this.state.pinIsOpen}}>

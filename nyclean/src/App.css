@@ -479,3 +479,14 @@ footer {
 .small{
   font-size: 12px;
 }
+
+#signout{
+  background-color: white;
+  border-color: black;
+  border-radius: 5px;
+}
+
+.edit{
+  height: 15px;
+  width: auto;
+}
