@@ -10,12 +10,23 @@
   letter-spacing: 1px;
   word-spacing: 2px;
 }
+.linkText1 {
+  font-family: Helvetica, Sans-serif;
+  color: #1000A4;
+  font-size: 50%;
+  letter-spacing: 1px;
+  word-spacing: 2px;
+}
 .normalText{
   font-family: Helvetica, sans-serif;
   font-size: 100%;
   letter-spacing: 1px;
   word-spacing: 2px;
   color: #000000;
+}
+#Indent1{
+  position:absolute;
+  left:120px; 
 }
 #bigHeader{
   position: absolute;
@@ -424,7 +435,12 @@ footer {
   margin-top: 185px;
   margin-left: 400px;
 }
-
+#profLinks {
+  position: absolute;
+  top: 0;
+  margin-top: 235px;
+  margin-left: 400px;
+}
 #bio {
   position: absolute;
   top: 0;

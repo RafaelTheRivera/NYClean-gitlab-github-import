@@ -4,6 +4,7 @@ import App from './App';
 import EditEmail from './EditEmail';
 import EditUser from './EditUser';
 import EditPass from './EditPass';
+import EditBio from './EditBio';
 import Login from './Login';
 import LoginPassEdit from './LoginPassEdit';
 import LoginEmailEdit from './LoginEmailEdit';
@@ -18,6 +19,7 @@ const Routes = () => (
         <Route exact path = {"/editEmail"} component = {() => <EditEmail />}/>
         <Route exact path = {"/editPass"} component = {() => <EditPass />}/>
         <Route exact path = {"/editUser"} component = {() => <EditUser />}/>
+        <Route exact path = {"/editbio"} component = {() => <EditBio />}/>
         <Route exact path = {"/safety"} component = {() => <Safety />}/>
         <Route exact path = {"/Login"} component = {() => <Login />}/>
         <Route exact path = {"/LoginEmailEdit"} component = {() => <LoginEmailEdit />}/>

@@ -4,10 +4,15 @@ import firebase from './Firestore'
 import { Redirect } from 'react-router-dom';
 import back from './images/back.png';
 
-class EditUser extends Component {
+const db = firebase.firestore();
+db.settings ({
+  timestampsInSnapshots: true
+});
+
+class EditBio extends Component {
   constructor(){
     super();
-    this.state = {displayName:"", currentUser:null};
+    this.state = {userBio:"", currentUser:null};
   }
   componentWillMount(){
     firebase.auth().onAuthStateChanged(user => {
@@ -40,20 +45,21 @@ class EditUser extends Component {
   }
   handleChange = (event) => {
       this.setState({
-        displayName:event.target.value
+        userBio:event.target.value
       });
   }
-  changeUser = () => {
+  changeBio = () => {
     // e.preventDefault();
     const user = firebase.auth().currentUser;
-      user.updateProfile({
-      displayName: this.state.displayName}).then(() => {
-        console.log("Name updated!");
+    const userRef = db.collection("users");
+    userRef.doc(user.uid).update({
+      bio: this.state.userBio
+    }).then(() => {
         this.setState({
           changed:true
-        })
-      }).catch((error) => { console.log(error); });
-  }
+        });
+  });
+}
   renderRedirect = () => {
       return <Redirect to='/profpage' />
   }
@@ -63,14 +69,17 @@ class EditUser extends Component {
     <div>
     <a href = "/profpage"> <img id = "back" src = {back} alt= "back"/></a>
     <div class = "appText">
-    <br></br><br></br>
-    <form class = "editUserBar" onSubmit={e=>e.preventDefault()}>
-    New Username:
-    <input type = "text"
+    <br></br>
+    <p id = "Indent1">Bio:</p>
+    <br></br>
+    <form class = "editUserBar" onSubmit={e=>e.preventDefault()} id = "Indent1">
+    <textarea type = "text"
     onChange = {this.handleChange}
-    value = {this.state.displayName}
+    value = {this.state.userBio}
+    rows = "5"
+    cols = "50"
     />
-    <button onClick={this.changeUser}>Change</button>
+    <button onClick={this.changeBio}>Change</button>
     </form>
     {this.renderRedirect()}
     </div>
@@ -79,14 +88,17 @@ class EditUser extends Component {
 } else {
   return(
   <div class = "appText">
-  <br></br><br></br>
-  <form class = "editUserBar" onSubmit={e=>e.preventDefault()}>
-  New Username:
-  <input type = "text"
+  <br></br>
+  <p id = "Indent1">Bio:</p>
+  <br></br>
+  <form class = "editUserBar" onSubmit={e=>e.preventDefault()} id = "Indent1">
+  <textarea type = "text"
+  rows = "5"
+  cols = "50"
   onChange = {this.handleChange}
-  value = {this.state.displayName}
-  />
-  <button onClick={this.changeUser}>Change</button>
+  value = {this.state.userBio}
+  /><br />
+  <button onClick={this.changeBio}>Change</button>
   </form>
   </div>
 );
@@ -94,4 +106,4 @@ class EditUser extends Component {
 }
 }
 
-export default EditUser;
+export default EditBio;
