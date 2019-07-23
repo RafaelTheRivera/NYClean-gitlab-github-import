@@ -1,3 +1,4 @@
+
 .signOut {
   position:absolute;
   left: 1135px;
@@ -74,6 +75,8 @@ padding-top: 8px;
 #greenyc {
 height: 42px;
 width: auto;
+filter: grayscale(0%);
+-webkit-filter: (0%);
 }
 
 #back{
@@ -211,7 +214,14 @@ z-index:2;
   top:40px;
   left:0px;
   z-index:0;
-  filter: grayscale(100%);
+  filter:hue-rotate(169deg);
+}
+#emptypin{
+  z-index:1000;
+  position:absolute;
+  height: 25px;
+  width: auto;
+  z-index:4;
 }
 #emptypinicon{
   position: absolute;
