@@ -131,6 +131,21 @@ height:40px;
 margin-top:5px;
 z-index:2;
 }
+#login2{
+width:130px;
+padding-left:10px;
+right: 10px;
+height:40px;
+margin-top:5px;
+z-index:2;
+}
+#rightside{
+  position:absolute;
+  left:1145px;
+}
+a:hover{
+  color:blue;
+}
 
 #rogueText{
 margin-top:-7px;

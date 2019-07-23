@@ -61,8 +61,6 @@ class App extends Component {
 
           <Header />
 
-          <div id = "safetytab"></div>
-
           <Bubble />
 
           <div id="rectangle"></div>
@@ -72,6 +70,13 @@ class App extends Component {
 
 
           <footer>
+<<<<<<< HEAD
+            <div id = "safetytab"></div>
+            <button onClick = {this.signOut}>Sign Out</button>
+            <a id = "rightside" href="./safety" class = "linkText">Safety Information</a>
+          </footer>
+=======
+>>>>>>> d3eee1555454a8ca41f667382e4e986c57f92b4c
 
             <button id = "signout" className = "small" onClick = {this.signOut}>SIGN OUT</button>
           </footer>
