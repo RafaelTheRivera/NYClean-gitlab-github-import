@@ -8,7 +8,7 @@ import emptypinicon from './../images/emptypinicon.png';
 import emptypin from './../images/pin.png';
 import add from './../images/add.png';
 import cover from './../images/cover.png';
-import Tabs from 'react-bootstrap/Tabs';
+import safetyicon from './../images/safetyicon.png';
 
 class Bubble extends Component{
   constructor(props){
@@ -212,6 +212,8 @@ class Bubble extends Component{
             </div>
             <img className = "cover" id = "cover4" src = {cover} alt = "cover"/>
           </span>
+
+        <a href="./safety"><img id = "safetyicon" src = {safetyicon} alt = "safetyicon"/></a>
 
       </div>
     );
