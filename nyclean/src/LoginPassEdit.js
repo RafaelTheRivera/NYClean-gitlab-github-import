@@ -79,7 +79,6 @@ class LoginPassEdit extends Component {
       console.log('false')
       return(
         <div>
-        <Header />
           <br></br><h1><center class = "normalText">Please Relog after a password change.</center></h1>
           <StyledFirebaseAuth uiConfig = {uiConfig} firebaseAuth = {firebase.auth()}/>
         </div>

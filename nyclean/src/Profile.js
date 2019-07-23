@@ -113,7 +113,7 @@ class Profile extends Component {
     </h6>
     <div id="profilecircle">
     <img src = {this.state.imageSrc} id = "profileimg"/>
-          <p>Change Profile Picture:</p><form onSubmit = {this.submitInput}>
+          <form onSubmit = {this.submitInput}>
           <input
           type = "images"
           name = "profilePic"
