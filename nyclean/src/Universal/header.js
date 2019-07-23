@@ -1,16 +1,27 @@
 import React, {Component} from 'react';
 import './../App.css';
+<<<<<<< HEAD
 import firebase from 'firebase';
 import headergradient from './../images/headergradient.png';
 import greenyc from './../images/greenyc.png';
+=======
+import headergradient from './../images/headergradient.png';
+import greenyc from './../images/greenyc.png';
+import firebase from './../Firestore';
+
+>>>>>>> ca9f0dce26c4a17902015f2270bb84c34f579f77
 
 class Header extends Component {
   constructor(){
     super();
     this.state = {search: "",
                   username: "",
+<<<<<<< HEAD
                   profileWidth: "",
                   imgsrc:null};
+=======
+                  profileWidth: ""};
+>>>>>>> ca9f0dce26c4a17902015f2270bb84c34f579f77
   }
   componentWillMount(){
     firebase.auth().onAuthStateChanged(user => {
@@ -21,6 +32,7 @@ class Header extends Component {
     else {
       this.setState({profileWidth: user.displayName.length * 8.5 + 50 + "px"});
     }
+<<<<<<< HEAD
     const db = firebase.firestore();
     
     const userRef = db.collection("users");
@@ -32,13 +44,49 @@ class Header extends Component {
         console.log("srcset")
         console.log(this.state.imgsrc)
     })
+=======
+>>>>>>> ca9f0dce26c4a17902015f2270bb84c34f579f77
     });
   }
   updateSearchBar = e => {
     this.setState({
       [e.target.name]: e.target.value
     });
+<<<<<<< HEAD
     this.state = {};
+=======
+  }
+  getProfilePicture = e => {
+    //find user's profile photo
+  }
+  getSearch = e => {
+    //find search results based on updateSearchBar
+    //note: must call the search results bar
+    e.preventDefault();
+    //const db = firebase.firestore();
+    /*let reviewBase = db.collection(open this database later);
+    //program function to find distances based on an inputted location and search coordinates
+    let query = reviewBase.where(/*query within);
+    console.log(query);
+    //program function to display results based on search criteria
+    */
+  }
+  checkLoginStatus = e => {
+
+  }
+  isAtHome() {
+    console.log("running");
+    const url = window.location.href;
+    const length = url.length;
+    var output;
+    if (length > 23 && url.indexOf("search") < 0){
+      output = "visible";
+      return(output);
+    }else{
+      output = "hidden";
+      return(output);
+    }
+>>>>>>> ca9f0dce26c4a17902015f2270bb84c34f579f77
   }
   render(){
     return(
@@ -61,17 +109,28 @@ class Header extends Component {
           <div className= "headerItem" id = "logo">
             <a href = "/"> <img id = "greenyc" src = {greenyc} alt= "logo"/> </a>
           </div>
-            <div className= "headerItem" id = "login2" style = {{width: this.state.profileWidth}}>
+
+            <div className= "headerItem" id = "login" style = {{width: this.state.profileWidth}}>
               <a href = "./profpage"><span id="rogueText">{this.state.username}</span></a>
+<<<<<<< HEAD
               {console.log(this.state.imgsrc)}
               <img alt="" id = "profilepic" src = {this.state.imgsrc}/>
               </div>
+=======
+              <img alt="" id = "profilepic" src = /*should actually link to individual profiles*/"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"/>
+            </div>
+
+>>>>>>> ca9f0dce26c4a17902015f2270bb84c34f579f77
           <a href = "./profpage">
-            <div className= "headerItem" id = "login2" style = {{width: this.state.profileWidth}}>
+            <div className= "headerItem" id = "login" style = {{width: this.state.profileWidth}}>
               <span id="rogueText">{this.state.username}</span>
             </div>
 
           </a>
+<<<<<<< HEAD
+=======
+
+>>>>>>> ca9f0dce26c4a17902015f2270bb84c34f579f77
       </div>
     )
   }

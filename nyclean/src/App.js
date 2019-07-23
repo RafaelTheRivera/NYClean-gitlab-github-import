@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Header from './Universal/header.js';
 import './App.css';
 import footergradient from './images/footergradient.png';
 import safetyicon from './images/safetyicon.png';
@@ -60,8 +59,6 @@ class App extends Component {
 
         <div style = {{overflow: "hidden"}}>
 
-          <Header />
-
           <Bubble />
 
           <div id="rectangle"></div>
@@ -71,11 +68,21 @@ class App extends Component {
           <a href="./safety"><img id = "safetyicon" src = {safetyicon} alt = "safetyicon"/></a>
 
           <footer>
+
+          <footer>
+
             <div id = "safetytab"></div>
+
             <button onClick = {this.signOut}>Sign Out</button>
             <a id = "rightside" href="./safety" class = "linkText">Safety Information</a>
           </footer>
 
+            <a id = "safety" href="./safety" class = "linkText">Safety Information</a>
+
+
+            <button id = "signout" className = "small" onClick = {this.signOut}>SIGN OUT</button>
+
+          </footer>
 
         </div>
       );

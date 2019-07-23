@@ -225,7 +225,6 @@ z-index:2;
   top:40px;
   left:0px;
   z-index:0;
-  filter:hue-rotate(169deg);
 }
 #emptypin{
   z-index:1000;
@@ -275,7 +274,7 @@ z-index:2;
   margin-right: 25px;
   height: 40px;
   width: auto;
-  z-index:2;
+  z-index:4;
 }
 
 #friends{
@@ -377,8 +376,8 @@ footer {
   padding-top: 20px;
   padding-left:15px;
   padding-right: 15px;
-
 }
+
 #bub4{
   top:375px;
 }
@@ -466,7 +465,6 @@ footer {
   margin-top: 50px;
   margin-left: 150px;
 }
-
 #safetycontent{
   margin-left: 100px;
   margin-right: 100px;
