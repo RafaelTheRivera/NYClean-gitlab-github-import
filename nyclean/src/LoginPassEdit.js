@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import firebase from './Firestore';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { Redirect } from 'react-router-dom'
-import Header from './Universal/header'
 import './App.css'
 
 const uiConfig = {

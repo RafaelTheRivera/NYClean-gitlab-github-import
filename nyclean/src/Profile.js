@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Header from './Universal/header';
 import './App.css';
 import firebase from './Firestore'
 import { Redirect } from 'react-router-dom';
@@ -7,13 +6,8 @@ import back from './images/back.png';
 import edit from './images/edit.png';
 
 import greenyclogo from './images/greenyclogo.png';
-<<<<<<< HEAD
-const db = firebase.firestore();
-=======
 
 const db = firebase.firestore();
-
->>>>>>> d3eee1555454a8ca41f667382e4e986c57f92b4c
 
 class Profile extends Component {
   constructor(){

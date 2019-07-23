@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import firebase from './Firestore';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { Redirect } from 'react-router-dom'
-import Header from './Universal/header'
+import Bubble from "./Universal/bubble.js";
 import './App.css'
 
 const uiConfig = {
@@ -76,7 +76,7 @@ class Login extends Component {
       console.log('false')
       return(
         <div>
-        <Header />
+        <Bubble />
           <br /><br /><br /><h1><center class = "normalText">Please Log In/Sign Up</center></h1>
           <StyledFirebaseAuth uiConfig = {uiConfig} firebaseAuth = {firebase.auth()}/>
         </div>
