@@ -12,6 +12,7 @@ import emptypinicon from './../images/emptypinicon.png';
 import emptypin from './../images/pin.png';
 import add from './../images/add.png';
 import cover from './../images/cover.png';
+import safetyicon from './../images/safetyicon.png'
 import Tabs from 'react-bootstrap/Tabs';
 
 class Bubble extends Component{
@@ -201,7 +202,6 @@ class Bubble extends Component{
           <div className= "headerItem" id = "logo">
             <a href = "/"> <img id = "greenyc" src = {greenyc} alt= "logo"/> </a>
           </div>
-          <a href = "./profpage">
             <form onSubmit = {this.getSearch}>
               <div className= "headerItem" id = "search">
                 <input
@@ -216,6 +216,7 @@ class Bubble extends Component{
                 </button>
               </div>
             </form>
+          <a href = "./profpage">
             <div className= "headerItem" id = "login" style = {{width: this.state.profileWidth}}>
               <span id="rogueText">{this.state.username}</span>
               <img alt="" id = "profilepic" src = /*should actually link to individual profiles*/"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"/>
@@ -294,6 +295,7 @@ class Bubble extends Component{
             </div>
             <img className = "cover" id = "cover4" src = {cover} alt = "cover"/>
           </span>
+        <img id = "safetyicon" src = {safetyicon} alt = {"safety"}  style = {{marginTop: this.state.height - 179}}/>
 
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
