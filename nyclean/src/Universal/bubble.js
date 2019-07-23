@@ -12,6 +12,7 @@ import emptypinicon from './../images/emptypinicon.png';
 import emptypin from './../images/pin.png';
 import add from './../images/add.png';
 import cover from './../images/cover.png';
+import safetyicon from './../images/safetyicon.png';
 import Tabs from 'react-bootstrap/Tabs';
 
 class Bubble extends Component{
@@ -49,9 +50,9 @@ class Bubble extends Component{
 
   componentDidMount(){
     window.addEventListener("resize", this.updateDimensions);
-    this.height = window.innerHeight-90;
-    this.corner1 = L.latLng(40.4079549, -74.2768574);
-    this.corner2 = L.latLng(41.0210528, -73.6697356);
+    this.height = this.state.height - 40;
+    this.corner1 = L.latLng(40.4079549, -74.5768574);
+    this.corner2 = L.latLng(41.0210528, -73.5697356);
     this.bounds = L.latLngBounds(this.corner1, this.corner2);
     this.overlayCoords = [
                     [[41.3618319, -75.2051234],[41.469047, -72.2873209],[39.7803319, -72.3759987],[39.4415253, -77.2803378]], // outer ring
@@ -72,7 +73,7 @@ class Bubble extends Component{
         L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
 	         attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
         }),
-        L.polygon(this.overlayCoords, {color: 'black', fillOpacity: .7, stroke: false})
+        L.polygon(this.overlayCoords, {color: "#28BBB4", fillOpacity: .2, stroke: false})
       ]
     });
     window.addEventListener("resize", this.updateDimensions);
@@ -294,6 +295,9 @@ class Bubble extends Component{
             <div className = "bubble" id = "bub4" style = {{top: this.state.height - 379}}>
             </div>
             <img className = "cover" id = "cover4" src = {cover} alt = "cover"/>
+
+          <a href = "/safety"><img id = "safetyicon" src = {safetyicon} alt = "safetyicon"/></a>
+
           </span>
 
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
@@ -302,7 +306,7 @@ class Bubble extends Component{
         <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
   integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
   crossOrigin=""></script>
-        <div id="map" style = {{height: this.state.height - 90}}></div>
+        <div id="map" style = {{height: this.state.height - 40}}></div>
       </div>
     );
   }
