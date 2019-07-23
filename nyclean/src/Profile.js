@@ -1,24 +1,41 @@
 import React, {Component} from 'react';
 import Header from './Universal/header';
 import './App.css';
-<<<<<<< HEAD
 import firebase from './Firestore'
 import { Redirect } from 'react-router-dom';
-=======
 import back from './images/back.png';
 import greenyclogo from './images/greenyclogo.png';
->>>>>>> 28f1325f0801ffbf8c4d1f90f1014a35578756d6
+const db = firebase.firestore();
 
 class Profile extends Component {
   constructor(){
     super();
     this.state = {userName:"username",
     Totaltrash:20,
-    imageSrc: "https://m.media-amazon.com/images/M/MV5BMTc0MDMyMzI2OF5BMl5BanBnXkFtZTcwMzM2OTk1MQ@@._V1_UX214_CR0,0,214,317_AL_.jpg",
+    imageSrc: "",
     imageInput: '',
     userBio:'',
     signedIn:true};
   }
+  updateInput = e => {
+      this.setState({
+        imageInput: e.target.value
+      });
+    }
+  submitInput = e => {
+    e.preventDefault();
+    this.setState({
+      imageSrc: this.state.imageInput,
+  })
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        const userRef = db.collection("users");
+        userRef.doc(user.uid).update({
+          imageSrc: this.state.imageSrc
+        })
+      }
+      });
+    }
   componentWillMount(){
     firebase.auth().onAuthStateChanged(user => {
       this.setState({userName: user.displayName});
@@ -39,6 +56,9 @@ class Profile extends Component {
         const userRef = db.collection("users");
 
         userRef.doc(user.uid).get().then(getDoc => {
+          this.setState({
+            imageSrc: getDoc.data().imageSrc
+          })
           if (!getDoc.exists){
             userRef.doc(user.uid).set({
               fullname: user.displayName,
@@ -53,17 +73,7 @@ class Profile extends Component {
       }
     });
   }
-  updateInput = e => {
-      this.setState({
-        imageInput: e.target.value
-      });
-    }
-  submitInput = e => {
-    e.preventDefault();
-    this.setState({
-      imageSrc: this.state.imageInput
-    })
-  }
+
   renderRedirect = () => {
       return <Redirect to='/Login' />
   }
@@ -86,7 +96,7 @@ class Profile extends Component {
     <center><h1>My Profile</h1></center>
 
     <div id="profilecircle">
-    <img src = {this.state.imageSrc}/>
+    <img src = {this.state.imageSrc} id = "profileimg"/>
           <form onSubmit = {this.submitInput}>
           <input
           type = "images"
