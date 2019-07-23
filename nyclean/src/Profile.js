@@ -5,15 +5,9 @@ import firebase from './Firestore'
 import { Redirect } from 'react-router-dom';
 import back from './images/back.png';
 import edit from './images/edit.png';
-
 import greenyclogo from './images/greenyclogo.png';
-<<<<<<< HEAD
-const db = firebase.firestore();
-=======
 
 const db = firebase.firestore();
-
->>>>>>> d3eee1555454a8ca41f667382e4e986c57f92b4c
 
 class Profile extends Component {
   constructor(){
@@ -22,7 +16,7 @@ class Profile extends Component {
     Totaltrash:20,
     imageSrc: "",
     imageInput: '',
-    userBio:'',
+    userBio:'Default Text',
     signedIn:true};
   }
   updateInput = e => {
@@ -118,7 +112,7 @@ class Profile extends Component {
     <a href = "/EditPass" class = "linkText">Change Password</a><br/>
     </h6>
     <div id="profilecircle">
-    <img src = {this.state.imageSrc} id = "profileimg"/>
+    <img alt = "" src = {this.state.imageSrc} id = "profileimg"/>
           <p>Change Profile Picture:</p><form onSubmit = {this.submitInput}>
           <input
           type = "images"

@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 import './../App.css';
-
+import firebase from 'firebase';
+import headergradient from './../images/headergradient.png';
+import greenyc from './../images/greenyc.png';
 
 class Header extends Component {
   constructor(){
     super();
-<<<<<<< HEAD
     this.state = {search: "",
                   username: "",
                   profileWidth: "",
-                  imgsrc:""};
+                  imgsrc:null};
   }
   componentWillMount(){
     firebase.auth().onAuthStateChanged(user => {
@@ -21,16 +22,15 @@ class Header extends Component {
       this.setState({profileWidth: user.displayName.length * 8.5 + 50 + "px"});
     }
     const db = firebase.firestore();
-    db.settings ({
-      timestampsInSnapshots: true
-    });
-
+    
     const userRef = db.collection("users");
 
     userRef.doc(user.uid).get().then(getDoc => {
         this.setState({
           imgsrc: getDoc.data().imageSrc
         })
+        console.log("srcset")
+        console.log(this.state.imgsrc)
     })
     });
   }
@@ -38,19 +38,11 @@ class Header extends Component {
     this.setState({
       [e.target.name]: e.target.value
     });
-=======
     this.state = {};
-  }
-  componentWillMount(){
->>>>>>> d3eee1555454a8ca41f667382e4e986c57f92b4c
-  }
-  getProfilePicture = e => {
-    //find user's profile photo
   }
   render(){
     return(
       <div>
-<<<<<<< HEAD
         <img id = "bigHeader" src = {headergradient} alt = {"topgradient"}/>
           <form>
             <div className= "headerItem" id = "search">
@@ -71,7 +63,8 @@ class Header extends Component {
           </div>
             <div className= "headerItem" id = "login2" style = {{width: this.state.profileWidth}}>
               <a href = "./profpage"><span id="rogueText">{this.state.username}</span></a>
-              <img alt="" id = "profilepic" src ={this.state.imgsrc}/>
+              {console.log(this.state.imgsrc)}
+              <img alt="" id = "profilepic" src = {this.state.imgsrc}/>
               </div>
           <a href = "./profpage">
             <div className= "headerItem" id = "login2" style = {{width: this.state.profileWidth}}>
@@ -79,9 +72,6 @@ class Header extends Component {
             </div>
 
           </a>
-=======
-
->>>>>>> d3eee1555454a8ca41f667382e4e986c57f92b4c
       </div>
     )
   }
