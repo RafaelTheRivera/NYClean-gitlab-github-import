@@ -12,12 +12,12 @@ class Safety extends Component {
   render(){
     return(
       <div>
-        
+
         <a href = "/"> <img id = "back" src = {back} alt= "back"/>
         <img id = "greenyclogo" src = {greenyclogo} alt= "logo"/>
         </a>
 
-        <center><h1>Safety Information</h1></center>
+        <center><h1 id = "safetyheader"><b>SAFETY INFORMATION</b></h1></center>
         <br />
 
         <div id = "safetycontent">
