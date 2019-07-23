@@ -150,9 +150,23 @@ class Bubble extends Component{
             <div className = "blocker" id = "blo1">
             </div>
             <div className = "bubble" id = "bub1">
-              Post by: paige
-              <center><div id="insertimage"></div></center>
-              Insert caption here
+              <p className = "small">Post by: paige
+              <center><div id="insertimage">
+
+              <img src = {this.state.imageSrc}/>
+                    <form onSubmit = {this.submitInput}>
+                    <input
+                    type = "images"
+                    name = "profilePic"
+                    placeholder = "Image URL"
+                    onChange = {this.updateInput}
+                    value = {this.state.imageSrc}
+                    />
+                    <button type = "submit">Submit</button>
+                    </form>
+              </div></center>
+              Insert caption here</p>
+              <img id = "add" src = {add} alt = "add poster"/>
             </div>
             <img className = "cover" id = "cover1" src = {cover} alt = "cover"/>
           </span>
@@ -164,8 +178,8 @@ class Bubble extends Component{
             </div>
             <div className = "bubble" id = "bub2">
             </div>
-            <img id = "add" src = {add} alt = "addposter"/>
             <img className = "cover" id = "cover2" src = {cover} alt = "cover"/>
+
           </span>
 
         <img id = "leader" src = {leader} alt = {"leaderboard"} onClick = {this.openLeader}/>
@@ -175,15 +189,16 @@ class Bubble extends Component{
             <div className = "blocker" id = "blo3">
             </div>
             <div className = "bubble" id = "bub3">
-            <center><p id = "totalcount">TOTAL COUNT</p> <p id = "livecount">12,345 lbs</p> <br />
+            <center><p id = "totalcount">TOTAL COUNT</p> <p id = "livecount"><b>12,345</b> lbs</p> <br />
             Weekly Leaderboard</center>
-            <ol>
+            <br />
+            <p className = "small"><ol>
               <li>user 123 lbs</li>
               <li>user 123 lbs</li>
               <li>user 123 lbs</li>
               <li>user 123 lbs</li>
               <li>user 123 lbs</li>
-            </ol>
+            </ol></p>
             </div>
             <img className = "cover" id = "cover3" src = {cover} alt = "cover"/>
           </span>

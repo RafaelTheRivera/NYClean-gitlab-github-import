@@ -4,14 +4,14 @@
   top: 5px;
 }
 .linkText {
-  font-family: Helvetica, Sans-serif;
+  font-family:'Open Sans', sans-serif;
   color: #1000A4;
   font-size: 100%;
   letter-spacing: 1px;
   word-spacing: 2px;
 }
 .normalText{
-  font-family: Helvetica, sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 100%;
   letter-spacing: 1px;
   word-spacing: 2px;
@@ -21,7 +21,7 @@
   position: absolute;
   top: 0;
   width:100%;
-  height:90px;
+  height:100px;
   z-index: 2;
 }
 
@@ -61,29 +61,8 @@ padding-top: 8px;
 }
 
 #greenyc {
-height: 37px;
+height: 42px;
 width: auto;
-}
-
-#safetytab{
-  height:50px;
-  width:250px;
-  border-color: black;
-  border-style:solid;
-  border-width:1px;
-  border-top-left-radius:10px;
-  border-top-right-radius:10px;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  background-color:white;
-  z-index:-1;
-}
-
-#safety{
-  z-index: 3;
 }
 
 #back{
@@ -110,7 +89,7 @@ width: auto;
 margin-left: 25%;
 width: 50%;
 text-align: center;
-padding-top: 9px;
+padding-top: 7px;
 height: 50px;
 font-family: helvetica;
 font-weight: bold;
@@ -208,7 +187,7 @@ z-index:2;
   position: absolute;
   right:0;
   top: 0;
-  margin-top: 75px;
+  margin-top: 85px;
   margin-right: 25px;
   height: 40px;
   width: auto;
@@ -227,7 +206,7 @@ z-index:2;
   position: absolute;
   right:0;
   top: 0;
-  margin-top: 75px;
+  margin-top: 85px;
   margin-right: 25px;
   height: 40px;
   width: auto;
@@ -238,7 +217,7 @@ z-index:2;
   position: absolute;
   right:0;
   top: 0;
-  margin-top: 140px;
+  margin-top: 150px;
   margin-right: 25px;
   height: 40px;
   width: auto;
@@ -249,7 +228,18 @@ z-index:2;
   position: absolute;
   right:0;
   top: 0;
-  margin-top: 205px;
+  margin-top: 215px;
+  margin-right: 25px;
+  height: 40px;
+  width: auto;
+  z-index:2;
+}
+
+#safetyicon{
+  position: absolute;
+  right:0;
+  top: 0;
+  margin-top: 575px;
   margin-right: 25px;
   height: 40px;
   width: auto;
@@ -383,7 +373,7 @@ footer {
   margin-right: 44px;
 }
 #cover4{
-  margin-top: 620px;
+  margin-top: 645px;
   margin-right: 44px;
 }
 
@@ -392,9 +382,10 @@ footer {
   right:0;
   top: 0;
   margin-right: 25px;
-  margin-top: 17px;
+  margin-top: 15px;
   height: 15px;
   width: auto;
+  z-index: 3;
 }
 
 #insertimage{
@@ -444,12 +435,21 @@ footer {
   margin-right: 100px;
 }
 
+#safetyheader{
+  font-family: "Arial Black", "Arial Bold", Gadget, sans-serif;
+}
+
 #livecount{
   font-size: 30px;
   margin-top: 0px;
+  color: #F26721;
 }
 
 #totalcount{
   font-size: 10px;
   margin-bottom: 0px;
+}
+
+.small{
+  font-size: 12px;
 }
