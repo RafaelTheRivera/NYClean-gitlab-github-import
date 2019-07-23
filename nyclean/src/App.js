@@ -75,7 +75,7 @@ class App extends Component {
           <footer>
             <div id = "safetytab"></div>
 
-            <button onClick = {this.signOut}>Sign Out</button>
+            <button id = "signout" className = "small" onClick = {this.signOut}>SIGN OUT</button>
           </footer>
 
         </div>

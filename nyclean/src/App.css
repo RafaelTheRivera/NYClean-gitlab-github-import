@@ -26,7 +26,7 @@
 }
 #Indent1{
   position:absolute;
-  left:120px; 
+  left:120px;
 }
 #bigHeader{
   position: absolute;
@@ -468,4 +468,15 @@ footer {
 
 .small{
   font-size: 12px;
+}
+
+#signout{
+  background-color: white;
+  border-color: black;
+  border-radius: 5px;
+}
+
+.edit{
+  height: 15px;
+  width: auto;
 }
