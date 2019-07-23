@@ -5,6 +5,7 @@ import firebase from './Firestore'
 import { Redirect } from 'react-router-dom';
 import back from './images/back.png';
 
+
 class EditPass extends Component {
   constructor(){
     super();

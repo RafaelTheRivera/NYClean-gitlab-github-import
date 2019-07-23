@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import Header from './Universal/header.js';
 import './App.css';
 import footergradient from './images/footergradient.png';
-import safetyicon from './images/safetyicon.png';
 import Map from './Universal/map.js'
 import Bubble from './Universal/bubble.js';
 import { Redirect } from 'react-router-dom';
@@ -68,14 +67,19 @@ class App extends Component {
 
           <Map />
 
-          <a href="./safety"><img id = "safetyicon" src = {safetyicon} alt = "safetyicon"/></a>
+
 
           <footer>
+<<<<<<< HEAD
             <div id = "safetytab"></div>
             <button onClick = {this.signOut}>Sign Out</button>
             <a id = "rightside" href="./safety" class = "linkText">Safety Information</a>
           </footer>
+=======
+>>>>>>> d3eee1555454a8ca41f667382e4e986c57f92b4c
 
+            <button id = "signout" className = "small" onClick = {this.signOut}>SIGN OUT</button>
+          </footer>
 
         </div>
       );

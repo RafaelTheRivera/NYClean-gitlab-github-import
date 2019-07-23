@@ -4,8 +4,16 @@ import './App.css';
 import firebase from './Firestore'
 import { Redirect } from 'react-router-dom';
 import back from './images/back.png';
+import edit from './images/edit.png';
+
 import greenyclogo from './images/greenyclogo.png';
+<<<<<<< HEAD
 const db = firebase.firestore();
+=======
+
+const db = firebase.firestore();
+
+>>>>>>> d3eee1555454a8ca41f667382e4e986c57f92b4c
 
 class Profile extends Component {
   constructor(){
@@ -99,13 +107,15 @@ class Profile extends Component {
     </a>
 
 
-    <center><h1>My Profile</h1></center>
-    <h2 id = "username">{this.state.userName} <a href = "/EditUser" class = "linkText1">Change Username</a></h2>
-    <br /><br /><br />
-    <h6 id = "profLinks"><a href = "/EditEmail" class ="linkText">Change Email</a><br></br>
-    <a href = "/EditPass" class = "linkText">Change Password</a><br></br>
-    <a href = "/EditBio" class = "linkText">Edit Bio</a>
-    <p>{this.state.userBio}</p>
+    <center><h1 id = "safetyheader">MY PROFILE</h1></center>
+    <h2 id = "username">{this.state.userName} <a href = "/EditUser" class = "linkText1"><img className = "edit" src = {edit} alt = "edit"/></a></h2>
+    <br /><br />
+    <h6 id = "profLinks">
+    <p><br />{this.state.userBio}
+    <a href = "/EditBio" class = "linkText"><img className = "edit" src = {edit} alt = "edit"/></a></p>
+    <br/>
+    <a href = "/EditEmail" class ="linkText">Change Email</a><br/>
+    <a href = "/EditPass" class = "linkText">Change Password</a><br/>
     </h6>
     <div id="profilecircle">
     <img src = {this.state.imageSrc} id = "profileimg"/>
