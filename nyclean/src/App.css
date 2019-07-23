@@ -1,3 +1,4 @@
+
 .signOut {
   position:absolute;
   left: 1135px;
@@ -66,6 +67,8 @@ top: 0;
 #greenyc {
 height: 33px;
 width: auto;
+filter: grayscale(0%);
+-webkit-filter: (0%);
 }
 
 #safetytab{
@@ -154,15 +157,6 @@ white-space:nowrap;
 background-color: #aaffaa;
 }
 
-#sneaky{
-  position:absolute;
-  height:40px;
-  width:300px;
-  margin-left:0px;
-  top: 0;
-  background-color: white;
-  z-index:-1;
-}
 #submit{
 width:30px;
 height:30px;
@@ -229,7 +223,7 @@ z-index:2;
   top:40px;
   left:0px;
   z-index:0;
-  filter: grayscale(100%);
+  filter:hue-rotate(169deg);
 }
 #emptypinicon{
   position: absolute;

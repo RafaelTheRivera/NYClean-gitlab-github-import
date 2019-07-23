@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
 import './../App.css';
+import L from 'leaflet';
+import headergradient from './../images/headergradient.png';
+import firebase from './../Firestore';
+import greenyc from './../images/greenyc.png';
 import pin from './../images/pinicon1.png';
 import feed from './../images/feedicon1.png';
 import leader from './../images/leadericon1.png';
@@ -20,7 +24,13 @@ class Bubble extends Component{
                   dragEvent: false,
                   mouseDown: 0,
                   x: 0,
-                  y: 0
+                  y: 0,
+                  username: "",
+                  profileWidth: "",
+                  height:null,
+                  search: "",
+                  lat: 40.5,
+                  long: -74
                 }
       this.mouseDown = this.mouseDown.bind(this);
       this.mouseUp = this.mouseUp.bind(this);
@@ -31,12 +41,44 @@ class Bubble extends Component{
       this.openLeader = this.openLeader.bind(this);
       this.openFriends = this.openFriends.bind(this);
       this.updateDimensions = this.updateDimensions.bind(this);
+      this.componentDidMount = this.componentDidMount.bind(this);
+      this.getSearch = this.getSearch.bind(this);
     }
 
   componentDidMount(){
     window.addEventListener("resize", this.updateDimensions);
+    this.height = window.innerHeight-90;
+    this.corner1 = L.latLng(40.4079549, -74.2768574);
+    this.corner2 = L.latLng(41.0210528, -73.6697356);
+    this.bounds = L.latLngBounds(this.corner1, this.corner2);
+    this.overlayCoords = [
+                    [[41.3618319, -75.2051234],[41.469047, -72.2873209],[39.7803319, -72.3759987],[39.4415253, -77.2803378]], // outer ring
+                    [[40.9174387, -73.9182608],[40.9036805, -73.8616911],[40.9101667, -73.8529897],
+                    [40.9047576, -73.8403284], [40.8964564, -73.8370143], [40.8769762, -73.7574783], [40.7915645, -73.7683374], [40.7534296, -73.7008563],
+                    [40.7387889, -73.6995021], [40.7270097, -73.7079006], [40.7206274, -73.727728], [40.6524473, -73.7232974], [40.5938638, -73.7365575],
+                    [40.5387046, -73.9406415], [40.4925961, -74.2546212], [40.513526, -74.258347], [40.5210896, -74.2461042], [40.5533506, -74.2497042],
+                    [40.5581952, -74.216163], [40.6308063, -74.2023198], [40.6464677, -74.1808265], [40.6423436, -74.1423563], [40.6517223,-74.0660873]] // hole
+                  ];
+    this.map = L.map('map', {
+      center: [40.7280822, -73.9937973],
+      zoom: 17,
+      minZoom:11,
+      maxBounds: this.bounds,
+      zoomSnap: 0.2,
+      layers: [
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+	         attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+        }),
+        L.polygon(this.overlayCoords, {color: 'black', fillOpacity: .7, stroke: false})
+      ]
+    });
+    window.addEventListener("resize", this.updateDimensions);
   }
   componentWillMount(){
+    firebase.auth().onAuthStateChanged(user => {
+      this.setState({username: user.displayName,
+                    profileWidth: user.displayName.length * 8.5 + 50 + "px"});
+    });
     document.body.onmousedown = this.mouseDown;
     document.body.onmouseup = this.mouseUp;
     document.body.onmousemove = this.handleMouseMove.bind(this);
@@ -44,6 +86,26 @@ class Bubble extends Component{
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
+  }
+  updateSearchBar = e => {
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  }
+  getSearch = e => {
+    //find search results based on updateSearchBar
+    //note: must call the search results bar
+    e.preventDefault();
+    const search = this.state.search;
+    const db = firebase.firestore();
+    let reviewBase = db.collection("locations");
+    //program function to find distances based on an inputted location and search coordinates
+    let query = reviewBase.where("name", "==", search.toLowerCase());
+    console.log(query);
+    let lat = reviewBase.doc(query.lat).get();
+    let long = reviewBase.doc(query.long).get();
+    this.setState({lat: lat, long: long});
+    this.map.flyTo([this.state.lat, this.state.long], 16);
   }
   updateDimensions() {
    var w = window;
@@ -61,37 +123,30 @@ class Bubble extends Component{
   mouseDown(e){
     this.setState({mouseDown: 1});
     this.setState({x: e.screenX - 7, y: e.screenY - 96});
-    console.log(this.state.mouseDown);
     if (this.state.mouseLeavePin === false ){
       this.setState({dragEvent: true, unmergedImages: "visible"});
-      console.log("dragEvent = " + this.state.dragEvent);
     }
-    console.log("down");
   }
-  mouseUp(){
+  mouseUp(e){
     this.setState({mouseDown: 0});
-    console.log(this.state.mouseDown);
     if (this.state.mouseLeavePin === true && this.state.dragEvent === true){
-      console.log("pinned");
+      var coords = this.map.mouseEventToLatLng(e);
+      console.log(coords);
+      var newMark = L.marker(coords).addTo(this.map);
+      console.log(newMark.className);
       this.setState({dragEvent: false, unmergedImages: "hidden"});
-      console.log("dragEvent = " + this.state.dragEvent);
     }else if (this.state.dragEvent === false){
       this.setState({dragEvent: false, unmergedImages: "hidden"});
-      console.log("dragEvent = " + this.state.dragEvent);
     }else if (this.state.mouseLeavePin === false){
       this.openPin();
       this.setState({dragEvent: false, unmergedImages: "hidden"});
-      console.log("dragEvent = " + this.state.dragEvent);
     }
-    console.log("up");
   }
   mouseEnterPin(){
     this.setState({mouseLeavePin: false});
-    console.log("in pin");
   }
   mouseExitPin(){
     this.setState({mouseLeavePin: true});
-    console.log("out of pin");
   }
   openPin(){
     if (this.state.pinIsOpen === "hidden"){
@@ -139,6 +194,32 @@ class Bubble extends Component{
   render(){
     return(
       <div>
+        <img id = "bigHeader" src = {headergradient} alt = {"topgradient"}/>
+          <div className= "headerItem" id = "logo">
+            <a href = "/"> <img id = "greenyc" src = {greenyc} alt= "logo"/> </a>
+          </div>
+          <a href = "./profpage">
+            <form onSubmit = {this.getSearch}>
+              <div className= "headerItem" id = "search">
+                <input
+                  type = "text"
+                  id="box"
+                  name = "search"
+                  placeholder = " Search..."
+                  onChange = {this.updateSearchBar}
+                  value = {this.state.search}></input>
+                <button type = "submit" id="submit" className= "headerItem">
+                  <img alt="" src="https://images.vexels.com/media/users/3/143356/isolated/preview/64e14fe0195557e3f18ea3becba3169b-search-magnifying-glass-by-vexels.png" id="magnifying"/>
+                </button>
+              </div>
+            </form>
+            <div className= "headerItem" id = "login" style = {{width: this.state.profileWidth}}>
+              <span id="rogueText">{this.state.username}</span>
+              <img alt="" id = "profilepic" src = /*should actually link to individual profiles*/"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"/>
+            </div>
+
+          </a>
+
         <img id = "emptypin" src = {emptypin} draggable = "false" alt = {"solo pin"} style = {{visibility: this.state.unmergedImages, top: this.state.y, left: this.state.x}}/>
         <img id = "emptypinicon" src = {emptypinicon} draggable = "false" onMouseLeave = {this.mouseExitPin} onMouseOver = {this.mouseEnterPin} alt = {"empty pin"} style = {{visibility: this.state.unmergedImages}}/>
         <img id = "pin" src = {pin} alt = {"pin"} draggable = "false" onMouseLeave = {this.mouseExitPin} onMouseOver = {this.mouseEnterPin}/>
@@ -152,7 +233,6 @@ class Bubble extends Component{
               <img id = "add" src = {add} alt = "addposter"/>
               <center><div id="insertimage"></div></center>
               Insert caption here
-
             </div>
           </span>
         <img id = "feed" src = {feed} alt = {"feed"} onClick = {this.openFeed}/>
@@ -180,7 +260,6 @@ class Bubble extends Component{
               <li>user 123 lbs</li>
               <li>user 123 lbs</li>
             </ol>
-
             </div>
           </span>
         <img id = "friends" src = {friends} alt = {"friends"} onClick = {this.openFriends}  style = {{marginTop: this.state.height - 119}}/>
@@ -192,6 +271,14 @@ class Bubble extends Component{
             <div className = "bubble" id = "bub4" style = {{top: this.state.height - 379}}>
             </div>
           </span>
+
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+ integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+ crossOrigin=""/>
+        <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+  integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+  crossOrigin=""></script>
+        <div id="map" style = {{height: this.state.height - 90}}></div>
       </div>
     );
   }
