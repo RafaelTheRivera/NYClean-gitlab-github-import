@@ -2,11 +2,12 @@ import React, {Component} from 'react';
 import './App.css';
 import Header from './Universal/header'
 import firebase from './Firestore'
+import { Redirect } from 'react-router-dom';
 
 class EditPass extends Component {
   constructor(){
     super();
-    this.state = {passWord:"", newPass:"", currentUser:null};
+    this.state = {changed: false, passWord:"", newPass:"", currentUser:null};
   }
   componentWillMount(){
     firebase.auth().onAuthStateChanged(user => {
@@ -58,10 +59,17 @@ class EditPass extends Component {
     user.reauthenticateWithCredential(credential).then(() => {
       user.updatePassword(this.state.newPass).then(() => {
         console.log("Pass updated!");
+        this.setState({
+          changed:true
+        })
       }).catch((error) => { console.log(error); });
     }).catch((error) => { console.log(error); });
   }
+  renderRedirect = () => {
+      return <Redirect to='/profpage' />
+  }
   render(){
+  if (this.state.changed === true){
   return (
     <div class = "appText">
     <br></br><br></br>
@@ -71,7 +79,28 @@ class EditPass extends Component {
     onChange = {this.handleChange}
     value = {this.state.newPass}
     />
-    Re-ender Current Password:
+    Re-enter Current Password:
+    <input type = "text"
+    onChange = {this.handleChangePass}
+    value = {this.state.passWord}
+    />
+    <button onClick={this.changePass}>Change</button>
+    </form>
+    {this.renderRedirect()}
+    </div>
+  );
+  }
+  else {
+    return(
+    <div class = "appText">
+    <br></br><br></br>
+    <form class = "editUserBar" onSubmit={e=>e.preventDefault()}>
+    New Password:
+    <input type = "text"
+    onChange = {this.handleChange}
+    value = {this.state.newPass}
+    />
+    Re-enter Current Password:
     <input type = "text"
     onChange = {this.handleChangePass}
     value = {this.state.passWord}
@@ -81,6 +110,6 @@ class EditPass extends Component {
     </div>
   );
   }
-}
+}}
 
 export default EditPass;

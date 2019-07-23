@@ -4,10 +4,10 @@ import Header from './Universal/header'
 import firebase from './Firestore'
 import { Redirect } from 'react-router-dom';
 
-class EditUser extends Component {
+class EditEmail extends Component {
   constructor(){
     super();
-    this.state = {displayName:"", currentUser:null};
+    this.state = {changed: false, passWord:"", userName:"", currentUser:null};
   }
   componentWillMount(){
     firebase.auth().onAuthStateChanged(user => {
@@ -40,19 +40,31 @@ class EditUser extends Component {
   }
   handleChange = (event) => {
       this.setState({
-        displayName:event.target.value
+        userName:event.target.value
       });
   }
-  changeUser = () => {
+  handleChangePass = (event) => {
+      this.setState({
+        passWord:event.target.value
+      });
+  }
+  changeEmail = () => {
     // e.preventDefault();
     const user = firebase.auth().currentUser;
-      user.updateProfile({
-      displayName: this.state.displayName}).then(() => {
-        console.log("Name updated!");
+    console.log(user.displayName)
+    console.log(this.state.passWord);
+    const credential = firebase.auth.EmailAuthProvider.credential(
+        user.email,
+        this.state.passWord
+    );
+    user.reauthenticateWithCredential(credential).then(() => {
+      user.updateEmail(this.state.userName).then(() => {
+        console.log("Email updated!");
         this.setState({
           changed:true
         })
       }).catch((error) => { console.log(error); });
+    }).catch((error) => { console.log(error); });
   }
   renderRedirect = () => {
       return <Redirect to='/profpage' />
@@ -63,12 +75,17 @@ class EditUser extends Component {
     <div class = "appText">
     <br></br><br></br>
     <form class = "editUserBar" onSubmit={e=>e.preventDefault()}>
-    New Username:
+    New Email:
     <input type = "text"
     onChange = {this.handleChange}
-    value = {this.state.displayName}
+    value = {this.state.userName}
     />
-    <button onClick={this.changeUser}>Change</button>
+    Re-enter Current Password:
+    <input type = "text"
+    onChange = {this.handleChangePass}
+    value = {this.state.passWord}
+    />
+    <button onClick={this.changeEmail}>Change</button>
     </form>
     {this.renderRedirect()}
     </div>
@@ -78,12 +95,17 @@ class EditUser extends Component {
   <div class = "appText">
   <br></br><br></br>
   <form class = "editUserBar" onSubmit={e=>e.preventDefault()}>
-  New Username:
+  New Email:
   <input type = "text"
   onChange = {this.handleChange}
-  value = {this.state.displayName}
+  value = {this.state.userName}
   />
-  <button onClick={this.changeUser}>Change</button>
+  Re-enter Current Password:
+  <input type = "text"
+  onChange = {this.handleChangePass}
+  value = {this.state.passWord}
+  />
+  <button onClick={this.changeEmail}>Change</button>
   </form>
   </div>
 );
@@ -91,4 +113,4 @@ class EditUser extends Component {
 }
 }
 
-export default EditUser;
+export default EditEmail;
