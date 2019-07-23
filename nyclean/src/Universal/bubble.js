@@ -80,7 +80,7 @@ class Bubble extends Component{
   }
    handleMouseMove(e){
      if(this.state.dragEvent === true){
-       this.setState({x: e.screenX - 7, y: e.screenY - 95});
+       this.setState({x: e.clientX-7, y: e.clientY - 27});
      }
    }
   componentWillMount(){
