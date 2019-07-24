@@ -33,7 +33,9 @@ class Bubble extends Component{
                   height:null,
                   search: "",
                   lat: 40.5,
-                  long: -74
+                  long: -74,
+                  totalPins:0,
+                  newMark: null
                 }
       this.mouseDown = this.mouseDown.bind(this);
       this.mouseUp = this.mouseUp.bind(this);
@@ -134,10 +136,21 @@ class Bubble extends Component{
   mouseUp(e){
     this.setState({mouseDown: 0});
     if (this.state.mouseLeavePin === true && this.state.dragEvent === true){
+      console.log(this.state.newMark)
+      if(this.state.totalPins > 0){
+        this.map.removeLayer(this.state.newMark);
+      }
+      this.setState({totalPins: this.state.totalPins + 1});
+      console.log(this.state.totalPins);
       var coords = this.map.mouseEventToLatLng(e);
       console.log(coords);
-      var newMark = L.marker(coords).addTo(this.map);
-      console.log(newMark.className);
+      this.setState({newMark: L.marker(coords).addTo(this.map).bindPopup("<div id = 'editPopup'><p id = 'newPostHead'>New Post</p><div id = 'tab1'> Text</div> Pictures</div><div id = 'pinbody'><p id = 'poster'>Posted by: " + this.state.username + "</p><textarea id = 'bodyText' placeholder = 'Write something!'></textarea></div></div>").openPopup()});
+      const map = this.map;
+      const state = this.state;
+      this.state.newMark.on('popupclose', function(){
+        map.removeLayer(state.newMark);
+      });
+      this.map.flyTo(coords);
       this.setState({dragEvent: false, unmergedImages: "hidden"});
     }else if (this.state.dragEvent === false){
       this.setState({dragEvent: false, unmergedImages: "hidden"});
