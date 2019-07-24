@@ -15,6 +15,13 @@ import cover from './../images/cover.png';
 import safetyicon from './../images/safetyicon.png';
 import Tabs from 'react-bootstrap/Tabs';
 
+const db = firebase.firestore();
+db.settings ({
+  timestampsInSnapshots: true
+})
+
+const userRef = db.collection("users");
+
 class Bubble extends Component{
   constructor(props){
     super(props);
@@ -34,7 +41,7 @@ class Bubble extends Component{
                   search: "",
                   lat: 40.5,
                   long: -74,
-                  imgsrc:""
+                  imgsrc:null
                 }
       this.mouseDown = this.mouseDown.bind(this);
       this.mouseUp = this.mouseUp.bind(this);
@@ -48,7 +55,6 @@ class Bubble extends Component{
       this.componentDidMount = this.componentDidMount.bind(this);
       this.getSearch = this.getSearch.bind(this);
     }
-
   componentDidMount(){
     window.addEventListener("resize", this.updateDimensions);
     this.height = this.state.height - 40;
@@ -78,26 +84,6 @@ class Bubble extends Component{
       ]
     });
     window.addEventListener("resize", this.updateDimensions);
-    firebase.auth().onAuthStateChanged(user => {
-      if(user){
-      this.setState({username: user.displayName,
-                    profileWidth: user.displayName.length * 8.5 + 50 + "px"});
-    }
-    else {
-      this.setState({profileWidth: user.displayName.length * 8.5 + 50 + "px"});
-    }
-    const db = firebase.firestore();
-
-    const userRef = db.collection("users");
-    userRef.doc(user.uid).get().then(getDoc => {
-      if (!getDoc.data().imageSrc === null){
-        this.setState({
-          imgsrc: getDoc.data().imageSrc
-        })};
-        console.log("srcset")
-        console.log(this.state.imgsrc)
-    })
-    });
   }
    handleMouseMove(e){
      if(this.state.dragEvent === true){
@@ -109,9 +95,25 @@ class Bubble extends Component{
     document.body.onmouseup = this.mouseUp;
     document.body.onmousemove = this.handleMouseMove.bind(this);
     firebase.auth().onAuthStateChanged(user => {
-      this.setState({username: user.displayName,
+      if (user) {
+        this.setState({username: user.displayName,
                     profileWidth: user.displayName.length * 8.5 + 50 + "px"});
-    });
+        userRef.doc(user.uid).get().then(getDoc => {
+        if (getDoc.data() === undefined ){
+          userRef.doc(user.uid).update({
+            imageSrc: "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
+          })
+
+        }
+        userRef.doc(user.uid).get().then(getDoc => {
+        this.setState({
+            imgsrc: getDoc.data().imageSrc
+          });
+        })
+          console.log("srcset")
+          console.log(this.state.imgsrc)
+      })
+    }});
     this.updateDimensions();
   }
   componentWillUnmount() {
