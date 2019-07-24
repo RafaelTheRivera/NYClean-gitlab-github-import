@@ -21,6 +21,10 @@ db.settings ({
 })
 
 const userRef = db.collection("users");
+var ref = firebase.database().ref('/locations/CSYIxNTBYIDwLadcLtrz');
+var map;
+const latlng = L.latLng(40.7280822, -73.9937973, 16);
+
 
 class Bubble extends Component{
   constructor(props){
@@ -39,9 +43,9 @@ class Bubble extends Component{
                   profileWidth: "",
                   height:null,
                   search: "",
-                  lat: 40.5,
-                  long: -74,
-                  imgsrc:null
+                  lat: 40.748440,
+                  long: -73.985664,
+                  imgsrc:"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                 }
       this.mouseDown = this.mouseDown.bind(this);
       this.mouseUp = this.mouseUp.bind(this);
@@ -73,7 +77,7 @@ class Bubble extends Component{
       center: [40.7280822, -73.9937973],
       zoom: 16,
       minZoom:11,
-      maxZoom: 16,
+      maxZoom: 20,
       maxBounds: this.bounds,
       zoomSnap: 0.2,
       layers: [
@@ -96,12 +100,10 @@ class Bubble extends Component{
     document.body.onmousemove = this.handleMouseMove.bind(this);
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        this.setState({username: user.displayName,
-                    profileWidth: user.displayName.length * 8.5 + 50 + "px"});
         userRef.doc(user.uid).get().then(getDoc => {
         if (getDoc.data() === undefined ){
           userRef.doc(user.uid).update({
-            imageSrc: "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
+            imageSrc: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
           })
 
         }
@@ -113,6 +115,8 @@ class Bubble extends Component{
           console.log("srcset")
           console.log(this.state.imgsrc)
       })
+      this.setState({username: user.displayName,
+                  profileWidth: user.displayName.length * 8.5 + 50 + "px"});
     }});
     this.updateDimensions();
   }
@@ -129,15 +133,17 @@ class Bubble extends Component{
     //note: must call the search results bar
     e.preventDefault();
     const search = this.state.search;
-    const db = firebase.firestore();
-    let reviewBase = db.collection("locations");
     //program function to find distances based on an inputted location and search coordinates
-    let query = reviewBase.where("name", "==", search.toLowerCase());
-    console.log(query);
-    let lat = reviewBase.doc(query.lat).get();
-    let long = reviewBase.doc(query.long).get();
+    let query = null;
+    ref.once("value", function(snapshot){
+      console.log(snapshot.val())
+      query = snapshot.val()
+      console.log(query)
+    })
+    let lat = query
+    let long = query
     this.setState({lat: lat, long: long});
-    this.map.flyTo([this.state.lat, this.state.long], 16);
+    this.map.flyTo(latlng);
   }
   updateDimensions() {
    var w = window;
