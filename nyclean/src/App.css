@@ -56,6 +56,49 @@ position: absolute;
 height: 40px;
 }
 
+#editPopup{
+  height:200px;
+  width:150px;
+  font-family: helvetica, sans-serif;
+  font-weight:bold;
+  text-align:center;
+}
+#tab1{
+  height:30px;
+  width:155px;
+  background-color:#1dbcb4;
+  position:absolute;
+  margin-left:0px;
+  border-radius:5px;
+  left:15px;
+  top:35px;
+}
+#pinbody{
+  z-index:100;
+  height:160px;
+  width:155px;
+  left: 15px;
+  top: 50px;
+  position:absolute;
+  border: 1px solid #1dbcb4;
+  background-color: #ffffff;
+  border-radius:10px;
+}
+#poster{
+  text-align:left;
+  margin-top:5px;
+  margin-left: 5px;
+}
+#bodyText{
+  height:120px;
+  width:145px;
+  margin-top: -10px;
+  margin-left:4px;
+}
+#newPostHead{
+  font-size:1.5em;
+  margin-top:-10px;
+}
 .editUserBar{
 margin-top: -1px;
 padding-top:10px;
