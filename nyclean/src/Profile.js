@@ -60,7 +60,7 @@ class Profile extends Component {
         userRef.doc(user.uid).get().then(getDoc => {
           if(getDoc.data().imageSrc == null) {
             userRef.doc(user.uid).update({
-              imageSrc: "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
+              imageSrc: "https://i.imgur.com/Of7XNtM.png"
             })
             userRef.doc(user.uid).get().then(getDoc => {
               this.setState({
