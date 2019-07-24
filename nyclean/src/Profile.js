@@ -63,8 +63,14 @@ class Profile extends Component {
             userRef.doc(user.uid).update({
               imageSrc: "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
             })
+            userRef.doc(user.uid).get().then(getDoc => {
+              this.setState({
+                imageSrc: getDoc.data().imageSrc
+              })
+            })
           }
-
+        })
+        userRef.doc(user.uid).get().then(getDoc => {
           this.setState({
             imageSrc: getDoc.data().imageSrc
           })
@@ -75,7 +81,7 @@ class Profile extends Component {
               email: user.email,
             });
           }
-        });
+        })
         userRef.doc(user.uid).get().then(getDoc => {
             this.setState({
               userBio: getDoc.data().bio
