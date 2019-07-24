@@ -68,12 +68,14 @@ class App extends Component {
 
             <div id = "safetytab"></div>
 
-            <a id = "safety" href="./safety" class = "linkText">Safety Information</a>
+            <a id = "rightside" href="./safety" class = "linkText">Safety Information</a>
+
+          <footer>
 
             <button id = "signout" className = "small" onClick = {this.signOut}>SIGN OUT</button>
 
           </footer>
-
+          </footer>
         </div>
       );
     }

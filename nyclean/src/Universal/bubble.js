@@ -89,11 +89,11 @@ class Bubble extends Component{
     const db = firebase.firestore();
 
     const userRef = db.collection("users");
-
     userRef.doc(user.uid).get().then(getDoc => {
+      if (!getDoc.data().imageSrc === null){
         this.setState({
           imgsrc: getDoc.data().imageSrc
-        })
+        })};
         console.log("srcset")
         console.log(this.state.imgsrc)
     })
@@ -101,7 +101,7 @@ class Bubble extends Component{
   }
    handleMouseMove(e){
      if(this.state.dragEvent === true){
-       this.setState({x: e.screenX - 7, y: e.screenY - 95});
+       this.setState({x: e.clientX-7, y: e.clientY - 27});
      }
    }
   componentWillMount(){
