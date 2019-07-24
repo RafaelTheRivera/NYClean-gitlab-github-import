@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import footergradient from './images/footergradient.png';
+import safetyicon from './images/safetyicon.png';
 import Bubble from './Universal/bubble.js';
 import { Redirect } from 'react-router-dom';
 import firebase from './Firestore';
@@ -62,14 +63,7 @@ class App extends Component {
           <div id="rectangle"></div>
 
 
-
           <footer>
-
-            <div id = "safetytab"></div>
-
-            <button onClick = {this.signOut}>Sign Out</button>
-
-            <a id = "safety" href="./safety" class = "linkText">Safety Information</a>
 
 
             <button id = "signout" className = "small" onClick = {this.signOut}>SIGN OUT</button>
