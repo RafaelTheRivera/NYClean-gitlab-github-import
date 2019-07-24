@@ -15,6 +15,13 @@ import cover from './../images/cover.png';
 import safetyicon from './../images/safetyicon.png';
 import Tabs from 'react-bootstrap/Tabs';
 
+const db = firebase.firestore();
+db.settings ({
+  timestampsInSnapshots: true
+})
+
+const userRef = db.collection("users");
+
 class Bubble extends Component{
   constructor(props){
     super(props);
@@ -33,7 +40,10 @@ class Bubble extends Component{
                   height:null,
                   search: "",
                   lat: 40.5,
-                  long: -74
+                  long: -74,
+                  totalPins:0,
+                  newMark: null,
+                  imgsrc:null
                 }
       this.mouseDown = this.mouseDown.bind(this);
       this.mouseUp = this.mouseUp.bind(this);
@@ -47,7 +57,6 @@ class Bubble extends Component{
       this.componentDidMount = this.componentDidMount.bind(this);
       this.getSearch = this.getSearch.bind(this);
     }
-
   componentDidMount(){
     window.addEventListener("resize", this.updateDimensions);
     this.height = this.state.height - 40;
@@ -88,9 +97,25 @@ class Bubble extends Component{
     document.body.onmouseup = this.mouseUp;
     document.body.onmousemove = this.handleMouseMove.bind(this);
     firebase.auth().onAuthStateChanged(user => {
-      this.setState({username: user.displayName,
+      if (user) {
+        this.setState({username: user.displayName,
                     profileWidth: user.displayName.length * 8.5 + 50 + "px"});
-    });
+        userRef.doc(user.uid).get().then(getDoc => {
+        if (getDoc.data() === undefined ){
+          userRef.doc(user.uid).update({
+            imageSrc: "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
+          })
+
+        }
+        userRef.doc(user.uid).get().then(getDoc => {
+        this.setState({
+            imgsrc: getDoc.data().imageSrc
+          });
+        })
+          console.log("srcset")
+          console.log(this.state.imgsrc)
+      })
+    }});
     this.updateDimensions();
   }
   componentWillUnmount() {
@@ -134,10 +159,21 @@ class Bubble extends Component{
   mouseUp(e){
     this.setState({mouseDown: 0});
     if (this.state.mouseLeavePin === true && this.state.dragEvent === true){
+      console.log(this.state.newMark)
+      if(this.state.totalPins > 0){
+        this.map.removeLayer(this.state.newMark);
+      }
+      this.setState({totalPins: this.state.totalPins + 1});
+      console.log(this.state.totalPins);
       var coords = this.map.mouseEventToLatLng(e);
       console.log(coords);
-      var newMark = L.marker(coords).addTo(this.map);
-      console.log(newMark.className);
+      this.setState({newMark: L.marker(coords).addTo(this.map).bindPopup("<div id = 'editPopup'><p id = 'newPostHead'>New Post</p><div id = 'tab1'> Text</div> Pictures</div><div id = 'pinbody'><p id = 'poster'>Posted by: " + this.state.username + "</p><textarea id = 'bodyText' placeholder = 'Write something!'></textarea></div></div>").openPopup()});
+      const map = this.map;
+      const state = this.state;
+      this.state.newMark.on('popupclose', function(){
+        map.removeLayer(state.newMark);
+      });
+      this.map.flyTo(coords);
       this.setState({dragEvent: false, unmergedImages: "hidden"});
     }else if (this.state.dragEvent === false){
       this.setState({dragEvent: false, unmergedImages: "hidden"});
@@ -219,7 +255,7 @@ class Bubble extends Component{
           <a href = "./profpage">
             <div className= "headerItem" id = "login" style = {{width: this.state.profileWidth}}>
               <span id="rogueText">{this.state.username}</span>
-              <img alt="" id = "profilepic" src = /*should actually link to individual profiles*/"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"/>
+              <img alt="" id = "profilepic" src = {this.state.imgsrc}/>
             </div>
 
           </a>
