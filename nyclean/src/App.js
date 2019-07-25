@@ -62,7 +62,7 @@ class App extends Component {
             <button id = "signout" className = "small" onClick = {this.signOut}>SIGN OUT</button>
 
           </footer>
-          
+
         </div>
       );
     }

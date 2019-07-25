@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './../App.css';
 import L from 'leaflet';
 import headergradient from './../images/headergradient.png';
-import firebase from './../Firestore';
+import firebase from './../Firestore.js';
 import greenyc from './../images/greenyc.png';
 import pin from './../images/pinicon1.png';
 import feed from './../images/feedicon1.png';
@@ -14,6 +14,7 @@ import add from './../images/add.png';
 import cover from './../images/cover.png';
 import safetyicon from './../images/safetyicon.png';
 import Tabs from 'react-bootstrap/Tabs';
+
 
 const db = firebase.firestore();
 db.settings ({
@@ -151,13 +152,12 @@ class Bubble extends Component{
     //note: must call the search results bar
     e.preventDefault();
     const search = this.state.search;
-    const ref = firebase.database().ref('locations/CSYIxNTBYIDwLadcLtrz');
+    const locations = firebase.database()
+    const ref = locations.ref('/locations/CSYIxNTBYIDwLadcLtrz');
     //program function to find distances based on an inputted location and search coordinates
     let query = null;
-    ref.on("value", function(snapshot){
+    ref.on('value', function(snapshot){
       console.log(snapshot.val())
-      query = snapshot.val()
-      console.log(query)
     })
     console.log(query)
     let lat = query
@@ -318,11 +318,10 @@ class Bubble extends Component{
               <p className = "small">Post by: {this.state.username}
               <center><div id="insertimage">
 
-              <img src = {this.state.uploadImage} alt = {""} id = "uploadImage"/>
+              <img src = {this.state.uploadImage} alt = "" id = "uploadImage"/>
                     <form onSubmit = {this.submitInput}>
                     <input
-                    type = "images"
-                    name = "profilePic"
+                    type = "text"
                     placeholder = "Image URL"
                     onChange = {this.updateInput}
                     value = {this.state.imageSrc}
