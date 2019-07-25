@@ -12,7 +12,7 @@ class Profile extends Component {
   constructor(){
     super();
     this.state = {userName:"",
-    Totaltrash:20,
+    Totaltrash: Math.floor(Math.random()*20),
     imageSrc: null,
     imageInput: '',
     userBio:'Default Text',
@@ -58,6 +58,9 @@ class Profile extends Component {
         const userRef = db.collection("users");
 
         userRef.doc(user.uid).get().then(getDoc => {
+          userRef.doc(user.uid).update({
+            Totaltrash: this.state.Totaltrash
+          })
           if(getDoc.data().imageSrc == null) {
             userRef.doc(user.uid).update({
               imageSrc: "https://i.imgur.com/Of7XNtM.png"
