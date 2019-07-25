@@ -396,11 +396,9 @@ class Bubble extends Component{
                   <textarea placeholder = "Insert caption here" onChange = {this.updateCaption} value = {this.state.caption} id="caption"></textarea>
                   <button type = "submit" id = "post">Post</button>
                 </form>
-              </p>
-
             </div>
             <img className = "cover" id = "cover1" src = {cover} alt = "cover"/>
-          </span>
+          </div></span>
         <img id = "feed" src = {feed} alt = {"feed"} onClick = {this.openFeed}/>
           <span style = {{visibility: this.state.feedIsOpen}}>
 
