@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import firebase from './Firestore';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import { Redirect } from 'react-router-dom';
-import './App.css';
+import { Redirect } from 'react-router-dom'
+import './App.css'
 
 const uiConfig = {
   signInFlow: 'popup' ,   //or can be redirect instead
