@@ -51,9 +51,9 @@ class Leaderboard extends React.Component {
     return (
       <div>
       <p><b>TOTAL TRASH COUNT: </b>{this.state.ActualTotalTrash} lbs</p>
-        <ul>
+        <ol>
           {items}
-        </ul>
+        </ol>
       </div>
     );
   }
