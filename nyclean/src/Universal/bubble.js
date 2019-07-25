@@ -21,10 +21,7 @@ db.settings ({
 })
 
 const userRef = db.collection("users");
-<<<<<<< HEAD
 var ref = firebase.database().ref('/locations/CSYIxNTBYIDwLadcLtrz');
-=======
->>>>>>> 67934ad9a524f062ceeeea86bfc1528be80dbefe
 
 class Bubble extends Component{
   constructor(props){
