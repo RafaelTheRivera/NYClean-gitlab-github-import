@@ -49,8 +49,15 @@ class Bubble extends Component{
                   dataMark: null,
                   coords: null,
                   uploadImage: "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png",
+
+                  fullname: "",
+                  Totaltrash: 0,
+                  list: [],
+                  ActualTotalTrash: 0,
+
                   caption: "",
                   filelink: ""
+
                 }
       this.mouseDown = this.mouseDown.bind(this);
       this.mouseUp = this.mouseUp.bind(this);
@@ -118,11 +125,33 @@ class Bubble extends Component{
 
     });
   }
+  sort_by_key(array, key)
+  {
+    return array.sort(function(a, b)
+  {
+    var x = a[key]; var y = b[key];
+    return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+  });
+  }
    handleMouseMove(e){
      if(this.state.dragEvent === true){
        this.setState({x: e.clientX-7, y: e.clientY - 27});
      }
    }
+   componentDidMount(){
+     db.collection("users").get().then((querySnapshot) => {
+       querySnapshot.forEach((doc) => {
+         this.setState({
+           list: this.state.list.concat({
+             fullname: doc.data().fullname,
+             Totaltrash : doc.data().Totaltrash
+           })
+         })
+
+       console.log(doc.id, " => ", doc.data());
+       });
+     });
+   };
   componentWillMount(){
     document.body.onmousedown = this.mouseDown;
     document.body.onmouseup = this.mouseUp;
@@ -303,6 +332,12 @@ class Bubble extends Component{
     console.log(this.state.filelink);
   }
   render(){
+    this.state.list = this.sort_by_key(this.state.list, "Totaltrash");
+    this.state.ActualTotalTrash = (this.state.list.reduce( function(cnt,o){ return cnt + o.Totaltrash; }, 0));
+    this.state.list.reverse();
+    const items = this.state.list.slice(0, 5).map((trash) =>
+      <li> {trash.fullname}: <b>{trash.Totaltrash}</b> lbs</li>
+    );
     return(
       <div>
         <img id = "bigHeader" src = {headergradient} alt = {"topgradient"}/>
@@ -380,16 +415,14 @@ class Bubble extends Component{
             <div className = "blocker" id = "blo3">
             </div>
             <div className = "bubble" id = "bub3">
-            <center><p id = "totalcount">TOTAL COUNT</p> <p id = "livecount"><b>{this.state.lbs}</b> lbs</p> <br />
+
+            <center><p id = "totalcount">TOTAL COUNT</p> <p id = "livecount"><b>{this.state.ActualTotalTrash}</b> lbs</p> <br />
             Weekly Leaderboard</center>
             <br />
-            <div className = "small"><ol>
-              <li>user 123 lbs</li>
-              <li>user 123 lbs</li>
-              <li>user 123 lbs</li>
-              <li>user 123 lbs</li>
-              <li>user 123 lbs</li>
-            </ol></div>
+            <p className = "small"><ol>
+              <li>{items}</li>
+            </ol></p>
+
             </div>
             <img className = "cover" id = "cover3" src = {cover} alt = "cover"/>
           </span>
