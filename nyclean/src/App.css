@@ -374,10 +374,9 @@ footer {
 }
 #bub1{
   top:75px;
-  padding-top: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
-  height: 350px;
+  padding-top: 35px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 #post{
@@ -408,7 +407,7 @@ footer {
 }
 #bub3{
   top:205px;
-  padding-top: 20px;
+  padding-top: 35px;
   padding-left:15px;
   padding-right: 15px;
 }
@@ -536,4 +535,27 @@ footer {
 .edit{
   height: 15px;
   width: auto;
+}
+
+.bubbleheader{
+  height:25px;
+  width:246px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  position:absolute;
+  padding-top: 4px;
+  background-color: #1DBCB4;
+  color: white;
+  z-index:3;
+}
+
+#bubheader1{
+  margin-top: 77px;
+  right: 0;
+  margin-right: 82px;
+}
+#bubheader3{
+  margin-top: 207px;
+  right: 0;
+  margin-right: 82px;
 }
