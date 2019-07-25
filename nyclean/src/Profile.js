@@ -4,7 +4,6 @@ import firebase from './Firestore'
 import { Redirect } from 'react-router-dom';
 import back from './images/back.png';
 import edit from './images/edit.png';
-
 import greenyclogo from './images/greenyclogo.png';
 
 const db = firebase.firestore();
@@ -12,11 +11,11 @@ const db = firebase.firestore();
 class Profile extends Component {
   constructor(){
     super();
-    this.state = {userName:"username",
+    this.state = {userName:"",
     Totaltrash:20,
-    imageSrc: "",
+    imageSrc: null,
     imageInput: '',
-    userBio:'',
+    userBio:'Default Text',
     signedIn:true};
   }
   updateInput = e => {
@@ -59,9 +58,16 @@ class Profile extends Component {
         const userRef = db.collection("users");
 
         userRef.doc(user.uid).get().then(getDoc => {
+          if(getDoc.data().imageSrc == null) {
+            userRef.doc(user.uid).update({
+              imageSrc: "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
+            })
+          }
+
           this.setState({
             imageSrc: getDoc.data().imageSrc
           })
+        console.log(this.state.imageSrc);
           if (!getDoc.exists){
             userRef.doc(user.uid).set({
               fullname: user.displayName,
@@ -112,8 +118,8 @@ class Profile extends Component {
     <a href = "/EditPass" class = "linkText">Change Password</a><br/>
     </h6>
     <div id="profilecircle">
-    <img src = {this.state.imageSrc} id = "profileimg"/>
-          <form onSubmit = {this.submitInput}>
+    <img alt = "" src = {this.state.imageSrc} id = "profileimg"/>
+          <p>Change Profile Picture:</p><form onSubmit = {this.submitInput}>
           <input
           type = "images"
           name = "profilePic"
