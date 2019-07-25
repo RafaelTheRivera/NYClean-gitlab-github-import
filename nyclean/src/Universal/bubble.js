@@ -44,6 +44,10 @@ class Bubble extends Component{
                   imgsrc:"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
                   totalPins:0,
                   newMark: null,
+                  imgsrc:null,
+                  coords: null,
+                  uploadImage: "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png",
+                  caption: null
                 }
       this.mouseDown = this.mouseDown.bind(this);
       this.mouseUp = this.mouseUp.bind(this);
@@ -54,8 +58,14 @@ class Bubble extends Component{
       this.openLeader = this.openLeader.bind(this);
       this.openFriends = this.openFriends.bind(this);
       this.updateDimensions = this.updateDimensions.bind(this);
+      this.updateSearchBar = this.updateSearchBar.bind(this);
+      this.updateBody = this.updateBody.bind(this);
       this.componentDidMount = this.componentDidMount.bind(this);
       this.getSearch = this.getSearch.bind(this);
+      this.updateInput = this.updateInput.bind(this);
+      this.submitInput = this.updateInput.bind(this);
+      this.updateCaption = this.updateCaption.bind(this);
+      this.submitInput = this.submitInput.bind(this);
     }
   componentDidMount(){
     window.addEventListener("resize", this.updateDimensions);
@@ -117,14 +127,24 @@ class Bubble extends Component{
                   profileWidth: user.displayName.length * 8.5 + 50 + "px"});
     }});
     this.updateDimensions();
+    const db = firebase.firestore();
+    const pinData = db.collection("pins");
+    console.log(pinData);
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
   }
-  updateSearchBar = e => {
+  updateSearchBar(e){
     this.setState({
       [e.target.name]: e.target.value
     });
+    console.log(this.state.search);
+  }
+  updateBody(e){
+    this.setState({
+      body: e.target.value
+    });
+    console.log(this.state.body);
   }
   getSearch = e => {
     //find search results based on updateSearchBar
@@ -169,8 +189,12 @@ class Bubble extends Component{
       this.setState({totalPins: this.state.totalPins + 1});
       console.log(this.state.totalPins);
       var coords = this.map.mouseEventToLatLng(e);
+      this.setState({coords: coords})
       console.log(coords);
-      this.setState({newMark: L.marker(coords).addTo(this.map).bindPopup("<div id = 'editPopup'><p id = 'newPostHead'>New Post</p><div id = 'tab1'> Text</div> Pictures</div><div id = 'pinbody'><p id = 'poster'>Posted by: " + this.state.username + "</p><textarea id = 'bodyText' placeholder = 'Write something!'></textarea></div></div>").openPopup()});
+      this.setState({newMark: L.marker(coords).addTo(this.map).bindPopup("<p id = 'set'>Pin location set</p>").openPopup()});
+      if (this.state.pinIsOpen === "hidden"){
+        this.openPin();
+      }
       const map = this.map;
       const state = this.state;
       this.state.newMark.on('popupclose', function(){
@@ -234,6 +258,24 @@ class Bubble extends Component{
       this.setState({friendsIsOpen: "hidden"});
     }
   }
+  updateInput = e =>{
+    this.setState({imageSrc: e.target.value});
+  }
+  submitInput = e =>{
+    e.preventDefault();
+    this.setState({uploadImage: this.state.imageSrc, imageSrc: ""});
+    //upload image to firebase
+    console.log(this.state.uploadImage + this.state.imageSrc)
+  }
+  updateCaption = e => {
+    this.setState({caption: e.target.value});
+    console.log(this.state.caption);
+  }
+  submitCaption = e => {
+    e.preventDefault();
+    //upload caption to firebase
+    this.setState({caption: ""});
+  }
   render(){
     return(
       <div>
@@ -272,10 +314,10 @@ class Bubble extends Component{
             <div className = "blocker" id = "blo1">
             </div>
             <div className = "bubble" id = "bub1">
-              <p className = "small">Post by: paige
+              <p className = "small">Post by: {this.state.username}
               <center><div id="insertimage">
 
-              <img src = {this.state.imageSrc} alt = {"profile"}/>
+              <img src = {this.state.uploadImage} alt = {""} id = "uploadImage"/>
                     <form onSubmit = {this.submitInput}>
                     <input
                     type = "images"
@@ -287,7 +329,11 @@ class Bubble extends Component{
                     <button type = "submit">Submit</button>
                     </form>
               </div></center>
-              Insert caption here</p>
+                <form onSubmit = {this.submitCaption}>
+                  <textarea placeholder = "Insert caption here" onChange = {this.updateCaption} value = {this.state.caption}></textarea>
+                  <button type = "submit"> Submit </button>
+                </form>
+              </p>
               <img id = "add" src = {add} alt = "add poster"/>
             </div>
             <img className = "cover" id = "cover1" src = {cover} alt = "cover"/>
@@ -333,8 +379,9 @@ class Bubble extends Component{
             </div>
             <div className = "bubble" id = "bub4" style = {{top: this.state.height - 379}}>
             </div>
-            <img className = "cover" id = "cover4" src = {cover} alt = "cover"/>
-
+            <container id = "ihateeverything">
+              <img className = "cover" id = "cover4" style = {{top: this.state.height - 116.5}} src = {cover} alt = "cover"/>
+            </container>
           </span>
         <a href = "./safety"><img id = "safetyicon" src = {safetyicon} alt = {"safety"}  style = {{marginTop: this.state.height - 179}}/></a>
 
