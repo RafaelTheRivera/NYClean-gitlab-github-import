@@ -26,11 +26,7 @@ class App extends Component {
           signedIn: true,
           currentUser: user
         });
-
-        const db = firebase.firestore();
-        db.settings ({
-          timestampsInSnapshots: true
-        });
+        const db = firebase.firestore()
 
         const userRef = db.collection("users");
 
@@ -66,7 +62,7 @@ class App extends Component {
             <button id = "signout" className = "small" onClick = {this.signOut}>SIGN OUT</button>
 
           </footer>
-
+          
         </div>
       );
     }

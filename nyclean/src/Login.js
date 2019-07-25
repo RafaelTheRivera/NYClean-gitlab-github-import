@@ -77,6 +77,7 @@ class Login extends Component {
         <div>
           <br /><br /><br /><h1><center class = "normalText">Please Log In/Sign Up</center></h1>
           <StyledFirebaseAuth uiConfig = {uiConfig} firebaseAuth = {firebase.auth()}/>
+          
         </div>
       );
     }
