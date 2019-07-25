@@ -373,6 +373,7 @@ footer {
   z-index:1;
 }
 #bub1{
+  height: 380px;
   top:75px;
   padding-top: 35px;
   padding-left: 15px;
@@ -388,14 +389,14 @@ footer {
   border:none;
   position:absolute;
   left:1px;
-  bottom:1px;
+  bottom:0px;
   font-weight: bold;
   font-family: helvetica, sans-serif;
   color:white;
 }
 #caption{
   width: 200px;
-  top: 270px;
+  top: 300px;
   position: absolute;
   z-index:2;
   height:50px;

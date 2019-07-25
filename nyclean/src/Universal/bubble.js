@@ -348,9 +348,9 @@ class Bubble extends Component{
               </div></center>
                 <form onSubmit = {this.submitCaption}>
                   <textarea placeholder = "Insert caption here" onChange = {this.updateCaption} value = {this.state.caption} id="caption"></textarea>
-                  <button type = "submit" id = "post">Post</button>
+                  <button type = "submit" id = "post">POST</button>
                 </form>
-              </p>
+              </div>
 
             </div>
             <img className = "cover" id = "cover1" src = {cover} alt = "cover"/>
