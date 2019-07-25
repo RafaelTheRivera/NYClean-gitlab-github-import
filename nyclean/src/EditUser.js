@@ -3,6 +3,8 @@ import './App.css';
 import firebase from './Firestore'
 import { Redirect } from 'react-router-dom';
 import back from './images/back.png';
+import edit from './images/edit.png';
+import greenyclogo from './images/greenyclogo.png';
 
 class EditUser extends Component {
   constructor(){
@@ -60,9 +62,10 @@ class EditUser extends Component {
   render(){
   if (this.state.changed === true){
   return (
-    <div>
-    <a href = "/profpage"> <img id = "back" src = {back} alt= "back"/></a>
     <div class = "appText">
+    <a href = "/profpage"> <img id = "back" src = {back} alt= "back"/>
+    <img id = "greenyclogo" src = {greenyclogo} alt= "logo"/>
+    </a>
     <br></br><br></br>
     <form class = "editUserBar" onSubmit={e=>e.preventDefault()}>
     New Username:
@@ -74,11 +77,13 @@ class EditUser extends Component {
     </form>
     {this.renderRedirect()}
     </div>
-    </div>
   );
 } else {
   return(
   <div class = "appText">
+  <a href = "/profpage"> <img id = "back" src = {back} alt= "back"/>
+  <img id = "greenyclogo" src = {greenyclogo} alt= "logo"/>
+  </a>
   <br></br><br></br>
   <form class = "editUserBar" onSubmit={e=>e.preventDefault()}>
   New Username:
