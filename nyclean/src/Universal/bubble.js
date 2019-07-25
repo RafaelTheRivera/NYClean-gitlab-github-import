@@ -22,8 +22,6 @@ db.settings ({
 
 const userRef = db.collection("users");
 var ref = firebase.database().ref('/locations/CSYIxNTBYIDwLadcLtrz');
-var map;
-const latlng = L.latLng(40.7280822, -73.9937973, 16);
 
 
 class Bubble extends Component{
@@ -148,7 +146,7 @@ class Bubble extends Component{
     let lat = query
     let long = query
     this.setState({lat: lat, long: long});
-    this.map.flyTo(latlng);
+    this.map.flyTo(L.latlng(40.7280822, -73.9937973), 16);
   }
   updateDimensions() {
    var w = window;
