@@ -3,6 +3,7 @@ import './App.css';
 import firebase from './Firestore'
 import { Redirect } from 'react-router-dom';
 import back from './images/back.png';
+import edit from './images/edit.png';
 import greenyclogo from './images/greenyclogo.png';
 
 const db = firebase.firestore();
@@ -67,14 +68,13 @@ class EditBio extends Component {
   render(){
   if (this.state.changed === true){
   return (
-    <div>
-
-    <a href = "/profpage"> <img id = "back" src = {back} alt= "back"/></a>
     <div class = "appText">
-    <br></br>
-    <p id = "Indent1">Bio:</p>
-    <br></br>
-    <form class = "editUserBar" onSubmit={e=>e.preventDefault()} id = "Indent1">
+    <a href = "/profpage"> <img id = "back" src = {back} alt= "back"/>
+    <img id = "greenyclogo" src = {greenyclogo} alt= "logo"/>
+    </a>
+    <br></br><br></br>
+    <p>New Bio:</p>
+    <form class = "editUserBar" onSubmit={e=>e.preventDefault()}>
     <textarea type = "text"
     onChange = {this.handleChange}
     value = {this.state.userBio}
@@ -85,15 +85,16 @@ class EditBio extends Component {
     </form>
     {this.renderRedirect()}
     </div>
-    </div>
   );
 } else {
   return(
   <div class = "appText">
-  <br></br>
-  <p id = "Indent1">Bio:</p>
-  <br></br>
-  <form class = "editUserBar" onSubmit={e=>e.preventDefault()} id = "Indent1">
+  <a href = "/profpage"> <img id = "back" src = {back} alt= "back"/>
+  <img id = "greenyclogo" src = {greenyclogo} alt= "logo"/>
+  </a>
+  <br></br><br></br>
+  <p>New Bio:</p>
+  <form class = "editUserBar" onSubmit={e=>e.preventDefault()}>
   <textarea type = "text"
   rows = "5"
   cols = "50"

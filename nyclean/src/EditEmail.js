@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import './App.css';
 import firebase from './Firestore'
 import { Redirect } from 'react-router-dom';
+import back from './images/back.png';
+import edit from './images/edit.png';
+import greenyclogo from './images/greenyclogo.png';
 
 class EditEmail extends Component {
   constructor(){
@@ -72,6 +75,9 @@ class EditEmail extends Component {
   if (this.state.changed === true){
   return (
     <div class = "appText">
+    <a href = "/profpage"> <img id = "back" src = {back} alt= "back"/>
+    <img id = "greenyclogo" src = {greenyclogo} alt= "logo"/>
+    </a>
     <br></br><br></br>
     <form class = "editUserBar" onSubmit={e=>e.preventDefault()}>
     New Email:
@@ -92,6 +98,9 @@ class EditEmail extends Component {
 } else {
   return(
   <div class = "appText">
+  <a href = "/profpage"> <img id = "back" src = {back} alt= "back"/>
+  <img id = "greenyclogo" src = {greenyclogo} alt= "logo"/>
+  </a>
   <br></br><br></br>
   <form class = "editUserBar" onSubmit={e=>e.preventDefault()}>
   New Email:

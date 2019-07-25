@@ -3,7 +3,8 @@ import './App.css';
 import firebase from './Firestore'
 import { Redirect } from 'react-router-dom';
 import back from './images/back.png';
-
+import edit from './images/edit.png';
+import greenyclogo from './images/greenyclogo.png';
 
 class EditPass extends Component {
   constructor(){
@@ -72,9 +73,10 @@ class EditPass extends Component {
   render(){
   if (this.state.changed === true){
   return (
-
     <div class = "appText">
-    <a href = "/profpage"> <img id = "back" src = {back} alt= "back"/></a>
+    <a href = "/profpage"> <img id = "back" src = {back} alt= "back"/>
+    <img id = "greenyclogo" src = {greenyclogo} alt= "logo"/>
+    </a>
     <br></br><br></br>
     <form class = "editUserBar" onSubmit={e=>e.preventDefault()}>
     New Password:
@@ -82,7 +84,7 @@ class EditPass extends Component {
     onChange = {this.handleChange}
     value = {this.state.newPass}
     />
-    Re-enter Current Password:
+    <br></br>Re-enter Current Password:
     <input type = "text"
     onChange = {this.handleChangePass}
     value = {this.state.passWord}
@@ -96,6 +98,9 @@ class EditPass extends Component {
   else {
     return(
     <div class = "appText">
+    <a href = "/profpage"> <img id = "back" src = {back} alt= "back"/>
+    <img id = "greenyclogo" src = {greenyclogo} alt= "logo"/>
+    </a>
     <br></br><br></br>
     <form class = "editUserBar" onSubmit={e=>e.preventDefault()}>
     New Password:
