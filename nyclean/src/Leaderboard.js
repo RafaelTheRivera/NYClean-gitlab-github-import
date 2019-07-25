@@ -9,6 +9,7 @@ class Leaderboard extends React.Component {
       fullname: "",
       Totaltrash: 0,
       list: [],
+      ActualTotalTrash: 0
     };
   }
   sort_by_key(array, key)
@@ -36,15 +37,20 @@ class Leaderboard extends React.Component {
 
 
 
+
+
   render() {
     this.state.list = this.sort_by_key(this.state.list, "Totaltrash");
+    this.state.ActualTotalTrash = (this.state.list.reduce( function(cnt,o){ return cnt + o.Totaltrash; }, 0));
     console.log('this one');
     console.log(this.state.list);
-    const items = this.state.list.reverse().map((trash) =>
+    this.state.list.reverse();
+    const items = this.state.list.slice(0, 5).map((trash) =>
       <li> {trash.fullname}: <b>{trash.Totaltrash}</b> lbs</li>
     );
     return (
       <div>
+      <p><b>TOTAL TRASH COUNT: </b>{this.state.ActualTotalTrash} lbs</p>
         <ul>
           {items}
         </ul>
