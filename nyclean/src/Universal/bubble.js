@@ -21,7 +21,10 @@ db.settings ({
 })
 
 const userRef = db.collection("users");
+<<<<<<< HEAD
 var ref = firebase.database().ref('/locations/CSYIxNTBYIDwLadcLtrz');
+=======
+>>>>>>> 67934ad9a524f062ceeeea86bfc1528be80dbefe
 
 class Bubble extends Component{
   constructor(props){
@@ -170,17 +173,19 @@ class Bubble extends Component{
     //note: must call the search results bar
     e.preventDefault();
     const search = this.state.search;
+    const ref = firebase.database().ref('locations/CSYIxNTBYIDwLadcLtrz');
     //program function to find distances based on an inputted location and search coordinates
     let query = null;
-    ref.once("value", function(snapshot){
+    ref.on("value", function(snapshot){
       console.log(snapshot.val())
       query = snapshot.val()
       console.log(query)
     })
+    console.log(query)
     let lat = query
     let long = query
     this.setState({lat: lat, long: long});
-    this.map.flyTo(L.latlng(40.7280822, -73.9937973), 16);
+    this.map.flyTo([40.798440, -73.995664], 16);
   }
   updateDimensions() {
    var w = window;
