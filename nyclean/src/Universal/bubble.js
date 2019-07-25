@@ -310,6 +310,7 @@ class Bubble extends Component{
         <img id = "emptypinicon" src = {emptypinicon} draggable = "false" onMouseLeave = {this.mouseExitPin} onMouseOver = {this.mouseEnterPin} alt = {"empty pin"} style = {{visibility: this.state.unmergedImages}}/>
         <img id = "pin" src = {pin} alt = {"pin"} draggable = "false" onMouseLeave = {this.mouseExitPin} onMouseOver = {this.mouseEnterPin}/>
           <span style = {{visibility: this.state.pinIsOpen}}>
+            <div className = "bubbleheader" id = "bubheader1"><center><p className = "small">DRAG AND DROP PIN</p></center></div>
             <div className = "connector" id = "con1">
             </div>
             <div className = "blocker" id = "blo1">
@@ -335,12 +336,14 @@ class Bubble extends Component{
                   <button type = "submit"> Submit </button>
                 </form>
               </p>
-              <img id = "add" src = {add} alt = "add poster"/>
+
             </div>
             <img className = "cover" id = "cover1" src = {cover} alt = "cover"/>
           </span>
         <img id = "feed" src = {feed} alt = {"feed"} onClick = {this.openFeed}/>
           <span style = {{visibility: this.state.feedIsOpen}}>
+
+
 
             <div className = "connector" id = "con2">
             </div>
@@ -354,6 +357,9 @@ class Bubble extends Component{
 
         <img id = "leader" src = {leader} alt = {"leaderboard"} onClick = {this.openLeader}/>
           <span style = {{visibility: this.state.leaderIsOpen}}>
+
+            <div className = "bubbleheader" id = "bubheader3"><center><p className = "small">LEADERBOARD</p></center></div>
+
             <div className = "connector" id = "con3">
             </div>
             <div className = "blocker" id = "blo3">
