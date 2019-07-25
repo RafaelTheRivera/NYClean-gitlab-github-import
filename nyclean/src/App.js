@@ -58,20 +58,11 @@ class App extends Component {
 
           <div id="rectangle"></div>
 
-          <a href="./safety"><img id = "safetyicon" src = {safetyicon} alt = "safetyicon"/></a>
-
           <footer>
-
-            <div id = "safetytab"></div>
-
-            <a id = "rightside" href="./safety" class = "linkText">Safety Information</a>
-
-          <footer>
-
             <button id = "signout" className = "small" onClick = {this.signOut}>SIGN OUT</button>
 
           </footer>
-          </footer>
+          
         </div>
       );
     }

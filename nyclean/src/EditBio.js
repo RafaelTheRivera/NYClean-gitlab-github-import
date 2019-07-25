@@ -3,6 +3,7 @@ import './App.css';
 import firebase from './Firestore'
 import { Redirect } from 'react-router-dom';
 import back from './images/back.png';
+import greenyclogo from './images/greenyclogo.png';
 
 const db = firebase.firestore();
 db.settings ({
@@ -67,6 +68,7 @@ class EditBio extends Component {
   if (this.state.changed === true){
   return (
     <div>
+
     <a href = "/profpage"> <img id = "back" src = {back} alt= "back"/></a>
     <div class = "appText">
     <br></br>
