@@ -8,6 +8,7 @@ import greenyclogo from './images/greenyclogo.png';
 
 const db = firebase.firestore();
 
+
 class Profile extends Component {
   constructor(){
     super();
@@ -58,21 +59,14 @@ class Profile extends Component {
         const userRef = db.collection("users");
 
         userRef.doc(user.uid).get().then(getDoc => {
-          if(getDoc.data().imageSrc == null) {
+          if(getDoc.data().imageSrc === null || getDoc.data().imageSrc === "") {
             userRef.doc(user.uid).update({
               imageSrc: "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
             })
-            userRef.doc(user.uid).get().then(getDoc => {
-              this.setState({
-                imageSrc: getDoc.data().imageSrc
-              })
-            })
           }
-        })
-        userRef.doc(user.uid).get().then(getDoc => {
           this.setState({
             imageSrc: getDoc.data().imageSrc
-          })
+          });
         console.log(this.state.imageSrc);
           if (!getDoc.exists){
             userRef.doc(user.uid).set({
@@ -80,7 +74,7 @@ class Profile extends Component {
               email: user.email,
             });
           }
-        })
+        });
         userRef.doc(user.uid).get().then(getDoc => {
             this.setState({
               userBio: getDoc.data().bio
@@ -127,8 +121,7 @@ class Profile extends Component {
     <img alt = "" src = {this.state.imageSrc} id = "profileimg"/>
           <p>Change Profile Picture:</p><form onSubmit = {this.submitInput}>
           <input
-          type = "images"
-          name = "profilePic"
+          type = "text"
           placeholder = "Image URL"
           onChange = {this.updateInput}
           value = {this.state.imageSrc}
