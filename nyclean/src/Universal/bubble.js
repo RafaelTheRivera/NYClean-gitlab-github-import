@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import FileReader from 'filereader'
 import './../App.css';
 import L from 'leaflet';
 import headergradient from './../images/headergradient.png';
@@ -15,6 +14,8 @@ import add from './../images/add.png';
 import cover from './../images/cover.png';
 import safetyicon from './../images/safetyicon.png';
 import insertphoto from './../images/insertphoto.png';
+import picarrowleft from './../images/picarrowleft.png';
+import picarrowright from './../images/picarrowright.png';
 import Tabs from 'react-bootstrap/Tabs';
 
 
@@ -54,15 +55,18 @@ class Bubble extends Component{
                   newMark: null,
                   dataMark: null,
                   coords: null,
-                  uploadImage: "https://i.imgur.com/Of7XNtM.png",
+                  uploadImageBefore: "",
+                  uploadImageAfter: "",
                   fullname: "",
                   Totaltrash: Math.floor(Math.random()*21),
                   list: [],
                   ActualTotalTrash: 0,
                   caption: "",
                   filelink: "",
-                  pinupdate: false
-
+                  pinupdate: false,
+                  editingImage: 1,
+                  image1visible: "hidden",
+                  image2visible: "hidden"
                 }
       this.mouseDown = this.mouseDown.bind(this);
       this.mouseUp = this.mouseUp.bind(this);
@@ -81,6 +85,7 @@ class Bubble extends Component{
       this.getSearch = this.getSearch.bind(this);
       this.updateCaption = this.updateCaption.bind(this);
       this.updateImage = this.updateImage.bind(this);
+      this.handleArrowClick = this.handleArrowClick.bind(this);
     }
   componentDidMount(){
     window.addEventListener("resize", this.updateDimensions);
@@ -127,7 +132,8 @@ class Bubble extends Component{
           console.log(totalLbs);
         }
         for (var i = 0; i < dataArray.length; i++) {
-          const dataMark =  L.marker([dataArray[i].lat,[dataArray[i].long]]).addTo(map).bindPopup("<p id = 'set'>Pin location set</p>").openPopup();
+          const date = dataArray[i].date
+          const dataMark =  L.marker([dataArray[i].lat,[dataArray[i].long]]).addTo(map).bindPopup("<div id = 'popup'><p id = 'posttitle'>Post by:  "+ dataArray[i].username +"<p id = 'date'> on "+ date.substr(0, date.indexOf("201" || "202")) +"</p></p><div id = 'controlbody'><p id = 'bodycaption'>"+ dataArray[i].body +"</p></div></div><div id='pictures'><img src = "+ dataArray[i].beforeImage +" id = 'imageBefore'/><img src = "+ dataArray[i].afterImage +" id = 'imageAfter'/></div>", {maxWidth : 600}).openPopup();
         }
         setState({lbs: totalLbs});
 
@@ -284,9 +290,12 @@ class Bubble extends Component{
                     leaderIsOpen: "hidden",
                     friendsIsOpen: "hidden",
                     tab1IsOpen: "hidden",
-                    tab2IsOpen: "hidden"});
+                    tab2IsOpen: "hidden",
+                    image1visible: "visible"});
     }else{
-      this.setState({pinIsOpen: "hidden"});
+      this.setState({pinIsOpen: "hidden",
+                    image1visible: "hidden",
+                    image2visible: "hidden"});
     }
   }
   openFeed(){
@@ -296,7 +305,9 @@ class Bubble extends Component{
                     pinIsOpen: "hidden",
                     feedIsOpen: "visible",
                     leaderIsOpen: "hidden",
-                    friendsIsOpen: "hidden"});
+                    friendsIsOpen: "hidden",
+                    image1visible: "hidden",
+                    image2visible: "hidden"});
     }else{
       this.setState({feedIsOpen: "hidden",
                     tab1IsOpen: "hidden",
@@ -311,7 +322,9 @@ class Bubble extends Component{
                     leaderIsOpen: "visible",
                     friendsIsOpen: "hidden",
                     tab1IsOpen: "hidden",
-                    tab2IsOpen: "hidden"});
+                    tab2IsOpen: "hidden",
+                    image1visible: "hidden",
+                    image2visible: "hidden"});
     }else{
       this.setState({leaderIsOpen: "hidden"});
     }
@@ -322,7 +335,9 @@ class Bubble extends Component{
       this.setState({pinIsOpen: "hidden",
                     feedIsOpen: "hidden",
                     leaderIsOpen: "hidden",
-                    friendsIsOpen: "visible"});
+                    friendsIsOpen: "visible",
+                    image1visible: "hidden",
+                    image2visible: "hidden"});
     }else{
       this.setState({friendsIsOpen: "hidden"});
     }
@@ -354,19 +369,40 @@ class Bubble extends Component{
       username: this.state.username,
       lat: this.state.coords.lat,
       long: this.state.coords.lng,
-      date: Date.now()/1000,
+      date: Date(),
       likes: 0,
-      afterImage: this.state.uploadImage,
-      beforeImage: "",
+      afterImage: this.state.uploadImageAfter,
+      beforeImage: this.state.uploadImageBefore,
       lbs: 3,
       body: this.state.caption
     })
     this.setState({caption: "", pinupdate: true});
   }
   updateImage = e =>{
-    this.setState({uploadImage: e.target.value});
-    console.log(this.state.uploadImage);
+    if (this.state.image1visible === "visible"){
+      this.setState({uploadImageBefore: e.target.value});
+      console.log(this.state.uploadImage);
+    }else if (this.state.image1visible === "hidden"){
+      this.setState({uploadImageAfter: e.target.value})
+    }
   }
+
+  handleArrowClick(e){
+    console.log(this.state.editingImage);
+      if(this.state.editingImage === 1){
+        this.setState({editingImage: 2,
+                      image1visible: "hidden",
+                      image2visible: "visible"
+                      });
+        console.log("handled");
+      }else if (this.state.editingImage === 2){
+        this.setState({editingImage: 1,
+                      image1visible: "visible",
+                      image2visible: "hidden"});
+        console.log("handled");
+      }
+  }
+
   render(){
     this.state.list = this.sort_by_key(this.state.list, "Totaltrash");
     this.state.ActualTotalTrash = (this.state.list.reduce( function(cnt,o){ return cnt + o.Totaltrash; }, 0));
@@ -415,25 +451,18 @@ class Bubble extends Component{
               <div className = "small">Post by: {this.state.username}
               <center><div id="insertimage">
 
-              <img src = {this.state.uploadImage} alt = "" id = "uploadImage"/>
-                    <form onSubmit = {this.submitInput}>
-                    <input
-                    type = "text"
-                    placeholder = "Image URL"
-                    onChange = {this.updateInput}
-                    value = {this.state.imageSrc}
-                    />
-                    <button type = "submit">Submit</button>
-                    </form>
-              <img src = {this.state.uploadImage} alt = {""} id = "uploadImage"/>
-                <input type = "file" onChange = {this.updateImage}/>
-              </div></center>
+                <img src = {insertphoto} id = "insertphoto"/>
+                <img src = {picarrowleft} id = "picarrowleft" onClick = {this.handleArrowClick} style = {{visibility: this.state.image2visible}}/>
+                <img src = {picarrowright} id = "picarrowright" onClick = {this.handleArrowClick} style = {{visibility: this.state.image1visible}}/>
+                <img src = {this.state.uploadImageBefore} alt = {""} className = "uploadImage" id = "uploadImageBefore" style = {{visibility: this.state.image1visible}}/>
+                <img src = {this.state.uploadImageAfter} alt = {""} className = "uploadImage" id = "uploadImageAfter" style = {{visibility: this.state.image2visible}}/>
                 <form onSubmit = {this.submitCaption}>
-                  <input type = "text" onChange = {this.updateImage} id = "fileInput" value = {this.state.uploadImage} placeholder = "Add image URL"/>
+                  <input type = "text" onChange = {this.updateImage} id = "fileInput" value = {this.state.uploadImageBefore} placeholder = "Add image URL"/>
+                  <input type = "text" onChange = {this.updateImage} id = "fileInput" value = {this.state.uploadImageAfter} placeholder = "Add image URL"/>
                   <textarea placeholder = "Insert caption here" onChange = {this.updateCaption} value = {this.state.caption} id="caption"></textarea>
                   <button type = "submit" id = "post">POST</button>
                 </form>
-              </div>
+              </div></center>
 
             </div>
 
