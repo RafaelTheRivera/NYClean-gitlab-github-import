@@ -22,7 +22,8 @@ db.settings ({
 })
 
 const userRef = db.collection("users");
-var ref = firebase.database().ref('/locations/CSYIxNTBYIDwLadcLtrz');
+const ref = db.collection("locations");
+const realtime = firebase.database().ref('/data');
 
 class Bubble extends Component{
   constructor(props){
@@ -93,8 +94,8 @@ class Bubble extends Component{
                   ];
     this.map = L.map('map', {
       center: [40.7280822, -73.9937973],
-      zoom: 16,
-      minZoom:11,
+      zoom: 15,
+      minZoom:9,
       maxZoom: 16,
       maxBounds: this.bounds,
       zoomSnap: 0.2,
@@ -120,8 +121,6 @@ class Bubble extends Component{
 
           totalLbs = totalLbs + dataArray[i].lbs;
           console.log(totalLbs);
-        }
-        for (var i = 0; i < dataArray.length; i++) {
           const dataMark =  L.marker([dataArray[i].lat,[dataArray[i].long]]).addTo(map).bindPopup("<p id = 'set'>Pin location set</p>").openPopup();
         }
         setState({lbs: totalLbs});
@@ -196,18 +195,60 @@ class Bubble extends Component{
     });
     console.log(this.state.body);
   }
+  phraseEachUpper(phrase){
+    var i = 0;
+      phrase = phrase.substring(i, i+1).toUpperCase() + phrase.substring(i+1, phrase.length);
+    for(i; i < phrase.length; i++)
+    {
+      if (phrase.charAt(i) === " " && i !== phrase.length)
+      {
+        phrase = phrase.substring(0, i+1) + phrase.substring(i+1, i+2).toUpperCase() + phrase.substring(i+2, phrase.length);
+      }
+    }
+    return phrase;
+  }
+  findSecondBlank(phrase){
+    var count = 0;
+    var index;
+    for (var i = 0; i < phrase.length; i++)
+    {
+      if (phrase.charAt(i) === " ")
+      {
+        count++;
+        if (count === 2)
+        {
+          index = i;
+        }
+      }
+    }
+    return index;
+  }
+  findThirdBlankReverse(phrase){
+    var count = 0;
+    var index;
+    for (var i = phrase.length-1; i >= 0; i--)
+    {
+      if (phrase.charAt(i) === " ")
+      {
+        count++;
+        if (count === 3)
+        {
+          index = i;
+        }
+      }
+    }
+    return index;
+  }
   getSearch = e => {
     //find search results based on updateSearchBar
     //note: must call the search results bar
     e.preventDefault();
     const search = this.state.search;
-    const ref = db.collection("locations")
     //program function to find distances based on an inputted location and search coordinates
     ref.get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        if (doc.data().name === search)
+        if (search === doc.data().name || search.toLowerCase() === doc.data().name || this.phraseEachUpper(search) === doc.data().name || this.phraseEachUpper(search.toLowerCase()) === doc.data().name)
         {
-          console.log(doc.data().name)
           let lat = doc.data().lat
           let long = doc.data().long
           this.setState({lat: lat, long: long});
@@ -215,7 +256,29 @@ class Bubble extends Component{
         }
       })
     })
-
+    realtime.on("value", (snapshot) => {
+      for (var i = 0; i <= 298; i++)
+      {
+        if (this.phraseEachUpper(search.toLowerCase()) === snapshot.val()[i][10])
+        {
+          let lat = parseFloat(snapshot.val()[i][8].substring(this.findSecondBlank(snapshot.val()[i][8]), snapshot.val()[i][8].length))
+          let long = parseFloat(snapshot.val()[i][8].substring(7, this.findSecondBlank(snapshot.val()[i][8])))
+          this.setState({lat: lat, long: long});
+          this.map.flyTo([this.state.lat, this.state.long], 16);
+        }
+      }
+      for (var a = 299; a <= 1927; a++)
+      {
+        if (snapshot.val()[i][10].substring(0, this.findThirdBlankReverse(snapshot.val()[i][10])).includes(this.phraseEachUpper(search.toLowerCase())))
+        {
+          let lat = parseFloat(snapshot.val()[i][11].substring(this.findSecondBlank(snapshot.val()[i][11]), snapshot.val()[i][11].length))
+          let long = parseFloat(snapshot.val()[i][11].substring(7, this.findSecondBlank(snapshot.val()[i][11])))
+          this.setState({lat: lat, long: long});
+          this.map.flyTo([this.state.lat, this.state.long], 16);
+          break;
+        }
+      }
+  })
   }
   updateDimensions() {
    var w = window;
