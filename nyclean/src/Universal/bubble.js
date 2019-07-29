@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import FileReader from 'filereader'
 import './../App.css';
 import L from 'leaflet';
 import headergradient from './../images/headergradient.png';
@@ -13,6 +14,7 @@ import emptypin from './../images/pin.png';
 import add from './../images/add.png';
 import cover from './../images/cover.png';
 import safetyicon from './../images/safetyicon.png';
+import insertphoto from './../images/insertphoto.png';
 import Tabs from 'react-bootstrap/Tabs';
 
 const db = firebase.firestore();
@@ -22,6 +24,7 @@ db.settings ({
 
 const userRef = db.collection("users");
 var ref = firebase.database().ref('/locations/CSYIxNTBYIDwLadcLtrz');
+
 
 class Bubble extends Component{
   constructor(props){
@@ -48,7 +51,7 @@ class Bubble extends Component{
                   newMark: null,
                   dataMark: null,
                   coords: null,
-                  uploadImage: "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png",
+                  uploadImage: 'C:\\Users\\ralph\\Documents\\CooperProgram\\nyclean\\nyclean\\src\\images\\insertphoto.png',
 
                   fullname: "",
                   Totaltrash: 0,
@@ -56,7 +59,8 @@ class Bubble extends Component{
                   ActualTotalTrash: 0,
 
                   caption: "",
-                  filelink: ""
+                  filelink: "",
+                  pinupdate: false
 
                 }
       this.mouseDown = this.mouseDown.bind(this);
@@ -73,6 +77,7 @@ class Bubble extends Component{
       this.componentDidMount = this.componentDidMount.bind(this);
       this.getSearch = this.getSearch.bind(this);
       this.updateCaption = this.updateCaption.bind(this);
+      this.updateImage = this.updateImage.bind(this);
     }
   componentDidMount(){
     window.addEventListener("resize", this.updateDimensions);
@@ -124,6 +129,19 @@ class Bubble extends Component{
         setState({lbs: totalLbs});
 
     });
+
+    db.collection("users").get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        this.setState({
+          list: this.state.list.concat({
+            fullname: doc.data().fullname,
+            Totaltrash : doc.data().Totaltrash
+          })
+        })
+
+      console.log(doc.id, " => ", doc.data());
+      });
+    });
   }
   sort_by_key(array, key)
   {
@@ -138,20 +156,6 @@ class Bubble extends Component{
        this.setState({x: e.clientX-7, y: e.clientY - 27});
      }
    }
-   componentDidMount(){
-     db.collection("users").get().then((querySnapshot) => {
-       querySnapshot.forEach((doc) => {
-         this.setState({
-           list: this.state.list.concat({
-             fullname: doc.data().fullname,
-             Totaltrash : doc.data().Totaltrash
-           })
-         })
-
-       console.log(doc.id, " => ", doc.data());
-       });
-     });
-   };
   componentWillMount(){
     document.body.onmousedown = this.mouseDown;
     document.body.onmouseup = this.mouseUp;
@@ -247,7 +251,11 @@ class Bubble extends Component{
       const map = this.map;
       const state = this.state;
       this.state.newMark.on('popupclose', function(){
-        map.removeLayer(state.newMark);
+        if (state.pinupdate === false){
+          map.removeLayer(state.newMark);
+        }else{
+          this.setState({pinupdate: true});
+        }
       });
       this.map.flyTo(coords);
       this.setState({dragEvent: false, unmergedImages: "hidden"});
@@ -325,11 +333,11 @@ class Bubble extends Component{
       lbs: 3,
       body: this.state.caption
     })
-    this.setState({caption: ""});
+    this.setState({caption: "", pinupdate: true});
   }
   updateImage = e =>{
-    this.setState({filelink: e.target.value});
-    console.log(this.state.filelink);
+    this.setState({uploadImage: e.target.value});
+    console.log(this.state.uploadImage);
   }
   render(){
     this.state.list = this.sort_by_key(this.state.list, "Totaltrash");
@@ -378,10 +386,10 @@ class Bubble extends Component{
             <div className = "bubble" id = "bub1">
               <div className = "small">Post by: {this.state.username}
               <center><div id="insertimage">
-              <img src = {this.state.uploadImage} alt = {""} id = "uploadImage"/>
-                <input type = "file" onChange = {this.updateImage}/>
+              <img src = {insertphoto} alt = {""} id = "uploadImage" name = "filename"/>
               </div></center>
                 <form onSubmit = {this.submitCaption}>
+                  <input type = "text" onChange = {this.updateImage} id = "fileInput" value = {this.state.uploadImage} placeholder = "Add image URL"/>
                   <textarea placeholder = "Insert caption here" onChange = {this.updateCaption} value = {this.state.caption} id="caption"></textarea>
                   <button type = "submit" id = "post">POST</button>
                 </form>
@@ -416,11 +424,11 @@ class Bubble extends Component{
             </div>
             <div className = "bubble" id = "bub3">
 
-            <center><p id = "totalcount">TOTAL COUNT</p> <p id = "livecount"><b>{this.state.ActualTotalTrash}</b> lbs</p> <br />
+            <center><p id = "totalcount">TOTAL COUNT</p> <p id = "livecount"><b>{this.state.lbs}</b> lbs</p> <br />
             Weekly Leaderboard</center>
             <br />
             <p className = "small"><ol>
-              <li>{items}</li>
+              {items}
             </ol></p>
 
             </div>

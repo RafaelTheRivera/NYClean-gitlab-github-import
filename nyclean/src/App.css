@@ -62,8 +62,13 @@ height: 40px;
   text-align:center;
 }
 #uploadImage{
-  height:100%;
-  width:100%;
+  height: 100%;
+  width: 100%;
+}
+#fileInput{
+  left: 23px;
+  position:absolute;
+  width: 200px;
 }
 .editUserBar{
 margin-top: -1px;
