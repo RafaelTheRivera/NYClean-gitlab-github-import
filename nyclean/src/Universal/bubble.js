@@ -30,6 +30,8 @@ class Bubble extends Component{
                   feedIsOpen: "hidden",
                   leaderIsOpen: "hidden",
                   friendsIsOpen: "hidden",
+                  tab1IsOpen: "hidden",
+                  tab2IsOpen: "hidden",
                   unmergedImages: "hidden",
                   mouseLeavePin: true,
                   dragEvent: false,
@@ -60,6 +62,8 @@ class Bubble extends Component{
       this.openFeed = this.openFeed.bind(this);
       this.openLeader = this.openLeader.bind(this);
       this.openFriends = this.openFriends.bind(this);
+      this.opentab1 = this.opentab1.bind(this);
+      this.opentab2 = this.opentab2.bind(this);
       this.updateDimensions = this.updateDimensions.bind(this);
       this.updateSearchBar = this.updateSearchBar.bind(this);
       this.updateBody = this.updateBody.bind(this);
@@ -240,7 +244,9 @@ class Bubble extends Component{
       this.setState({pinIsOpen: "visible",
                     feedIsOpen: "hidden",
                     leaderIsOpen: "hidden",
-                    friendsIsOpen: "hidden"});
+                    friendsIsOpen: "hidden",
+                    tab1IsOpen: "hidden",
+                    tab2IsOpen: "hidden"});
     }else{
       this.setState({pinIsOpen: "hidden"});
     }
@@ -248,12 +254,15 @@ class Bubble extends Component{
   openFeed(){
 
     if (this.state.feedIsOpen === "hidden"){
-      this.setState({pinIsOpen: "hidden",
+      this.setState({tab1IsOpen: "visible",
+                    pinIsOpen: "hidden",
                     feedIsOpen: "visible",
                     leaderIsOpen: "hidden",
                     friendsIsOpen: "hidden"});
     }else{
-      this.setState({feedIsOpen: "hidden"});
+      this.setState({feedIsOpen: "hidden",
+                    tab1IsOpen: "hidden",
+                    tab2IsOpen: "hidden"});
     }
   }
   openLeader(){
@@ -262,7 +271,9 @@ class Bubble extends Component{
       this.setState({pinIsOpen: "hidden",
                     feedIsOpen: "hidden",
                     leaderIsOpen: "visible",
-                    friendsIsOpen: "hidden"});
+                    friendsIsOpen: "hidden",
+                    tab1IsOpen: "hidden",
+                    tab2IsOpen: "hidden"});
     }else{
       this.setState({leaderIsOpen: "hidden"});
     }
@@ -278,6 +289,22 @@ class Bubble extends Component{
       this.setState({friendsIsOpen: "hidden"});
     }
   }
+
+  opentab1(){
+
+    if (this.state.tab1IsOpen === "hidden"){
+      this.setState({tab1IsOpen: "visible",
+                    tab2IsOpen: "hidden"});
+    }
+  }
+  opentab2(){
+
+    if (this.state.tab2IsOpen === "hidden"){
+      this.setState({tab1IsOpen: "hidden",
+                    tab2IsOpen: "visible"});
+    }
+  }
+
   updateCaption = e => {
     this.setState({caption: e.target.value});
     console.log(this.state.caption);
@@ -370,10 +397,18 @@ class Bubble extends Component{
             </div>
             <img className = "cover" id = "cover2" src = {cover} alt = "cover"/>
 
-            <div id = "tab1"></div>
-            <div id = "tableft"></div>
-            <div id = "tab2"></div>
-            <div id = "tabright"></div>
+            <div id = "tableft" onClick = {this.opentab1}><center><p className = "small">UPDATES</p></center></div>
+              <span style = {{visibility: this.state.tab1IsOpen}}>
+                <div id = "line1"></div>
+                <div className = "tab" id = "tab1"></div>
+              </span>
+
+
+            <div id = "tabright" onClick = {this.opentab2}><center><p className = "small">REPORTS</p></center></div>
+              <span style = {{visibility: this.state.tab2IsOpen}}>
+                <div id = "line2"></div>
+                <div className = "tab" id = "tab2"></div>
+              </span>
 
           </span>
 

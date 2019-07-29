@@ -560,16 +560,77 @@ footer {
   margin-right: 82px;
 }
 
-#tab1{
-  height:271px;
+.tab{
+  height:273px;
   width:246px;
   border-bottom-left-radius:8px;
   border-bottom-right-radius:8px;
-  position:absolute;
-  top: 0;
-  margin-top: 167px;
-  right: 0;
-  margin-right: 82px;
+  position: absolute;
+  z-index: 3;
   background-color:white;
-  z-index:2;
+  margin-top: 163px;
+  right:0;
+  margin-right: 82px;
+}
+
+#tableft{
+  height:27px;
+  width:127px;
+  border-top-left-radius: 10px;
+  border-color: black;
+  border-top-style:solid;
+  border-left-style:solid;
+  border-right-style:solid;
+  border-width:2px;
+  position:absolute;
+  padding-top: 4px;
+  background-color: #1DBCB4;
+  color: white;
+  z-index:4;
+  margin-top: 140px;
+  right: 0;
+  margin-right: 203px;
+}
+
+#tabright{
+  height:27px;
+  width:125px;
+  border-top-right-radius: 10px;
+  border-color: black;
+  border-top-style:solid;
+  border-left-style:solid;
+  border-right-style:solid;
+  border-width:2px;
+  position:absolute;
+  padding-top: 4px;
+  background-color: #1DBCB4;
+  color: white;
+  z-index:4;
+  margin-top: 140px;
+  right: 0;
+  margin-right: 80px;
+}
+
+#line1{
+  height: 2px;
+  width: 125px;
+  background-color: black;
+  position: absolute;
+  right: 0;
+  top:0;
+  margin-top: 165px;
+  margin-right: 80px;
+  z-index: 5;
+}
+
+#line2{
+  height: 2px;
+  width: 125px;
+  background-color: black;
+  position: absolute;
+  right: 0;
+  top:0;
+  margin-top: 165px;
+  margin-right: 205px;
+  z-index: 5;
 }
