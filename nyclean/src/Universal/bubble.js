@@ -350,11 +350,13 @@ class Bubble extends Component{
                   <textarea placeholder = "Insert caption here" onChange = {this.updateCaption} value = {this.state.caption} id="caption"></textarea>
                   <button type = "submit" id = "post">Post</button>
                 </form>
-              </p>
 
             </div>
-            <img className = "cover" id = "cover1" src = {cover} alt = "cover"/>
+
+          </div>
+          <img className = "cover" id = "cover1" src = {cover} alt = "cover"/>
           </span>
+
         <img id = "feed" src = {feed} alt = {"feed"} onClick = {this.openFeed}/>
           <span style = {{visibility: this.state.feedIsOpen}}>
 
@@ -367,6 +369,11 @@ class Bubble extends Component{
             <div className = "bubble" id = "bub2">
             </div>
             <img className = "cover" id = "cover2" src = {cover} alt = "cover"/>
+
+            <div id = "tab1"></div>
+            <div id = "tableft"></div>
+            <div id = "tab2"></div>
+            <div id = "tabright"></div>
 
           </span>
 
