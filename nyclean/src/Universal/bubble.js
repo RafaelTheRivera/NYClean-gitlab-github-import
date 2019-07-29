@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './../App.css';
 import L from 'leaflet';
 import headergradient from './../images/headergradient.png';
-import firebase from './../Firestore';
+import firebase from './../Firestore.js';
 import greenyc from './../images/greenyc.png';
 import pin from './../images/pinicon1.png';
 import feed from './../images/feedicon1.png';
@@ -14,6 +14,7 @@ import add from './../images/add.png';
 import cover from './../images/cover.png';
 import safetyicon from './../images/safetyicon.png';
 import Tabs from 'react-bootstrap/Tabs';
+
 
 const db = firebase.firestore();
 db.settings ({
@@ -45,14 +46,19 @@ class Bubble extends Component{
                   lat: 40.748440,
                   long: -73.985664,
                   lbs: 0,
-                  imgsrc:"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+                  imgsrc:"https://i.imgur.com/Of7XNtM.png",
                   totalPins:0,
                   newMark: null,
                   dataMark: null,
                   coords: null,
-                  uploadImage: "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png",
+                  uploadImage: "https://i.imgur.com/Of7XNtM.png",
+                  fullname: "",
+                  Totaltrash: Math.floor(Math.random()*21),
+                  list: [],
+                  ActualTotalTrash: 0,
                   caption: "",
                   filelink: ""
+
                 }
       this.mouseDown = this.mouseDown.bind(this);
       this.mouseUp = this.mouseUp.bind(this);
@@ -121,6 +127,26 @@ class Bubble extends Component{
         setState({lbs: totalLbs});
 
     });
+    db.collection("users").get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        this.setState({
+          list: this.state.list.concat({
+            fullname: doc.data().fullname,
+            Totaltrash : doc.data().Totaltrash
+          })
+        })
+
+      console.log(doc.id, " => ", doc.data());
+      });
+    });
+  }
+  sort_by_key(array, key)
+  {
+    return array.sort(function(a, b)
+  {
+    var x = a[key]; var y = b[key];
+    return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+  });
   }
    handleMouseMove(e){
      if(this.state.dragEvent === true){
@@ -137,7 +163,8 @@ class Bubble extends Component{
         userRef.doc(user.uid).get().then(getDoc => {
         if (getDoc.data() === undefined ){
           userRef.doc(user.uid).update({
-            imageSrc: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+            imageSrc: "https://i.imgur.com/Of7XNtM.png",
+            Totaltrash: this.state.Totaltrash
           })
 
         }
@@ -174,19 +201,21 @@ class Bubble extends Component{
     //note: must call the search results bar
     e.preventDefault();
     const search = this.state.search;
-    const ref = firebase.database().ref('locations/CSYIxNTBYIDwLadcLtrz');
+    const ref = db.collection("locations")
     //program function to find distances based on an inputted location and search coordinates
-    let query = null;
-    ref.on("value", function(snapshot){
-      console.log(snapshot.val())
-      query = snapshot.val()
-      console.log(query)
+    ref.get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        if (doc.data().name === search)
+        {
+          console.log(doc.data().name)
+          let lat = doc.data().lat
+          let long = doc.data().long
+          this.setState({lat: lat, long: long});
+          this.map.flyTo([this.state.lat, this.state.long], 16);
+        }
+      })
     })
-    console.log(query)
-    let lat = query
-    let long = query
-    this.setState({lat: lat, long: long});
-    this.map.flyTo([40.798440, -73.995664], 16);
+
   }
   updateDimensions() {
    var w = window;
@@ -330,6 +359,12 @@ class Bubble extends Component{
     console.log(this.state.filelink);
   }
   render(){
+    this.state.list = this.sort_by_key(this.state.list, "Totaltrash");
+    this.state.ActualTotalTrash = (this.state.list.reduce( function(cnt,o){ return cnt + o.Totaltrash; }, 0));
+    this.state.list.reverse();
+    const items = this.state.list.slice(0, 5).map((trash) =>
+      <li> {trash.fullname}: <b>{trash.Totaltrash}</b> lbs</li>
+    );
     return(
       <div>
         <img id = "bigHeader" src = {headergradient} alt = {"topgradient"}/>
@@ -370,6 +405,17 @@ class Bubble extends Component{
             <div className = "bubble" id = "bub1">
               <div className = "small">Post by: {this.state.username}
               <center><div id="insertimage">
+
+              <img src = {this.state.uploadImage} alt = "" id = "uploadImage"/>
+                    <form onSubmit = {this.submitInput}>
+                    <input
+                    type = "text"
+                    placeholder = "Image URL"
+                    onChange = {this.updateInput}
+                    value = {this.state.imageSrc}
+                    />
+                    <button type = "submit">Submit</button>
+                    </form>
               <img src = {this.state.uploadImage} alt = {""} id = "uploadImage"/>
                 <input type = "file" onChange = {this.updateImage}/>
               </div></center>
@@ -422,16 +468,16 @@ class Bubble extends Component{
             <div className = "blocker" id = "blo3">
             </div>
             <div className = "bubble" id = "bub3">
-            <center><p id = "totalcount">TOTAL COUNT</p> <p id = "livecount"><b>{this.state.lbs}</b> lbs</p> <br />
+
+            <center><p id = "totalcount">TOTAL COUNT</p> <p id = "livecount"><b>{this.state.ActualTotalTrash}</b> lbs</p> <br />
             Weekly Leaderboard</center>
             <br />
-            <div className = "small"><ol>
-              <li>user 123 lbs</li>
-              <li>user 123 lbs</li>
-              <li>user 123 lbs</li>
-              <li>user 123 lbs</li>
-              <li>user 123 lbs</li>
-            </ol></div>
+            <p className = "small">
+            <ol>
+              {items}
+            </ol>
+            </p>
+
             </div>
             <img className = "cover" id = "cover3" src = {cover} alt = "cover"/>
           </span>
