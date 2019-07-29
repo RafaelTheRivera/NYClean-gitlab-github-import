@@ -125,6 +125,18 @@ class Bubble extends Component{
         setState({lbs: totalLbs});
 
     });
+    db.collection("users").get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        this.setState({
+          list: this.state.list.concat({
+            fullname: doc.data().fullname,
+            Totaltrash : doc.data().Totaltrash
+          })
+        })
+
+      console.log(doc.id, " => ", doc.data());
+      });
+    });
   }
   sort_by_key(array, key)
   {
@@ -139,20 +151,6 @@ class Bubble extends Component{
        this.setState({x: e.clientX-7, y: e.clientY - 27});
      }
    }
-   componentDidMount(){
-     db.collection("users").get().then((querySnapshot) => {
-       querySnapshot.forEach((doc) => {
-         this.setState({
-           list: this.state.list.concat({
-             fullname: doc.data().fullname,
-             Totaltrash : doc.data().Totaltrash
-           })
-         })
-
-       console.log(doc.id, " => ", doc.data());
-       });
-     });
-   };
   componentWillMount(){
     document.body.onmousedown = this.mouseDown;
     document.body.onmouseup = this.mouseUp;
@@ -396,9 +394,10 @@ class Bubble extends Component{
                   <textarea placeholder = "Insert caption here" onChange = {this.updateCaption} value = {this.state.caption} id="caption"></textarea>
                   <button type = "submit" id = "post">Post</button>
                 </form>
+              </div>
             </div>
             <img className = "cover" id = "cover1" src = {cover} alt = "cover"/>
-          </div></span>
+          </span>
         <img id = "feed" src = {feed} alt = {"feed"} onClick = {this.openFeed}/>
           <span style = {{visibility: this.state.feedIsOpen}}>
 
@@ -428,9 +427,11 @@ class Bubble extends Component{
             <center><p id = "totalcount">TOTAL COUNT</p> <p id = "livecount"><b>{this.state.ActualTotalTrash}</b> lbs</p> <br />
             Weekly Leaderboard</center>
             <br />
-            <p className = "small"><ol>
-              <li>{items}</li>
-            </ol></p>
+            <p className = "small">
+            <ol>
+              {items}
+            </ol>
+            </p>
 
             </div>
             <img className = "cover" id = "cover3" src = {cover} alt = "cover"/>
