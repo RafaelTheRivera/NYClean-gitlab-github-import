@@ -13,7 +13,7 @@ class Profile extends Component {
   constructor(){
     super();
     this.state = {userName:"",
-    Totaltrash: Math.floor(Math.random()*20),
+    Totaltrash: Math.floor(Math.random()*21),
     imageSrc: null,
     imageInput: '',
     userBio:'Default Text',
@@ -59,8 +59,9 @@ class Profile extends Component {
         const userRef = db.collection("users");
 
         userRef.doc(user.uid).get().then(getDoc => {
-          if(getDoc.data().imageSrc === null || getDoc.data().imageSrc === "") {
+          if(getDoc.data().imageSrc === null || getDoc.data().imageSrc === "" || getDoc.data().totalTrash === null || getDoc.data().totalTrash === "") {
           userRef.doc(user.uid).update({
+              totalTrash: this.state.totalTrash,
               imageSrc: "https://i.imgur.com/Of7XNtM.png"
           })
         }
