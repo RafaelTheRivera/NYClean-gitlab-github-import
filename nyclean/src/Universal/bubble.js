@@ -13,6 +13,7 @@ import emptypin from './../images/pin.png';
 import add from './../images/add.png';
 import cover from './../images/cover.png';
 import safetyicon from './../images/safetyicon.png';
+import back from './../images/back.png';
 import Tabs from 'react-bootstrap/Tabs';
 
 
@@ -313,7 +314,9 @@ class Bubble extends Component{
       this.setState({pinIsOpen: "hidden",
                     feedIsOpen: "hidden",
                     leaderIsOpen: "hidden",
-                    friendsIsOpen: "visible"});
+                    friendsIsOpen: "visible",
+                    tab1IsOpen: "hidden",
+                    tab2IsOpen: "hidden"});
     }else{
       this.setState({friendsIsOpen: "hidden"});
     }
@@ -421,7 +424,7 @@ class Bubble extends Component{
               </div></center>
                 <form onSubmit = {this.submitCaption}>
                   <textarea placeholder = "Insert caption here" onChange = {this.updateCaption} value = {this.state.caption} id="caption"></textarea>
-                  <button type = "submit" id = "post">Post</button>
+                  <button type = "submit" id = "post"><center><p className = "small">POST</p></center></button>
                 </form>
 
             </div>
@@ -443,10 +446,12 @@ class Bubble extends Component{
             </div>
             <img className = "cover" id = "cover2" src = {cover} alt = "cover"/>
 
+
             <div id = "tableft" onClick = {this.opentab1}><center><p className = "small">UPDATES</p></center></div>
               <span style = {{visibility: this.state.tab1IsOpen}}>
                 <div id = "line1"></div>
                 <div className = "tab" id = "tab1"></div>
+                <div className = "texttype">text box 1 here</div>
               </span>
 
 
@@ -454,7 +459,9 @@ class Bubble extends Component{
               <span style = {{visibility: this.state.tab2IsOpen}}>
                 <div id = "line2"></div>
                 <div className = "tab" id = "tab2"></div>
+                <div className = "texttype">text box 2 here</div>
               </span>
+
 
           </span>
 
@@ -490,6 +497,37 @@ class Bubble extends Component{
             <div className = "bubble" id = "bub4" style = {{top: this.state.height - 379}}>
             </div>
             <img className = "cover" id = "cover4" style = {{top: this.state.height - 116.5}} src = {cover} alt = "cover"/>
+
+
+                  <div className = "bubbleheader" id = "bubheader4"><center><p className = "small">PROFILE</p></center></div>
+                  <img id = "profileback" src = {back}/>
+
+                  <div className = "page" id = "friend">
+                  <div id = "friendprofile"></div>
+                  <p id = "frienduser">username</p>
+                  <p id = "friendbio">This is this account's bio hello nice to meet you!</p>
+                  <p id = "friendpins">Pins
+                    <ol>
+                      <li>20 E 18th Street</li>
+                      <li>58 W 72nd Street</li>
+                      <li>103 E 8th Street</li>
+                      <li>20 E 18th Street</li>
+                      <li>58 W 72nd Street</li>
+                      <li>103 E 8th Street</li>
+                      <li>20 E 18th Street</li>
+                      <li>58 W 72nd Street</li>
+                      <li>103 E 8th Street</li>
+                    </ol>
+                  </p>
+
+                  </div>
+
+
+
+
+
+
+
           </span>
         <a href = "./safety"><img id = "safetyicon" src = {safetyicon} alt = {"safety"}  style = {{marginTop: this.state.height - 179}}/></a>
 
