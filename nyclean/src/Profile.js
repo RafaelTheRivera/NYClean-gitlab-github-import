@@ -73,7 +73,8 @@ class Profile extends Component {
           })
         }
         this.setState({
-          imageSrc: getDoc.data().imageSrc
+          imageSrc: getDoc.data().imageSrc,
+          Totaltrash: getDoc.data().Totaltrash
         });
         console.log(this.state.imageSrc);
           if (!getDoc.exists){

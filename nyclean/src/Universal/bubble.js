@@ -50,12 +50,10 @@ class Bubble extends Component{
                   dataMark: null,
                   coords: null,
                   uploadImage: "https://i.imgur.com/Of7XNtM.png",
-
                   fullname: "",
                   Totaltrash: Math.floor(Math.random()*21),
                   list: [],
                   ActualTotalTrash: 0,
-
                   caption: "",
                   filelink: ""
 
