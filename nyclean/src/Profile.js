@@ -13,12 +13,18 @@ class Profile extends Component {
   constructor(){
     super();
     this.state = {userName:"",
-    Totaltrash: Math.floor(Math.random()*20),
+    Totaltrash: Math.floor(Math.random()*21),
     imageSrc: null,
     imageInput: '',
     userBio:'Default Text',
     signedIn:true};
   }
+  signOut = () => firebase.auth().signOut().then( () => {
+    this.setState({
+      signedIn: false,
+      currentUser: null
+    });
+  });
   updateInput = e => {
       this.setState({
         imageInput: e.target.value
@@ -33,7 +39,8 @@ class Profile extends Component {
       if (user) {
         const userRef = db.collection("users");
         userRef.doc(user.uid).update({
-          imageSrc: this.state.imageSrc
+          imageSrc: this.state.imageSrc,
+          Totaltrash: this.state.Totaltrash
         })
       }
       });
@@ -59,13 +66,24 @@ class Profile extends Component {
         const userRef = db.collection("users");
 
         userRef.doc(user.uid).get().then(getDoc => {
-          if(getDoc.data().imageSrc === null || getDoc.data().imageSrc === "") {
+          if(getDoc.data().imageSrc === null || getDoc.data().imageSrc === "" || getDoc.data().imageSrc === "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png") {
           userRef.doc(user.uid).update({
               imageSrc: "https://i.imgur.com/Of7XNtM.png"
           })
         }
+          if(getDoc.data().Totaltrash === null) {
+            userRef.doc(user.uid).update({
+              Totaltrash: this.state.Totaltrash
+            })
+          }
+          if(getDoc.data().bio === null) {
+            userRef.doc(user.uid).update({
+              bio: this.state.userBio
+            })
+          }
         this.setState({
-          imageSrc: getDoc.data().imageSrc
+          imageSrc: getDoc.data().imageSrc,
+          Totaltrash: getDoc.data().Totaltrash
         });
         console.log(this.state.imageSrc);
           if (!getDoc.exists){
@@ -139,7 +157,10 @@ class Profile extends Component {
 
     <p>Trash count: {this.state.Totaltrash} lbs</p>
     </div>
+    <footer>
+      <button id = "signout" className = "small" onClick = {this.signOut}>SIGN OUT</button>
 
+    </footer>
     </div>
   );
   }

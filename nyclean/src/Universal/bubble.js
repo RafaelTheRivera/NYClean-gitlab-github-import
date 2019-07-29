@@ -3,7 +3,7 @@ import FileReader from 'filereader'
 import './../App.css';
 import L from 'leaflet';
 import headergradient from './../images/headergradient.png';
-import firebase from './../Firestore';
+import firebase from './../Firestore.js';
 import greenyc from './../images/greenyc.png';
 import pin from './../images/pinicon1.png';
 import feed from './../images/feedicon1.png';
@@ -16,6 +16,7 @@ import cover from './../images/cover.png';
 import safetyicon from './../images/safetyicon.png';
 import insertphoto from './../images/insertphoto.png';
 import Tabs from 'react-bootstrap/Tabs';
+
 
 const db = firebase.firestore();
 db.settings ({
@@ -33,6 +34,8 @@ class Bubble extends Component{
                   feedIsOpen: "hidden",
                   leaderIsOpen: "hidden",
                   friendsIsOpen: "hidden",
+                  tab1IsOpen: "hidden",
+                  tab2IsOpen: "hidden",
                   unmergedImages: "hidden",
                   mouseLeavePin: true,
                   dragEvent: false,
@@ -46,18 +49,16 @@ class Bubble extends Component{
                   lat: 40.748440,
                   long: -73.985664,
                   lbs: 0,
-                  imgsrc:"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+                  imgsrc:"https://i.imgur.com/Of7XNtM.png",
                   totalPins:0,
                   newMark: null,
                   dataMark: null,
                   coords: null,
-                  uploadImage: 'C:\\Users\\ralph\\Documents\\CooperProgram\\nyclean\\nyclean\\src\\images\\insertphoto.png',
-
+                  uploadImage: "https://i.imgur.com/Of7XNtM.png",
                   fullname: "",
-                  Totaltrash: 0,
+                  Totaltrash: Math.floor(Math.random()*21),
                   list: [],
                   ActualTotalTrash: 0,
-
                   caption: "",
                   filelink: "",
                   pinupdate: false
@@ -71,6 +72,8 @@ class Bubble extends Component{
       this.openFeed = this.openFeed.bind(this);
       this.openLeader = this.openLeader.bind(this);
       this.openFriends = this.openFriends.bind(this);
+      this.opentab1 = this.opentab1.bind(this);
+      this.opentab2 = this.opentab2.bind(this);
       this.updateDimensions = this.updateDimensions.bind(this);
       this.updateSearchBar = this.updateSearchBar.bind(this);
       this.updateBody = this.updateBody.bind(this);
@@ -129,7 +132,6 @@ class Bubble extends Component{
         setState({lbs: totalLbs});
 
     });
-
     db.collection("users").get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         this.setState({
@@ -166,7 +168,8 @@ class Bubble extends Component{
         userRef.doc(user.uid).get().then(getDoc => {
         if (getDoc.data() === undefined ){
           userRef.doc(user.uid).update({
-            imageSrc: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+            imageSrc: "https://i.imgur.com/Of7XNtM.png",
+            Totaltrash: this.state.Totaltrash
           })
 
         }
@@ -203,19 +206,21 @@ class Bubble extends Component{
     //note: must call the search results bar
     e.preventDefault();
     const search = this.state.search;
-    const ref = firebase.database().ref('locations/CSYIxNTBYIDwLadcLtrz');
+    const ref = db.collection("locations")
     //program function to find distances based on an inputted location and search coordinates
-    let query = null;
-    ref.on("value", function(snapshot){
-      console.log(snapshot.val())
-      query = snapshot.val()
-      console.log(query)
+    ref.get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        if (doc.data().name === search)
+        {
+          console.log(doc.data().name)
+          let lat = doc.data().lat
+          let long = doc.data().long
+          this.setState({lat: lat, long: long});
+          this.map.flyTo([this.state.lat, this.state.long], 16);
+        }
+      })
     })
-    console.log(query)
-    let lat = query
-    let long = query
-    this.setState({lat: lat, long: long});
-    this.map.flyTo([40.798440, -73.995664], 16);
+
   }
   updateDimensions() {
    var w = window;
@@ -277,7 +282,9 @@ class Bubble extends Component{
       this.setState({pinIsOpen: "visible",
                     feedIsOpen: "hidden",
                     leaderIsOpen: "hidden",
-                    friendsIsOpen: "hidden"});
+                    friendsIsOpen: "hidden",
+                    tab1IsOpen: "hidden",
+                    tab2IsOpen: "hidden"});
     }else{
       this.setState({pinIsOpen: "hidden"});
     }
@@ -285,12 +292,15 @@ class Bubble extends Component{
   openFeed(){
 
     if (this.state.feedIsOpen === "hidden"){
-      this.setState({pinIsOpen: "hidden",
+      this.setState({tab1IsOpen: "visible",
+                    pinIsOpen: "hidden",
                     feedIsOpen: "visible",
                     leaderIsOpen: "hidden",
                     friendsIsOpen: "hidden"});
     }else{
-      this.setState({feedIsOpen: "hidden"});
+      this.setState({feedIsOpen: "hidden",
+                    tab1IsOpen: "hidden",
+                    tab2IsOpen: "hidden"});
     }
   }
   openLeader(){
@@ -299,7 +309,9 @@ class Bubble extends Component{
       this.setState({pinIsOpen: "hidden",
                     feedIsOpen: "hidden",
                     leaderIsOpen: "visible",
-                    friendsIsOpen: "hidden"});
+                    friendsIsOpen: "hidden",
+                    tab1IsOpen: "hidden",
+                    tab2IsOpen: "hidden"});
     }else{
       this.setState({leaderIsOpen: "hidden"});
     }
@@ -315,6 +327,22 @@ class Bubble extends Component{
       this.setState({friendsIsOpen: "hidden"});
     }
   }
+
+  opentab1(){
+
+    if (this.state.tab1IsOpen === "hidden"){
+      this.setState({tab1IsOpen: "visible",
+                    tab2IsOpen: "hidden"});
+    }
+  }
+  opentab2(){
+
+    if (this.state.tab2IsOpen === "hidden"){
+      this.setState({tab1IsOpen: "hidden",
+                    tab2IsOpen: "visible"});
+    }
+  }
+
   updateCaption = e => {
     this.setState({caption: e.target.value});
     console.log(this.state.caption);
@@ -386,7 +414,19 @@ class Bubble extends Component{
             <div className = "bubble" id = "bub1">
               <div className = "small">Post by: {this.state.username}
               <center><div id="insertimage">
-              <img src = {insertphoto} alt = {""} id = "uploadImage" name = "filename"/>
+
+              <img src = {this.state.uploadImage} alt = "" id = "uploadImage"/>
+                    <form onSubmit = {this.submitInput}>
+                    <input
+                    type = "text"
+                    placeholder = "Image URL"
+                    onChange = {this.updateInput}
+                    value = {this.state.imageSrc}
+                    />
+                    <button type = "submit">Submit</button>
+                    </form>
+              <img src = {this.state.uploadImage} alt = {""} id = "uploadImage"/>
+                <input type = "file" onChange = {this.updateImage}/>
               </div></center>
                 <form onSubmit = {this.submitCaption}>
                   <input type = "text" onChange = {this.updateImage} id = "fileInput" value = {this.state.uploadImage} placeholder = "Add image URL"/>
@@ -396,8 +436,11 @@ class Bubble extends Component{
               </div>
 
             </div>
-            <img className = "cover" id = "cover1" src = {cover} alt = "cover"/>
+
+          </div>
+          <img className = "cover" id = "cover1" src = {cover} alt = "cover"/>
           </span>
+
         <img id = "feed" src = {feed} alt = {"feed"} onClick = {this.openFeed}/>
           <span style = {{visibility: this.state.feedIsOpen}}>
 
@@ -410,6 +453,19 @@ class Bubble extends Component{
             <div className = "bubble" id = "bub2">
             </div>
             <img className = "cover" id = "cover2" src = {cover} alt = "cover"/>
+
+            <div id = "tableft" onClick = {this.opentab1}><center><p className = "small">UPDATES</p></center></div>
+              <span style = {{visibility: this.state.tab1IsOpen}}>
+                <div id = "line1"></div>
+                <div className = "tab" id = "tab1"></div>
+              </span>
+
+
+            <div id = "tabright" onClick = {this.opentab2}><center><p className = "small">REPORTS</p></center></div>
+              <span style = {{visibility: this.state.tab2IsOpen}}>
+                <div id = "line2"></div>
+                <div className = "tab" id = "tab2"></div>
+              </span>
 
           </span>
 
@@ -427,9 +483,11 @@ class Bubble extends Component{
             <center><p id = "totalcount">TOTAL COUNT</p> <p id = "livecount"><b>{this.state.lbs}</b> lbs</p> <br />
             Weekly Leaderboard</center>
             <br />
-            <p className = "small"><ol>
+            <p className = "small">
+            <ol>
               {items}
-            </ol></p>
+            </ol>
+            </p>
 
             </div>
             <img className = "cover" id = "cover3" src = {cover} alt = "cover"/>
