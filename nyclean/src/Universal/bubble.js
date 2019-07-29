@@ -44,15 +44,15 @@ class Bubble extends Component{
                   lat: 40.748440,
                   long: -73.985664,
                   lbs: 0,
-                  imgsrc:"https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+                  imgsrc:"https://i.imgur.com/Of7XNtM.png",
                   totalPins:0,
                   newMark: null,
                   dataMark: null,
                   coords: null,
-                  uploadImage: "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png",
+                  uploadImage: "https://i.imgur.com/Of7XNtM.png",
 
                   fullname: "",
-                  Totaltrash: 0,
+                  Totaltrash: Math.floor(Math.random()*21),
                   list: [],
                   ActualTotalTrash: 0,
 
@@ -161,7 +161,8 @@ class Bubble extends Component{
         userRef.doc(user.uid).get().then(getDoc => {
         if (getDoc.data() === undefined ){
           userRef.doc(user.uid).update({
-            imageSrc: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+            imageSrc: "https://i.imgur.com/Of7XNtM.png",
+            Totaltrash: this.state.Totaltrash
           })
 
         }
