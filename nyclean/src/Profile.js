@@ -66,12 +66,21 @@ class Profile extends Component {
         const userRef = db.collection("users");
 
         userRef.doc(user.uid).get().then(getDoc => {
-          if(getDoc.data().imageSrc === null || getDoc.data().imageSrc === "" || getDoc.data().imageSrc === "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" || getDoc.data().Totaltrash === null) {
+          if(getDoc.data().imageSrc === null || getDoc.data().imageSrc === "" || getDoc.data().imageSrc === "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png") {
           userRef.doc(user.uid).update({
-              Totaltrash: this.state.Totaltrash,
               imageSrc: "https://i.imgur.com/Of7XNtM.png"
           })
         }
+          if(getDoc.data().Totaltrash === null) {
+            userRef.doc(user.uid).update({
+              Totaltrash: this.state.Totaltrash
+            })
+          }
+          if(getDoc.data().bio === null) {
+            userRef.doc(user.uid).update({
+              bio: this.state.userBio
+            })
+          }
         this.setState({
           imageSrc: getDoc.data().imageSrc,
           Totaltrash: getDoc.data().Totaltrash

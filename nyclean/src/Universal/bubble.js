@@ -197,18 +197,21 @@ class Bubble extends Component{
     //note: must call the search results bar
     e.preventDefault();
     const search = this.state.search;
-    const locations = firebase.database()
-    const ref = locations.ref('/locations/CSYIxNTBYIDwLadcLtrz');
+    const ref = db.collection("locations")
     //program function to find distances based on an inputted location and search coordinates
-    let query = null;
-    ref.on('value', function(snapshot){
-      console.log(snapshot.val())
+    ref.get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        if (doc.data().name === search)
+        {
+          console.log(doc.data().name)
+          let lat = doc.data().lat
+          let long = doc.data().long
+          this.setState({lat: lat, long: long});
+          this.map.flyTo([this.state.lat, this.state.long], 16);
+        }
+      })
     })
-    console.log(query)
-    let lat = query
-    let long = query
-    this.setState({lat: lat, long: long});
-    this.map.flyTo([40.798440, -73.995664], 16);
+
   }
   updateDimensions() {
    var w = window;
