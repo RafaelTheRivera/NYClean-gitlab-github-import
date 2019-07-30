@@ -233,9 +233,11 @@ class Bubble extends Component{
     return phrase + " at SW corner";
   }
   makeLetterCapital = (phrase, index) => {
-    if (index >= 0 && index < phrase.length)
+    if (index >= 0 && index < phrase.length){
       return phrase.substring(0, index) + phrase.substring(index, index+1).toUpperCase() + phrase.substring(index+1, phrase.length);
+    }
   }
+  getSearch = e => {
     //find search results based on updateSearchBar
     //note: must call the search results bar
     var status = 0;
