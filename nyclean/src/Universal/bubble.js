@@ -34,6 +34,8 @@ class Bubble extends Component{
                   friendsIsOpen: "hidden",
                   tab1IsOpen: "hidden",
                   tab2IsOpen: "hidden",
+                  FriendSearchIsOpen: "hidden",
+                  FriendPageIsOpen: "hidden",
                   unmergedImages: "hidden",
                   mouseLeavePin: true,
                   dragEvent: false,
@@ -58,7 +60,8 @@ class Bubble extends Component{
                   list: [],
                   ActualTotalTrash: 0,
                   caption: "",
-                  filelink: ""
+                  filelink: "",
+                  userReferences: []
 
                 }
       this.mouseDown = this.mouseDown.bind(this);
@@ -71,6 +74,8 @@ class Bubble extends Component{
       this.openFriends = this.openFriends.bind(this);
       this.opentab1 = this.opentab1.bind(this);
       this.opentab2 = this.opentab2.bind(this);
+      this.openFriendSearch = this.openFriendSearch.bind(this);
+      this.openFriendPage = this.openFriendPage.bind(this);
       this.updateDimensions = this.updateDimensions.bind(this);
       this.updateSearchBar = this.updateSearchBar.bind(this);
       this.updateBody = this.updateBody.bind(this);
@@ -181,6 +186,14 @@ class Bubble extends Component{
                   profileWidth: user.displayName.length * 8.5 + 50 + "px"});
     }});
     this.updateDimensions();
+
+    var userReferences = [];
+    const userData = db .collection("users").get().then((snapshot) =>{
+      snapshot.forEach(function(doc){
+        userReferences.push(doc.data().fullname);
+      });
+        this.setState({userReferences: userReferences});
+    });
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
@@ -276,7 +289,9 @@ class Bubble extends Component{
                     leaderIsOpen: "hidden",
                     friendsIsOpen: "hidden",
                     tab1IsOpen: "hidden",
-                    tab2IsOpen: "hidden"});
+                    tab2IsOpen: "hidden",
+                    FriendSearchIsOpen: "hidden",
+                    FriendProfileIsOpen: "hidden"});
     }else{
       this.setState({pinIsOpen: "hidden"});
     }
@@ -288,7 +303,9 @@ class Bubble extends Component{
                     pinIsOpen: "hidden",
                     feedIsOpen: "visible",
                     leaderIsOpen: "hidden",
-                    friendsIsOpen: "hidden"});
+                    friendsIsOpen: "hidden",
+                    FriendSearchIsOpen: "hidden",
+                    FriendProfileIsOpen: "hidden"});
     }else{
       this.setState({feedIsOpen: "hidden",
                     tab1IsOpen: "hidden",
@@ -303,7 +320,9 @@ class Bubble extends Component{
                     leaderIsOpen: "visible",
                     friendsIsOpen: "hidden",
                     tab1IsOpen: "hidden",
-                    tab2IsOpen: "hidden"});
+                    tab2IsOpen: "hidden",
+                    FriendSearchIsOpen: "hidden",
+                    FriendProfileIsOpen: "hidden"});
     }else{
       this.setState({leaderIsOpen: "hidden"});
     }
@@ -316,9 +335,13 @@ class Bubble extends Component{
                     leaderIsOpen: "hidden",
                     friendsIsOpen: "visible",
                     tab1IsOpen: "hidden",
-                    tab2IsOpen: "hidden"});
+                    tab2IsOpen: "hidden",
+                    FriendSearchIsOpen: "visible",
+                    FriendProfileIsOpen: "hidden"});
     }else{
-      this.setState({friendsIsOpen: "hidden"});
+      this.setState({friendsIsOpen: "hidden",
+                    FriendSearchIsOpen: "hidden",
+                    FriendProfileIsOpen: "hidden"});
     }
   }
 
@@ -334,6 +357,22 @@ class Bubble extends Component{
     if (this.state.tab2IsOpen === "hidden"){
       this.setState({tab1IsOpen: "hidden",
                     tab2IsOpen: "visible"});
+    }
+  }
+
+  openFriendSearch(){
+
+    if (this.state.FriendSearchIsOpen === "hidden"){
+      this.setState({FriendSearchIsOpen: "visible",
+                    FriendPageIsOpen: "hidden"});
+    }
+  }
+
+  openFriendPage(){
+
+    if (this.state.FriendPageIsOpen === "hidden"){
+      this.setState({FriendSearchIsOpen: "hidden",
+                    FriendPageIsOpen: "visible"});
     }
   }
 
@@ -361,7 +400,15 @@ class Bubble extends Component{
     this.setState({filelink: e.target.value});
     console.log(this.state.filelink);
   }
+
+
+
+
+
   render(){
+
+
+
     this.state.list = this.sort_by_key(this.state.list, "Totaltrash");
     this.state.ActualTotalTrash = (this.state.list.reduce( function(cnt,o){ return cnt + o.Totaltrash; }, 0));
     this.state.list.reverse();
@@ -370,6 +417,7 @@ class Bubble extends Component{
     );
     return(
       <div>
+
         <img id = "bigHeader" src = {headergradient} alt = {"topgradient"}/>
           <div className= "headerItem" id = "logo">
             <a href = "/"> <img id = "greenyc" src = {greenyc} alt= "logo"/> </a>
@@ -488,6 +536,8 @@ class Bubble extends Component{
             </div>
             <img className = "cover" id = "cover3" src = {cover} alt = "cover"/>
           </span>
+
+
         <img id = "friends" src = {friends} alt = {"friends"} onClick = {this.openFriends}  style = {{marginTop: this.state.height - 119}}/>
           <span style = {{visibility: this.state.friendsIsOpen}}>
             <div className = "connector" id = "con4" style = {{top: this.state.height - 119}}>
@@ -496,39 +546,53 @@ class Bubble extends Component{
             </div>
             <div className = "bubble" id = "bub4" style = {{top: this.state.height - 379}}>
             </div>
-            <img className = "cover" id = "cover4" style = {{top: this.state.height - 116.5}} src = {cover} alt = "cover"/>
+            <img className = "cover" id = "cover4" style = {{top: this.state.height - 117}} src = {cover} alt = "cover"/>
 
 
-                  <div className = "bubbleheader" id = "bubheader4"><center><p className = "small">PROFILE</p></center></div>
-                  <img id = "profileback" src = {back}/>
+                  <span style = {{visibility: this.state.FriendSearchIsOpen}}>
 
-                  <div className = "page" id = "friend">
-                  <div id = "friendprofile"></div>
-                  <p id = "frienduser">username</p>
-                  <p id = "friendbio">This is this account's bio hello nice to meet you!</p>
-                  <p id = "friendpins">Pins
-                    <ol>
-                      <li>20 E 18th Street</li>
-                      <li>58 W 72nd Street</li>
-                      <li>103 E 8th Street</li>
-                      <li>20 E 18th Street</li>
-                      <li>58 W 72nd Street</li>
-                      <li>103 E 8th Street</li>
-                      <li>20 E 18th Street</li>
-                      <li>58 W 72nd Street</li>
-                      <li>103 E 8th Street</li>
-                    </ol>
-                  </p>
+                  <div className = "bubbleheader" id = "bubheader4"><center><p className = "small">FIND FRIENDS</p></center></div>
+
+                  <div className = "page" id = "friendsearch">
+                    <p>insert search bar "Search by username"</p>
+
+                    <p id = "friendinfo" onClick = {this.openFriendPage}>{this.state.userReferences}</p>
 
                   </div>
+                  </span>
 
 
+                  <span style = {{visibility: this.state.FriendPageIsOpen}}>
+                  <div className = "bubbleheader" id = "bubheader4"><center><p className = "small">PROFILE</p></center></div>
 
+                  <img id = "profileback" src = {back} onClick = {this.openFriendSearch}/>
+
+                  <div className = "page" id = "friend">
+                    <div id = "friendprofile"></div>
+                    <p id = "frienduser">username</p>
+                    <p id = "friendinfo">This is this account's bio hello nice to meet you!<br /><br />
+                    Pins
+                      <ol>
+                        <li>pin</li>
+                        <li>pin</li>
+                        <li>pin</li>
+                        <li>pin</li>
+                        <li>pin</li>
+                        <li>pin</li>
+                        <li>pin</li>
+                        <li>pin</li>
+                        <li>pin</li>
+                      </ol>
+                      Trash count: 123
+                    </p>
+                  </div>
+                  </span>
 
 
 
 
           </span>
+
         <a href = "./safety"><img id = "safetyicon" src = {safetyicon} alt = {"safety"}  style = {{marginTop: this.state.height - 179}}/></a>
 
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
