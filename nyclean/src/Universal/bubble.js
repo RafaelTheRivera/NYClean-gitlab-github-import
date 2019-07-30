@@ -25,7 +25,8 @@ db.settings ({
 })
 
 const userRef = db.collection("users");
-var ref = firebase.database().ref('/locations/CSYIxNTBYIDwLadcLtrz');
+const ref = db.collection("locations");
+const realtime = db.collection('/subways');
 
 
 class Bubble extends Component{
@@ -103,8 +104,8 @@ class Bubble extends Component{
                   ];
     this.map = L.map('map', {
       center: [40.7280822, -73.9937973],
-      zoom: 16,
-      minZoom:11,
+      zoom: 15,
+      minZoom:9,
       maxZoom: 16,
       maxBounds: this.bounds,
       zoomSnap: 0.2,
@@ -127,9 +128,9 @@ class Bubble extends Component{
             console.log(dataArray);
         });
         for (var i = 0; i < dataArray.length; i++) {
-
           totalLbs = totalLbs + dataArray[i].lbs;
           console.log(totalLbs);
+          const dataMark =  L.marker([dataArray[i].lat,[dataArray[i].long]]).addTo(map).bindPopup("<p id = 'set'>Pin location set</p>").openPopup();
         }
         for (var i = 0; i < dataArray.length; i++) {
           const date = dataArray[i].date
@@ -207,18 +208,44 @@ class Bubble extends Component{
     });
     console.log(this.state.body);
   }
-  getSearch = e => {
+  phraseEachUpper = (phrase) => {
+    var i = 0;
+      phrase = phrase.substring(i, i+1).toUpperCase() + phrase.substring(i+1, phrase.length);
+    for(i; i < phrase.length; i++)
+    {
+      if (phrase.charAt(i) === " " && i !== phrase.length)
+      {
+        phrase = phrase.substring(0, i+1) + phrase.substring(i+1, i+2).toUpperCase() + phrase.substring(i+2, phrase.length);
+      }
+    }
+    return phrase;
+  }
+  addCorner1 = (phrase) => {
+    return phrase + " at NE corner";
+  }
+  addCorner2 = (phrase) => {
+    return phrase + " at NW corner";
+  }
+  addCorner3 = (phrase) => {
+    return phrase + " at SE corner";
+  }
+  addCorner4 = (phrase) => {
+    return phrase + " at SW corner";
+  }
+  makeLetterCapital = (phrase, index) => {
+    if (index >= 0 && index < phrase.length)
+      return phrase.substring(0, index) + phrase.substring(index, index+1).toUpperCase() + phrase.substring(index+1, phrase.length);
+  }
     //find search results based on updateSearchBar
     //note: must call the search results bar
+    var status = 0;
     e.preventDefault();
     const search = this.state.search;
-    const ref = db.collection("locations")
     //program function to find distances based on an inputted location and search coordinates
     ref.get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        if (doc.data().name === search)
+        if (search === doc.data().name || search.toLowerCase() === doc.data().name || this.phraseEachUpper(search) === doc.data().name || this.phraseEachUpper(search.toLowerCase()) === doc.data().name)
         {
-          console.log(doc.data().name)
           let lat = doc.data().lat
           let long = doc.data().long
           this.setState({lat: lat, long: long});
@@ -226,8 +253,79 @@ class Bubble extends Component{
         }
       })
     })
-
-  }
+    let query0 = realtime.where('name', '==', search).get().then(snapshot => {
+      if (snapshot.empty){
+        status = 1;
+      }
+      snapshot.forEach(doc => {
+      if (status === 0){
+      let lat = doc.data().lat
+      let long = doc.data().long
+      this.setState({lat: lat, long: long});
+      this.map.flyTo([this.state.lat, this.state.long], 16);
+    }})
+  })
+    let query1 = realtime.where('name', '==', this.phraseEachUpper(search.toLowerCase())).get().then(snapshot => {
+      if (snapshot.empty){
+        status = 2;
+      }
+      snapshot.forEach(doc => {
+      if (status === 1){
+      let lat = doc.data().lat
+      let long = doc.data().long
+      this.setState({lat: lat, long: long});
+      this.map.flyTo([this.state.lat, this.state.long], 16);
+    }})
+  })
+    let query2 = realtime.where('name', '==', this.addCorner1(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
+      if (snapshot.empty){
+        status = 3;
+      }
+      snapshot.forEach(doc => {
+      if (status === 2){
+      let lat = doc.data().lat
+      let long = doc.data().long
+      this.setState({lat: lat, long: long});
+      this.map.flyTo([this.state.lat, this.state.long], 16);
+    }})
+  })
+    let query3 = realtime.where('name', '==', this.addCorner2(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
+      if (snapshot.empty){
+        status = 4;
+      }
+      snapshot.forEach(doc => {
+      if (status === 3){
+      let lat = doc.data().lat
+      let long = doc.data().long
+      this.setState({lat: lat, long: long});
+      this.map.flyTo([this.state.lat, this.state.long], 16);
+    }})
+  })
+    let query4 = realtime.where('name', '==', this.addCorner3(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
+      if (snapshot.empty){
+        status = 5;
+      }
+      snapshot.forEach(doc => {
+      if (status === 4){
+      let lat = doc.data().lat
+      let long = doc.data().long
+      this.setState({lat: lat, long: long});
+      this.map.flyTo([this.state.lat, this.state.long], 16);
+    }})
+  })
+    let query5 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
+      if (snapshot.empty){
+      return;
+      }
+      snapshot.forEach(doc => {
+      if (status === 5){
+      let lat = doc.data().lat
+      let long = doc.data().long
+      this.setState({lat: lat, long: long});
+      this.map.flyTo([this.state.lat, this.state.long], 16);
+    }})
+  })
+}
   updateDimensions() {
    var w = window;
    var d = document;
