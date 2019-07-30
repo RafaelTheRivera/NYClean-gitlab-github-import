@@ -258,17 +258,6 @@ class Bubble extends Component{
     e.preventDefault();
     const search = this.state.search;
     //program function to find distances based on an inputted location and search coordinates
-    ref.get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        if (search === doc.data().name || search.toLowerCase() === doc.data().name || this.phraseEachUpper(search) === doc.data().name || this.phraseEachUpper(search.toLowerCase()) === doc.data().name)
-        {
-          let lat = doc.data().lat
-          let long = doc.data().long
-          this.setState({lat: lat, long: long});
-          this.map.flyTo([this.state.lat, this.state.long], 16);
-        }
-      })
-    })
     let query0 = realtime.where('name', '==', search).get().then(snapshot => {
       if (snapshot.empty){
         status = 1;
@@ -331,7 +320,7 @@ class Bubble extends Component{
   })
     let query5 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
       if (snapshot.empty){
-      return;
+      status = 6;
       }
       snapshot.forEach(doc => {
       if (status === 5){
@@ -341,7 +330,38 @@ class Bubble extends Component{
       this.map.flyTo([this.state.lat, this.state.long], 16);
     }})
   })
+    let query6 = realtime.where('name', '==', (this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 20))
+    || this.addCorner1(this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 20)))
+    || this.addCorner2(this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 20)))
+    || this.addCorner3(this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 20)))
+    || this.addCorner4(this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 20))))).get().then(snapshot => {
+      if (snapshot.empty){
+      status = 7;
+      }
+      snapshot.forEach(doc => {
+      if (status === 6){
+      let lat = doc.data().lat
+      let long = doc.data().long
+      this.setState({lat: lat, long: long});
+      this.map.flyTo([this.state.lat, this.state.long], 16);
+    }})
+  })
+    let query7 = realtime.where('name', '==', this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 2))).get().then(snapshot => {
+      if (snapshot.empty){
+      return;
+      }
+      snapshot.forEach(doc => {
+      if (status === 7){
+      let lat = doc.data().lat
+      let long = doc.data().long
+      this.setState({lat: lat, long: long});
+      this.map.flyTo([this.state.lat, this.state.long], 16);
+    }})
+  })
 }
+
+
+
   updateDimensions() {
    var w = window;
    var d = document;
