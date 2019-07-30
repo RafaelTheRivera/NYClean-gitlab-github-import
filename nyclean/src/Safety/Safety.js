@@ -15,6 +15,7 @@ class Safety extends Component {
         <a href = "/"> <img id = "back" src = {back} alt= "back"/>
         <img id = "greenyclogo" src = {greenyclogo} alt= "logo"/>
         </a>
+        
 
         <center><h1 id = "safetyheader"><b>SAFETY INFORMATION</b></h1></center>
         <br />

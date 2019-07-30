@@ -13,6 +13,7 @@ import emptypin from './../images/pin.png';
 import add from './../images/add.png';
 import cover from './../images/cover.png';
 import safetyicon from './../images/safetyicon.png';
+import back from './../images/back.png';
 import insertphoto from './../images/insertphoto.png';
 import picarrowleft from './../images/picarrowleft.png';
 import picarrowright from './../images/picarrowright.png';
@@ -38,6 +39,8 @@ class Bubble extends Component{
                   friendsIsOpen: "hidden",
                   tab1IsOpen: "hidden",
                   tab2IsOpen: "hidden",
+                  FriendSearchIsOpen: "hidden",
+                  FriendPageIsOpen: "hidden",
                   unmergedImages: "hidden",
                   mouseLeavePin: true,
                   dragEvent: false,
@@ -64,6 +67,7 @@ class Bubble extends Component{
                   ActualTotalTrash: 0,
                   caption: "",
                   filelink: "",
+                  userReferences: [],
                   pinupdate: false,
                   editingImage: 1,
                   image1visible: "hidden",
@@ -79,6 +83,8 @@ class Bubble extends Component{
       this.openFriends = this.openFriends.bind(this);
       this.opentab1 = this.opentab1.bind(this);
       this.opentab2 = this.opentab2.bind(this);
+      this.openFriendSearch = this.openFriendSearch.bind(this);
+      this.openFriendPage = this.openFriendPage.bind(this);
       this.updateDimensions = this.updateDimensions.bind(this);
       this.updateSearchBar = this.updateSearchBar.bind(this);
       this.updateBody = this.updateBody.bind(this);
@@ -135,9 +141,9 @@ class Bubble extends Component{
         for (var i = 0; i < dataArray.length; i++) {
           const date = dataArray[i].date
           const dataMark =  L.marker([dataArray[i].lat,[dataArray[i].long]]).addTo(map).bindPopup("<div id = 'popup'><p id = 'posttitle'>Post by:  "+ dataArray[i].username +"<p id = 'date'> on "+ date.substr(0, date.indexOf("201" || "202")) +"</p></p><div id = 'controlbody'><p id = 'bodycaption'>"+ dataArray[i].body +"</p></div></div><div id='pictures'><img src = "+ dataArray[i].beforeImage +" id = 'imageBefore'/><img src = "+ dataArray[i].afterImage +" id = 'imageAfter'/></div>", {maxWidth : 600}).openPopup();
+          map.closePopup();
         }
         setState({lbs: totalLbs});
-
     });
     db.collection("users").get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
@@ -192,6 +198,14 @@ class Bubble extends Component{
                   profileWidth: user.displayName.length * 8.5 + 50 + "px"});
     }});
     this.updateDimensions();
+
+    var userReferences = [];
+    const userData = db .collection("users").get().then((snapshot) =>{
+      snapshot.forEach(function(doc){
+        userReferences.push(doc.data().fullname);
+      });
+        this.setState({userReferences: userReferences});
+    });
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
@@ -410,7 +424,10 @@ class Bubble extends Component{
                     friendsIsOpen: "hidden",
                     tab1IsOpen: "hidden",
                     tab2IsOpen: "hidden",
-                    image1visible: "visible"});
+                    FriendSearchIsOpen: "hidden",
+                    FriendProfileIsOpen: "hidden",
+                    image1visible: "visible"
+                  });
     }else{
       this.setState({pinIsOpen: "hidden",
                     image1visible: "hidden",
@@ -425,8 +442,11 @@ class Bubble extends Component{
                     feedIsOpen: "visible",
                     leaderIsOpen: "hidden",
                     friendsIsOpen: "hidden",
+                    FriendSearchIsOpen: "hidden",
+                    FriendProfileIsOpen: "hidden",
                     image1visible: "hidden",
-                    image2visible: "hidden"});
+                    image2visible: "hidden"
+                  });
     }else{
       this.setState({feedIsOpen: "hidden",
                     tab1IsOpen: "hidden",
@@ -442,8 +462,11 @@ class Bubble extends Component{
                     friendsIsOpen: "hidden",
                     tab1IsOpen: "hidden",
                     tab2IsOpen: "hidden",
+                    FriendSearchIsOpen: "hidden",
+                    FriendProfileIsOpen: "hidden",
                     image1visible: "hidden",
-                    image2visible: "hidden"});
+                    image2visible: "hidden"
+                  });
     }else{
       this.setState({leaderIsOpen: "hidden"});
     }
@@ -455,10 +478,17 @@ class Bubble extends Component{
                     feedIsOpen: "hidden",
                     leaderIsOpen: "hidden",
                     friendsIsOpen: "visible",
+                    tab1IsOpen: "hidden",
+                    tab2IsOpen: "hidden",
+                    FriendSearchIsOpen: "visible",
+                    FriendProfileIsOpen: "hidden",
                     image1visible: "hidden",
-                    image2visible: "hidden"});
+                    image2visible: "hidden"
+                  });
     }else{
-      this.setState({friendsIsOpen: "hidden"});
+      this.setState({friendsIsOpen: "hidden",
+                    FriendSearchIsOpen: "hidden",
+                    FriendProfileIsOpen: "hidden"});
     }
   }
 
@@ -474,6 +504,22 @@ class Bubble extends Component{
     if (this.state.tab2IsOpen === "hidden"){
       this.setState({tab1IsOpen: "hidden",
                     tab2IsOpen: "visible"});
+    }
+  }
+
+  openFriendSearch(){
+
+    if (this.state.FriendSearchIsOpen === "hidden"){
+      this.setState({FriendSearchIsOpen: "visible",
+                    FriendPageIsOpen: "hidden"});
+    }
+  }
+
+  openFriendPage(){
+
+    if (this.state.FriendPageIsOpen === "hidden"){
+      this.setState({FriendSearchIsOpen: "hidden",
+                    FriendPageIsOpen: "visible"});
     }
   }
 
@@ -500,9 +546,10 @@ class Bubble extends Component{
   updateImage = e =>{
     if (this.state.image1visible === "visible"){
       this.setState({uploadImageBefore: e.target.value});
-      console.log(this.state.uploadImage);
+      console.log(this.state.uploadImageBefore);
     }else if (this.state.image1visible === "hidden"){
-      this.setState({uploadImageAfter: e.target.value})
+      this.setState({uploadImageAfter: e.target.value});
+      console.log(this.state.uploadImageAfter);
     }
   }
 
@@ -523,6 +570,9 @@ class Bubble extends Component{
   }
 
   render(){
+
+
+
     this.state.list = this.sort_by_key(this.state.list, "Totaltrash");
     this.state.ActualTotalTrash = (this.state.list.reduce( function(cnt,o){ return cnt + o.Totaltrash; }, 0));
     this.state.list.reverse();
@@ -531,6 +581,7 @@ class Bubble extends Component{
     );
     return(
       <div>
+
         <img id = "bigHeader" src = {headergradient} alt = {"topgradient"}/>
           <div className= "headerItem" id = "logo">
             <a href = "/"> <img id = "greenyc" src = {greenyc} alt= "logo"/> </a>
@@ -576,10 +627,10 @@ class Bubble extends Component{
                 <img src = {this.state.uploadImageBefore} alt = {""} className = "uploadImage" id = "uploadImageBefore" style = {{visibility: this.state.image1visible}}/>
                 <img src = {this.state.uploadImageAfter} alt = {""} className = "uploadImage" id = "uploadImageAfter" style = {{visibility: this.state.image2visible}}/>
                 <form onSubmit = {this.submitCaption}>
-                  <input type = "text" onChange = {this.updateImage} id = "fileInput" value = {this.state.uploadImageBefore} placeholder = "Add image URL"/>
-                  <input type = "text" onChange = {this.updateImage} id = "fileInput" value = {this.state.uploadImageAfter} placeholder = "Add image URL"/>
+                  <input type = "text" style = {{visibility: this.state.image1visible}} onChange = {this.updateImage} id = "fileInput" value = {this.state.uploadImageBefore} placeholder = "Add image URL"/>
+                  <input type = "text" style = {{visibility: this.state.image2visible}} onChange = {this.updateImage} id = "fileInput" value = {this.state.uploadImageAfter} placeholder = "Add image URL"/>
                   <textarea placeholder = "Insert caption here" onChange = {this.updateCaption} value = {this.state.caption} id="caption"></textarea>
-                  <button type = "submit" id = "post">POST</button>
+                  <button type = "submit" id = "post"><center><p className = "small">POST</p></center></button>
                 </form>
               </div></center>
 
@@ -602,10 +653,12 @@ class Bubble extends Component{
             </div>
             <img className = "cover" id = "cover2" src = {cover} alt = "cover"/>
 
+
             <div id = "tableft" onClick = {this.opentab1}><center><p className = "small">UPDATES</p></center></div>
               <span style = {{visibility: this.state.tab1IsOpen}}>
                 <div id = "line1"></div>
                 <div className = "tab" id = "tab1"></div>
+                <div className = "texttype">text box 1 here</div>
               </span>
 
 
@@ -613,7 +666,9 @@ class Bubble extends Component{
               <span style = {{visibility: this.state.tab2IsOpen}}>
                 <div id = "line2"></div>
                 <div className = "tab" id = "tab2"></div>
+                <div className = "texttype">text box 2 here</div>
               </span>
+
 
           </span>
 
@@ -640,6 +695,8 @@ class Bubble extends Component{
             </div>
             <img className = "cover" id = "cover3" src = {cover} alt = "cover"/>
           </span>
+
+
         <img id = "friends" src = {friends} alt = {"friends"} onClick = {this.openFriends}  style = {{marginTop: this.state.height - 119}}/>
           <span style = {{visibility: this.state.friendsIsOpen}}>
             <div className = "connector" id = "con4" style = {{top: this.state.height - 119}}>
@@ -648,8 +705,53 @@ class Bubble extends Component{
             </div>
             <div className = "bubble" id = "bub4" style = {{top: this.state.height - 379}}>
             </div>
-            <img className = "cover" id = "cover4" style = {{top: this.state.height - 116.5}} src = {cover} alt = "cover"/>
+            <img className = "cover" id = "cover4" style = {{top: this.state.height - 117}} src = {cover} alt = "cover"/>
+
+
+                  <span style = {{visibility: this.state.FriendSearchIsOpen}}>
+
+                  <div className = "bubbleheader" id = "bubheader4"><center><p className = "small">FIND FRIENDS</p></center></div>
+
+                  <div className = "page" id = "friendsearch">
+                    <p>insert search bar "Search by username"</p>
+
+                    <p id = "friendinfo" onClick = {this.openFriendPage}>{this.state.userReferences}</p>
+
+                  </div>
+                  </span>
+
+
+                  <span style = {{visibility: this.state.FriendPageIsOpen}}>
+                  <div className = "bubbleheader" id = "bubheader4"><center><p className = "small">PROFILE</p></center></div>
+
+                  <img id = "profileback" src = {back} onClick = {this.openFriendSearch}/>
+
+                  <div className = "page" id = "friend">
+                    <div id = "friendprofile"></div>
+                    <p id = "frienduser">username</p>
+                    <p id = "friendinfo">This is this account's bio hello nice to meet you!<br /><br />
+                    Pins
+                      <ol>
+                        <li>pin</li>
+                        <li>pin</li>
+                        <li>pin</li>
+                        <li>pin</li>
+                        <li>pin</li>
+                        <li>pin</li>
+                        <li>pin</li>
+                        <li>pin</li>
+                        <li>pin</li>
+                      </ol>
+                      Trash count: 123
+                    </p>
+                  </div>
+                  </span>
+
+
+
+
           </span>
+
         <a href = "./safety"><img id = "safetyicon" src = {safetyicon} alt = {"safety"}  style = {{marginTop: this.state.height - 179}}/></a>
 
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
