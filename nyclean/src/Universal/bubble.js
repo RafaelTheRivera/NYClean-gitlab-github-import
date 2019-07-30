@@ -249,6 +249,16 @@ class Bubble extends Component{
   makeLetterCapital = (phrase, index) => {
     if (index >= 0 && index < phrase.length)
       return phrase.substring(0, index) + phrase.substring(index, index+1).toUpperCase() + phrase.substring(index+1, phrase.length);
+    return phrase;
+  }
+  makeLetterCapitalReverse = (phrase, index) => {
+    if (index >= 0 && index < phrase.length)
+      return phrase.substring(0, phrase.length-index) + phrase.substring(phrase.length-index, phrase.length-index+1).toUpperCase() + phrase.substring(phrase.length-index+1, phrase.length);
+    return phrase;
+  }
+  fly = (num1, num2, num3) =>
+  {
+    this.map.flyTo([num1, num2], num3)
   }
   getSearch = e => {
     //find search results based on updateSearchBar
@@ -265,10 +275,11 @@ class Bubble extends Component{
       if (status === 0){
       let lat = doc.data().lat
       let long = doc.data().long
-      this.setState({lat: lat, long: long});
-      this.map.flyTo([this.state.lat, this.state.long], 16);
+      this.setState({lat: lat, long: long},()=>{
+        this.fly(this.state.lat, this.state.long, 16);
+      });
     }})
-  })
+  }).then(()=>{
     let query1 = realtime.where('name', '==', this.phraseEachUpper(search.toLowerCase())).get().then(snapshot => {
       if (snapshot.empty){
         status = 2;
@@ -277,10 +288,11 @@ class Bubble extends Component{
       if (status === 1){
       let lat = doc.data().lat
       let long = doc.data().long
-      this.setState({lat: lat, long: long});
-      this.map.flyTo([this.state.lat, this.state.long], 16);
+      this.setState({lat: lat, long: long},()=>{
+        this.fly(this.state.lat, this.state.long, 16);
+      });
     }})
-  })
+  }).then(()=>{
     let query2 = realtime.where('name', '==', this.addCorner1(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
       if (snapshot.empty){
         status = 3;
@@ -289,10 +301,11 @@ class Bubble extends Component{
       if (status === 2){
       let lat = doc.data().lat
       let long = doc.data().long
-      this.setState({lat: lat, long: long});
-      this.map.flyTo([this.state.lat, this.state.long], 16);
+      this.setState({lat: lat, long: long},()=>{
+        this.fly(this.state.lat, this.state.long, 16);
+      });
     }})
-  })
+  }).then(()=>{
     let query3 = realtime.where('name', '==', this.addCorner2(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
       if (snapshot.empty){
         status = 4;
@@ -301,10 +314,11 @@ class Bubble extends Component{
       if (status === 3){
       let lat = doc.data().lat
       let long = doc.data().long
-      this.setState({lat: lat, long: long});
-      this.map.flyTo([this.state.lat, this.state.long], 16);
+      this.setState({lat: lat, long: long},()=>{
+        this.fly(this.state.lat, this.state.long, 16);
+      });
     }})
-  })
+  }).then(()=>{
     let query4 = realtime.where('name', '==', this.addCorner3(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
       if (snapshot.empty){
         status = 5;
@@ -313,10 +327,11 @@ class Bubble extends Component{
       if (status === 4){
       let lat = doc.data().lat
       let long = doc.data().long
-      this.setState({lat: lat, long: long});
-      this.map.flyTo([this.state.lat, this.state.long], 16);
+      this.setState({lat: lat, long: long},()=>{
+        this.fly(this.state.lat, this.state.long, 16);
+      });
     }})
-  })
+  }).then(()=>{
     let query5 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
       if (snapshot.empty){
       status = 6;
@@ -325,15 +340,12 @@ class Bubble extends Component{
       if (status === 5){
       let lat = doc.data().lat
       let long = doc.data().long
-      this.setState({lat: lat, long: long});
-      this.map.flyTo([this.state.lat, this.state.long], 16);
+      this.setState({lat: lat, long: long},()=>{
+        this.fly(this.state.lat, this.state.long, 16);
+      });
     }})
-  })
-    let query6 = realtime.where('name', '==', (this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 20))
-    || this.addCorner1(this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 20)))
-    || this.addCorner2(this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 20)))
-    || this.addCorner3(this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 20)))
-    || this.addCorner4(this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 20))))).get().then(snapshot => {
+  }).then(()=>{
+    let query6 = realtime.where('name', '==', this.phraseEachUpper(this.makeLetterCapital((search.toLowerCase()), 20))).get().then(snapshot => {
       if (snapshot.empty){
       status = 7;
       }
@@ -341,22 +353,128 @@ class Bubble extends Component{
       if (status === 6){
       let lat = doc.data().lat
       let long = doc.data().long
-      this.setState({lat: lat, long: long});
-      this.map.flyTo([this.state.lat, this.state.long], 16);
+      this.setState({lat: lat, long: long},()=>{
+        this.fly(this.state.lat, this.state.long, 16);
+      });
     }})
-  })
-    let query7 = realtime.where('name', '==', this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 2))).get().then(snapshot => {
+  }).then(()=>{
+    let query7 = realtime.where('name', '==', this.phraseEachUpper(this.makeLetterCapital((search.toLowerCase()), 2))).get().then(snapshot => {
       if (snapshot.empty){
-      return;
+      status = 8;
       }
       snapshot.forEach(doc => {
       if (status === 7){
       let lat = doc.data().lat
       let long = doc.data().long
-      this.setState({lat: lat, long: long});
-      this.map.flyTo([this.state.lat, this.state.long], 16);
+      this.setState({lat: lat, long: long},()=>{
+        this.fly(this.state.lat, this.state.long, 16);
+      });
     }})
-  })
+  }).then(()=>{
+  let query8 = realtime.where('name', '==', this.addCorner1(this.phraseEachUpper(this.makeLetterCapital((search.toLowerCase()), 20)))).get().then(snapshot => {
+    if (snapshot.empty){
+    status = 9;
+    }
+    snapshot.forEach(doc => {
+    if (status === 8){
+    let lat = doc.data().lat
+    let long = doc.data().long
+    this.setState({lat: lat, long: long},()=>{
+      this.fly(this.state.lat, this.state.long, 16);
+    });
+  }})
+}).then(()=>{
+let query9 = realtime.where('name', '==', this.addCorner2(this.phraseEachUpper(this.makeLetterCapital((search.toLowerCase()), 20)))).get().then(snapshot => {
+  if (snapshot.empty){
+  status = 10;
+  }
+  snapshot.forEach(doc => {
+  if (status === 9){
+  let lat = doc.data().lat
+  let long = doc.data().long
+  this.setState({lat: lat, long: long},()=>{
+    this.fly(this.state.lat, this.state.long, 16);
+  });
+}})
+}).then(()=>{
+let query10 = realtime.where('name', '==', this.addCorner3(this.phraseEachUpper(this.makeLetterCapital((search.toLowerCase()), 20)))).get().then(snapshot => {
+  if (snapshot.empty){
+  status = 11;
+  }
+  snapshot.forEach(doc => {
+  if (status === 10){
+  let lat = doc.data().lat
+  let long = doc.data().long
+  this.setState({lat: lat, long: long},()=>{
+    this.fly(this.state.lat, this.state.long, 16);
+  });
+}})
+}).then(()=>{
+let query11 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(this.makeLetterCapital((search.toLowerCase()), 20)))).get().then(snapshot => {
+  if (snapshot.empty){
+  status = 12;
+  }
+  snapshot.forEach(doc => {
+  if (status === 11){
+  let lat = doc.data().lat
+  let long = doc.data().long
+  this.setState({lat: lat, long: long},()=>{
+    this.fly(this.state.lat, this.state.long, 16);
+  });
+}})
+}).then(()=>{
+let query12 = realtime.where('name', '==', this.addCorner1(this.phraseEachUpper(this.makeLetterCapital((search.toLowerCase()), 2)))).get().then(snapshot => {
+  if (snapshot.empty){
+  status = 13;
+  }
+  snapshot.forEach(doc => {
+  if (status === 12){
+  let lat = doc.data().lat
+  let long = doc.data().long
+  this.setState({lat: lat, long: long},()=>{
+    this.fly(this.state.lat, this.state.long, 16);
+  });
+}})
+}).then(()=>{
+let query13 = realtime.where('name', '==', this.addCorner2(this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 2)))).get().then(snapshot => {
+  if (snapshot.empty){
+  status = 14;
+  }
+  snapshot.forEach(doc => {
+  if (status === 13){
+  let lat = doc.data().lat
+  let long = doc.data().long
+  this.setState({lat: lat, long: long},()=>{
+    this.fly(this.state.lat, this.state.long, 16);
+  });
+}})
+}).then(()=>{
+let query14 = realtime.where('name', '==', this.addCorner3(this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 2)))).get().then(snapshot => {
+  if (snapshot.empty){
+  status = 15;
+  }
+  snapshot.forEach(doc => {
+  if (status === 14){
+  let lat = doc.data().lat
+  let long = doc.data().long
+  this.setState({lat: lat, long: long},()=>{
+    this.fly(this.state.lat, this.state.long, 16);
+  });
+}})
+}).then(()=>{
+let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 2)))).get().then(snapshot => {
+  if (snapshot.empty){
+  return;
+  }
+  snapshot.forEach(doc => {
+  if (status === 15){
+  let lat = doc.data().lat
+  let long = doc.data().long
+  this.setState({lat: lat, long: long},()=>{
+    this.fly(this.state.lat, this.state.long, 16);
+  });
+}})
+})})})})})})})})})})})})})})})})
 }
 
 
