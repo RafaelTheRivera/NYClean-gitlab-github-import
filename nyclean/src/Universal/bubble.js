@@ -11,6 +11,7 @@ import friends from './../images/friendsicon1.png';
 import emptypinicon from './../images/emptypinicon.png';
 import emptypin from './../images/pin.png';
 import add from './../images/add.png';
+import search from './../images/search.png';
 import cover from './../images/cover.png';
 import safetyicon from './../images/safetyicon.png';
 import back from './../images/back.png';
@@ -572,7 +573,6 @@ class Bubble extends Component{
   render(){
 
 
-
     this.state.list = this.sort_by_key(this.state.list, "Totaltrash");
     this.state.ActualTotalTrash = (this.state.list.reduce( function(cnt,o){ return cnt + o.Totaltrash; }, 0));
     this.state.list.reverse();
@@ -629,7 +629,7 @@ class Bubble extends Component{
                 <form onSubmit = {this.submitCaption}>
                   <input type = "text" style = {{visibility: this.state.image1visible}} onChange = {this.updateImage} id = "fileInput" value = {this.state.uploadImageBefore} placeholder = "Add image URL"/>
                   <input type = "text" style = {{visibility: this.state.image2visible}} onChange = {this.updateImage} id = "fileInput" value = {this.state.uploadImageAfter} placeholder = "Add image URL"/>
-                  <textarea placeholder = "Insert caption here" onChange = {this.updateCaption} value = {this.state.caption} id="caption"></textarea>
+                  <textarea placeholder = "Insert caption here..." onChange = {this.updateCaption} value = {this.state.caption} id="caption"></textarea>
                   <button type = "submit" id = "post"><center><p className = "small">POST</p></center></button>
                 </form>
               </div></center>
@@ -658,7 +658,12 @@ class Bubble extends Component{
               <span style = {{visibility: this.state.tab1IsOpen}}>
                 <div id = "line1"></div>
                 <div className = "tab" id = "tab1"></div>
-                <div className = "texttype">text box 1 here</div>
+                <div className = "texttype">
+                  <form>
+                    <input className = "feedform" type = "text" placeholder = "Update your status..."/>
+                    <button type = "submit" className = "feedbutton"/>
+                  </form>
+                </div>
               </span>
 
 
@@ -666,7 +671,12 @@ class Bubble extends Component{
               <span style = {{visibility: this.state.tab2IsOpen}}>
                 <div id = "line2"></div>
                 <div className = "tab" id = "tab2"></div>
-                <div className = "texttype">text box 2 here</div>
+                <div className = "texttype">
+                  <form>
+                    <input id = "report" className = "feedform" type = "text" placeholder = "Report a location..."/>
+                    <button type = "submit" className = "feedbutton" />
+                  </form>
+                </div>
               </span>
 
 
