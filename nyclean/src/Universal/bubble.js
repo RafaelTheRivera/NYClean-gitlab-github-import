@@ -14,6 +14,9 @@ import add from './../images/add.png';
 import cover from './../images/cover.png';
 import safetyicon from './../images/safetyicon.png';
 import back from './../images/back.png';
+import insertphoto from './../images/insertphoto.png';
+import picarrowleft from './../images/picarrowleft.png';
+import picarrowright from './../images/picarrowright.png';
 import Tabs from 'react-bootstrap/Tabs';
 
 
@@ -23,7 +26,9 @@ db.settings ({
 })
 
 const userRef = db.collection("users");
-var ref = firebase.database().ref('/locations/CSYIxNTBYIDwLadcLtrz');
+const ref = db.collection("locations");
+const realtime = db.collection('/subways');
+
 
 class Bubble extends Component{
   constructor(props){
@@ -54,15 +59,19 @@ class Bubble extends Component{
                   newMark: null,
                   dataMark: null,
                   coords: null,
-                  uploadImage: "https://i.imgur.com/Of7XNtM.png",
+                  uploadImageBefore: "",
+                  uploadImageAfter: "",
                   fullname: "",
                   Totaltrash: Math.floor(Math.random()*21),
                   list: [],
                   ActualTotalTrash: 0,
                   caption: "",
                   filelink: "",
-                  userReferences: []
-
+                  userReferences: [],
+                  pinupdate: false,
+                  editingImage: 1,
+                  image1visible: "hidden",
+                  image2visible: "hidden"
                 }
       this.mouseDown = this.mouseDown.bind(this);
       this.mouseUp = this.mouseUp.bind(this);
@@ -82,6 +91,8 @@ class Bubble extends Component{
       this.componentDidMount = this.componentDidMount.bind(this);
       this.getSearch = this.getSearch.bind(this);
       this.updateCaption = this.updateCaption.bind(this);
+      this.updateImage = this.updateImage.bind(this);
+      this.handleArrowClick = this.handleArrowClick.bind(this);
     }
   componentDidMount(){
     window.addEventListener("resize", this.updateDimensions);
@@ -99,8 +110,8 @@ class Bubble extends Component{
                   ];
     this.map = L.map('map', {
       center: [40.7280822, -73.9937973],
-      zoom: 16,
-      minZoom:11,
+      zoom: 15,
+      minZoom:9,
       maxZoom: 16,
       maxBounds: this.bounds,
       zoomSnap: 0.2,
@@ -123,15 +134,16 @@ class Bubble extends Component{
             console.log(dataArray);
         });
         for (var i = 0; i < dataArray.length; i++) {
-
           totalLbs = totalLbs + dataArray[i].lbs;
           console.log(totalLbs);
-        }
-        for (var i = 0; i < dataArray.length; i++) {
           const dataMark =  L.marker([dataArray[i].lat,[dataArray[i].long]]).addTo(map).bindPopup("<p id = 'set'>Pin location set</p>").openPopup();
         }
+        for (var i = 0; i < dataArray.length; i++) {
+          const date = dataArray[i].date
+          const dataMark =  L.marker([dataArray[i].lat,[dataArray[i].long]]).addTo(map).bindPopup("<div id = 'popup'><p id = 'posttitle'>Post by:  "+ dataArray[i].username +"<p id = 'date'> on "+ date.substr(0, date.indexOf("201" || "202")) +"</p></p><div id = 'controlbody'><p id = 'bodycaption'>"+ dataArray[i].body +"</p></div></div><div id='pictures'><img src = "+ dataArray[i].beforeImage +" id = 'imageBefore'/><img src = "+ dataArray[i].afterImage +" id = 'imageAfter'/></div>", {maxWidth : 600}).openPopup();
+          map.closePopup();
+        }
         setState({lbs: totalLbs});
-
     });
     db.collection("users").get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
@@ -210,18 +222,44 @@ class Bubble extends Component{
     });
     console.log(this.state.body);
   }
-  getSearch = e => {
+  phraseEachUpper = (phrase) => {
+    var i = 0;
+      phrase = phrase.substring(i, i+1).toUpperCase() + phrase.substring(i+1, phrase.length);
+    for(i; i < phrase.length; i++)
+    {
+      if (phrase.charAt(i) === " " && i !== phrase.length)
+      {
+        phrase = phrase.substring(0, i+1) + phrase.substring(i+1, i+2).toUpperCase() + phrase.substring(i+2, phrase.length);
+      }
+    }
+    return phrase;
+  }
+  addCorner1 = (phrase) => {
+    return phrase + " at NE corner";
+  }
+  addCorner2 = (phrase) => {
+    return phrase + " at NW corner";
+  }
+  addCorner3 = (phrase) => {
+    return phrase + " at SE corner";
+  }
+  addCorner4 = (phrase) => {
+    return phrase + " at SW corner";
+  }
+  makeLetterCapital = (phrase, index) => {
+    if (index >= 0 && index < phrase.length)
+      return phrase.substring(0, index) + phrase.substring(index, index+1).toUpperCase() + phrase.substring(index+1, phrase.length);
+  }
     //find search results based on updateSearchBar
     //note: must call the search results bar
+    var status = 0;
     e.preventDefault();
     const search = this.state.search;
-    const ref = db.collection("locations")
     //program function to find distances based on an inputted location and search coordinates
     ref.get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        if (doc.data().name === search)
+        if (search === doc.data().name || search.toLowerCase() === doc.data().name || this.phraseEachUpper(search) === doc.data().name || this.phraseEachUpper(search.toLowerCase()) === doc.data().name)
         {
-          console.log(doc.data().name)
           let lat = doc.data().lat
           let long = doc.data().long
           this.setState({lat: lat, long: long});
@@ -229,8 +267,79 @@ class Bubble extends Component{
         }
       })
     })
-
-  }
+    let query0 = realtime.where('name', '==', search).get().then(snapshot => {
+      if (snapshot.empty){
+        status = 1;
+      }
+      snapshot.forEach(doc => {
+      if (status === 0){
+      let lat = doc.data().lat
+      let long = doc.data().long
+      this.setState({lat: lat, long: long});
+      this.map.flyTo([this.state.lat, this.state.long], 16);
+    }})
+  })
+    let query1 = realtime.where('name', '==', this.phraseEachUpper(search.toLowerCase())).get().then(snapshot => {
+      if (snapshot.empty){
+        status = 2;
+      }
+      snapshot.forEach(doc => {
+      if (status === 1){
+      let lat = doc.data().lat
+      let long = doc.data().long
+      this.setState({lat: lat, long: long});
+      this.map.flyTo([this.state.lat, this.state.long], 16);
+    }})
+  })
+    let query2 = realtime.where('name', '==', this.addCorner1(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
+      if (snapshot.empty){
+        status = 3;
+      }
+      snapshot.forEach(doc => {
+      if (status === 2){
+      let lat = doc.data().lat
+      let long = doc.data().long
+      this.setState({lat: lat, long: long});
+      this.map.flyTo([this.state.lat, this.state.long], 16);
+    }})
+  })
+    let query3 = realtime.where('name', '==', this.addCorner2(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
+      if (snapshot.empty){
+        status = 4;
+      }
+      snapshot.forEach(doc => {
+      if (status === 3){
+      let lat = doc.data().lat
+      let long = doc.data().long
+      this.setState({lat: lat, long: long});
+      this.map.flyTo([this.state.lat, this.state.long], 16);
+    }})
+  })
+    let query4 = realtime.where('name', '==', this.addCorner3(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
+      if (snapshot.empty){
+        status = 5;
+      }
+      snapshot.forEach(doc => {
+      if (status === 4){
+      let lat = doc.data().lat
+      let long = doc.data().long
+      this.setState({lat: lat, long: long});
+      this.map.flyTo([this.state.lat, this.state.long], 16);
+    }})
+  })
+    let query5 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
+      if (snapshot.empty){
+      return;
+      }
+      snapshot.forEach(doc => {
+      if (status === 5){
+      let lat = doc.data().lat
+      let long = doc.data().long
+      this.setState({lat: lat, long: long});
+      this.map.flyTo([this.state.lat, this.state.long], 16);
+    }})
+  })
+}
   updateDimensions() {
    var w = window;
    var d = document;
@@ -265,7 +374,11 @@ class Bubble extends Component{
       const map = this.map;
       const state = this.state;
       this.state.newMark.on('popupclose', function(){
-        map.removeLayer(state.newMark);
+        if (state.pinupdate === false){
+          map.removeLayer(state.newMark);
+        }else{
+          this.setState({pinupdate: true});
+        }
       });
       this.map.flyTo(coords);
       this.setState({dragEvent: false, unmergedImages: "hidden"});
@@ -291,9 +404,13 @@ class Bubble extends Component{
                     tab1IsOpen: "hidden",
                     tab2IsOpen: "hidden",
                     FriendSearchIsOpen: "hidden",
-                    FriendProfileIsOpen: "hidden"});
+                    FriendProfileIsOpen: "hidden",
+                    image1visible: "visible"
+                  });
     }else{
-      this.setState({pinIsOpen: "hidden"});
+      this.setState({pinIsOpen: "hidden",
+                    image1visible: "hidden",
+                    image2visible: "hidden"});
     }
   }
   openFeed(){
@@ -305,7 +422,10 @@ class Bubble extends Component{
                     leaderIsOpen: "hidden",
                     friendsIsOpen: "hidden",
                     FriendSearchIsOpen: "hidden",
-                    FriendProfileIsOpen: "hidden"});
+                    FriendProfileIsOpen: "hidden",
+                    image1visible: "hidden",
+                    image2visible: "hidden"
+                  });
     }else{
       this.setState({feedIsOpen: "hidden",
                     tab1IsOpen: "hidden",
@@ -322,7 +442,10 @@ class Bubble extends Component{
                     tab1IsOpen: "hidden",
                     tab2IsOpen: "hidden",
                     FriendSearchIsOpen: "hidden",
-                    FriendProfileIsOpen: "hidden"});
+                    FriendProfileIsOpen: "hidden",
+                    image1visible: "hidden",
+                    image2visible: "hidden"
+                  });
     }else{
       this.setState({leaderIsOpen: "hidden"});
     }
@@ -337,7 +460,10 @@ class Bubble extends Component{
                     tab1IsOpen: "hidden",
                     tab2IsOpen: "hidden",
                     FriendSearchIsOpen: "visible",
-                    FriendProfileIsOpen: "hidden"});
+                    FriendProfileIsOpen: "hidden",
+                    image1visible: "hidden",
+                    image2visible: "hidden"
+                  });
     }else{
       this.setState({friendsIsOpen: "hidden",
                     FriendSearchIsOpen: "hidden",
@@ -387,23 +513,40 @@ class Bubble extends Component{
       username: this.state.username,
       lat: this.state.coords.lat,
       long: this.state.coords.lng,
-      date: Date.now()/1000,
+      date: Date(),
       likes: 0,
-      afterImage: this.state.uploadImage,
-      beforeImage: "",
+      afterImage: this.state.uploadImageAfter,
+      beforeImage: this.state.uploadImageBefore,
       lbs: 3,
       body: this.state.caption
     })
-    this.setState({caption: ""});
+    this.setState({caption: "", pinupdate: true});
   }
   updateImage = e =>{
-    this.setState({filelink: e.target.value});
-    console.log(this.state.filelink);
+    if (this.state.image1visible === "visible"){
+      this.setState({uploadImageBefore: e.target.value});
+      console.log(this.state.uploadImageBefore);
+    }else if (this.state.image1visible === "hidden"){
+      this.setState({uploadImageAfter: e.target.value});
+      console.log(this.state.uploadImageAfter);
+    }
   }
 
-
-
-
+  handleArrowClick(e){
+    console.log(this.state.editingImage);
+      if(this.state.editingImage === 1){
+        this.setState({editingImage: 2,
+                      image1visible: "hidden",
+                      image2visible: "visible"
+                      });
+        console.log("handled");
+      }else if (this.state.editingImage === 2){
+        this.setState({editingImage: 1,
+                      image1visible: "visible",
+                      image2visible: "hidden"});
+        console.log("handled");
+      }
+  }
 
   render(){
 
@@ -457,23 +600,18 @@ class Bubble extends Component{
               <div className = "small">Post by: {this.state.username}
               <center><div id="insertimage">
 
-              <img src = {this.state.uploadImage} alt = "" id = "uploadImage"/>
-                    <form onSubmit = {this.submitInput}>
-                    <input
-                    type = "text"
-                    placeholder = "Image URL"
-                    onChange = {this.updateInput}
-                    value = {this.state.imageSrc}
-                    />
-                    <button type = "submit">Submit</button>
-                    </form>
-              <img src = {this.state.uploadImage} alt = {""} id = "uploadImage"/>
-                <input type = "file" onChange = {this.updateImage}/>
-              </div></center>
+                <img src = {insertphoto} id = "insertphoto"/>
+                <img src = {picarrowleft} id = "picarrowleft" onClick = {this.handleArrowClick} style = {{visibility: this.state.image2visible}}/>
+                <img src = {picarrowright} id = "picarrowright" onClick = {this.handleArrowClick} style = {{visibility: this.state.image1visible}}/>
+                <img src = {this.state.uploadImageBefore} alt = {""} className = "uploadImage" id = "uploadImageBefore" style = {{visibility: this.state.image1visible}}/>
+                <img src = {this.state.uploadImageAfter} alt = {""} className = "uploadImage" id = "uploadImageAfter" style = {{visibility: this.state.image2visible}}/>
                 <form onSubmit = {this.submitCaption}>
+                  <input type = "text" style = {{visibility: this.state.image1visible}} onChange = {this.updateImage} id = "fileInput" value = {this.state.uploadImageBefore} placeholder = "Add image URL"/>
+                  <input type = "text" style = {{visibility: this.state.image2visible}} onChange = {this.updateImage} id = "fileInput" value = {this.state.uploadImageAfter} placeholder = "Add image URL"/>
                   <textarea placeholder = "Insert caption here" onChange = {this.updateCaption} value = {this.state.caption} id="caption"></textarea>
                   <button type = "submit" id = "post"><center><p className = "small">POST</p></center></button>
                 </form>
+              </div></center>
 
             </div>
 
@@ -524,7 +662,7 @@ class Bubble extends Component{
             </div>
             <div className = "bubble" id = "bub3">
 
-            <center><p id = "totalcount">TOTAL COUNT</p> <p id = "livecount"><b>{this.state.ActualTotalTrash}</b> lbs</p> <br />
+            <center><p id = "totalcount">TOTAL COUNT</p> <p id = "livecount"><b>{this.state.lbs}</b> lbs</p> <br />
             Weekly Leaderboard</center>
             <br />
             <p className = "small">
