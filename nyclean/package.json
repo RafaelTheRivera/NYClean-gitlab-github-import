@@ -6,6 +6,7 @@
     "bootstrap": "^4.3.1",
     "filereader": "^0.10.3",
     "firebase": "^6.3.0",
+    "firestore-export-import": "^0.2.6",
     "leaflet": "^1.5.1",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.9",
