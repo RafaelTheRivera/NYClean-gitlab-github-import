@@ -124,7 +124,7 @@ height: 40px;
   position: absolute;
   top: 70px;
   left: 230px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 #bodycaption{

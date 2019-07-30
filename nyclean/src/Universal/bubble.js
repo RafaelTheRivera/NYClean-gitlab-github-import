@@ -134,9 +134,9 @@ class Bubble extends Component{
         for (var i = 0; i < dataArray.length; i++) {
           const date = dataArray[i].date
           const dataMark =  L.marker([dataArray[i].lat,[dataArray[i].long]]).addTo(map).bindPopup("<div id = 'popup'><p id = 'posttitle'>Post by:  "+ dataArray[i].username +"<p id = 'date'> on "+ date.substr(0, date.indexOf("201" || "202")) +"</p></p><div id = 'controlbody'><p id = 'bodycaption'>"+ dataArray[i].body +"</p></div></div><div id='pictures'><img src = "+ dataArray[i].beforeImage +" id = 'imageBefore'/><img src = "+ dataArray[i].afterImage +" id = 'imageAfter'/></div>", {maxWidth : 600}).openPopup();
+          map.closePopup();
         }
         setState({lbs: totalLbs});
-
     });
     db.collection("users").get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
@@ -381,9 +381,10 @@ class Bubble extends Component{
   updateImage = e =>{
     if (this.state.image1visible === "visible"){
       this.setState({uploadImageBefore: e.target.value});
-      console.log(this.state.uploadImage);
+      console.log(this.state.uploadImageBefore);
     }else if (this.state.image1visible === "hidden"){
-      this.setState({uploadImageAfter: e.target.value})
+      this.setState({uploadImageAfter: e.target.value});
+      console.log(this.state.uploadImageAfter);
     }
   }
 
@@ -457,8 +458,8 @@ class Bubble extends Component{
                 <img src = {this.state.uploadImageBefore} alt = {""} className = "uploadImage" id = "uploadImageBefore" style = {{visibility: this.state.image1visible}}/>
                 <img src = {this.state.uploadImageAfter} alt = {""} className = "uploadImage" id = "uploadImageAfter" style = {{visibility: this.state.image2visible}}/>
                 <form onSubmit = {this.submitCaption}>
-                  <input type = "text" onChange = {this.updateImage} id = "fileInput" value = {this.state.uploadImageBefore} placeholder = "Add image URL"/>
-                  <input type = "text" onChange = {this.updateImage} id = "fileInput" value = {this.state.uploadImageAfter} placeholder = "Add image URL"/>
+                  <input type = "text" style = {{visibility: this.state.image1visible}} onChange = {this.updateImage} id = "fileInput" value = {this.state.uploadImageBefore} placeholder = "Add image URL"/>
+                  <input type = "text" style = {{visibility: this.state.image2visible}} onChange = {this.updateImage} id = "fileInput" value = {this.state.uploadImageAfter} placeholder = "Add image URL"/>
                   <textarea placeholder = "Insert caption here" onChange = {this.updateCaption} value = {this.state.caption} id="caption"></textarea>
                   <button type = "submit" id = "post">POST</button>
                 </form>
