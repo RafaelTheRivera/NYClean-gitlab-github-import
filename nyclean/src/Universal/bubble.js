@@ -594,7 +594,7 @@ class Bubble extends Component{
                   type = "text"
                   id="box"
                   name = "search"
-                  placeholder = " Search..."
+                  placeholder = " Search location..."
                   onChange = {this.updateSearchBar}
                   value = {this.state.search}></input>
                 <button type = "submit" id="submit" className= "headerItem">
@@ -725,7 +725,10 @@ class Bubble extends Component{
                   <div className = "bubbleheader" id = "bubheader4"><center><p className = "small">FIND FRIENDS</p></center></div>
 
                   <div className = "page" id = "friendsearch">
-                    <p>insert search bar "Search by username"</p>
+                  <form>
+                    <input id = "friendform" type = "text" placeholder = "Search by username..." /> 
+                    <button type = "submit" className = "feedbutton"></button>
+                  </form>
 
                     <p id = "friendinfo" onClick = {this.openFriendPage}>{this.state.userReferences}</p>
 
