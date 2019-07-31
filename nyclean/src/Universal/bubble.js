@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Button} from 'react';
 import './../App.css';
 import L from 'leaflet';
 import headergradient from './../images/headergradient.png';
@@ -18,6 +18,7 @@ import insertphoto from './../images/insertphoto.png';
 import picarrowleft from './../images/picarrowleft.png';
 import picarrowright from './../images/picarrowright.png';
 import Tabs from 'react-bootstrap/Tabs';
+import ListItem from './friendprofiles.js'
 
 
 const db = firebase.firestore();
@@ -72,7 +73,11 @@ class Bubble extends Component{
                   editingImage: 1,
                   image1visible: "hidden",
                   image2visible: "hidden",
-                  activeFriend: ""
+                  activeFriend: "",
+                  friendList: [],
+                  activeBio: "",
+                  activePfp: "",
+                  activeTrash: ""
                 }
       this.mouseDown = this.mouseDown.bind(this);
       this.mouseUp = this.mouseUp.bind(this);
@@ -95,7 +100,7 @@ class Bubble extends Component{
       this.updateImage = this.updateImage.bind(this);
       this.handleArrowClick = this.handleArrowClick.bind(this);
     }
-  componentDidMount(){
+  componentDidMount(props){
     window.addEventListener("resize", this.updateDimensions);
     this.height = this.state.height - 40;
     this.corner1 = L.latLng(40.4079549, -74.5768574);
@@ -144,6 +149,8 @@ class Bubble extends Component{
         setState({lbs: totalLbs});
     });
 
+    var userReferences = [];
+    var idStuff = [];
     db.collection("users").get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         this.setState({
@@ -153,27 +160,20 @@ class Bubble extends Component{
           })
         })
       });
-    });
-
-    var userReferences = [];
-    const userData = db .collection("users").get().then((snapshot) =>{
-      snapshot.forEach(function(doc){
+      querySnapshot.forEach(function(doc){
         if(doc.data().fullname !== undefined){
           userReferences.push(doc.data().fullname);
+          idStuff.push(doc.id);
+          idStuff.push(doc.data().fullname);
         }
       });
+          console.log(idStuff);
           console.log(userReferences);
-          for (var j = 0; j < userReferences.length; j++) {
-            var friendItem = document.createElement("BUTTON");
-            var friendList = document.getElementById("friendinfo");
-            friendItem.id = "friend" + j
-            friendItem.className = "friendlistitem";
-            friendItem.innerText = userReferences[j];
-            friendList.appendChild(friendItem);
-
-            console.log("newItem");
-          }
-        this.setState({userReferences: userReferences});
+          const list = userReferences.map(l =>(
+             <ListItem item={l} clickFunction={this.openFriendPage}/>
+           ));
+        this.setState({userReferences: list,
+                      idStuff: idStuff});
     });
 
   }
@@ -550,7 +550,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                     tab1IsOpen: "hidden",
                     tab2IsOpen: "hidden",
                     FriendSearchIsOpen: "hidden",
-                    FriendProfileIsOpen: "hidden",
+                    FriendPageIsOpen: "hidden",
                     image1visible: "visible"
                   });
     }else{
@@ -568,7 +568,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                     leaderIsOpen: "hidden",
                     friendsIsOpen: "hidden",
                     FriendSearchIsOpen: "hidden",
-                    FriendProfileIsOpen: "hidden",
+                    FriendPageIsOpen: "hidden",
                     image1visible: "hidden",
                     image2visible: "hidden"
                   });
@@ -588,7 +588,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                     tab1IsOpen: "hidden",
                     tab2IsOpen: "hidden",
                     FriendSearchIsOpen: "hidden",
-                    FriendProfileIsOpen: "hidden",
+                    FriendPageIsOpen: "hidden",
                     image1visible: "hidden",
                     image2visible: "hidden"
                   });
@@ -613,7 +613,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
     }else{
       this.setState({friendsIsOpen: "hidden",
                     FriendSearchIsOpen: "hidden",
-                    FriendProfileIsOpen: "hidden"});
+                    FriendPageIsOpen: "hidden"});
     }
   }
 
@@ -642,11 +642,24 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
   }
 
   openFriendPage(name){
+    var activeBio, activePfp, activeTrash;
     if (this.state.FriendPageIsOpen === "hidden"){
       this.setState({FriendSearchIsOpen: "hidden",
                     FriendPageIsOpen: "visible",
-                    activeFriend: name});
-      console.log("openFriendPage was activated");
+                    activeFriend: name},()=>{
+                      console.log("openFriendPage was activated" + this.state.activeFriend);
+                      var id = this.state.idStuff[this.state.idStuff.indexOf(this.state.activeFriend)-1];
+                      console.log(id);
+                      var documentReference = db.collection('users').doc(id);
+                      documentReference.get().then(function(doc) {
+                          activeBio = doc.data().bio;
+                          activePfp = doc.data().imageSrc;
+                          activeTrash = doc.data().Totaltrash;
+                          console.log(activePfp);
+                          this.setState({activeBio: activeBio, activePfp: activePfp, activeTrash: activeTrash});
+                      }.bind(this))
+                    }
+                  );
     }
   }
 
@@ -836,7 +849,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                   <div className = "page" id = "friendsearch">
                     <p>insert search bar "Search by username"</p>
 
-                    <div id = "friendinfo"></div>
+                    <div id = "friendinfo">{this.state.userReferences}</div>
 
                   </div>
                   </span>
@@ -848,9 +861,9 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                   <img id = "profileback" src = {back} onClick = {this.openFriendSearch}/>
 
                   <div className = "page" id = "friend">
-                    <div id = "friendprofile"></div>
-                    <p id = "frienduser">username</p>
-                    <p id = "friendinfo">This is this account's bio hello nice to meet you!<br /><br />
+                    <img id = "friendprofile" src = {this.state.activePfp}/>
+                    <p id = "frienduser">{this.state.activeFriend}</p>
+                    <p id = "friendinfo">{this.state.activeBio}<br /><br />
                     Pins
                       <ol>
                         <li>pin</li>
@@ -863,7 +876,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                         <li>pin</li>
                         <li>pin</li>
                       </ol>
-                      Trash count: 123
+                      Trash count: {this.state.activeTrash} lbs
                     </p>
                   </div>
                   </span>
