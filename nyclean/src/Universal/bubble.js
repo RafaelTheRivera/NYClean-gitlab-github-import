@@ -155,8 +155,8 @@ class Bubble extends Component{
       querySnapshot.forEach((doc) => {
         this.setState({
           list: this.state.list.concat({
-            fullname: doc.data().fullname,
-            Totaltrash : doc.data().Totaltrash
+            Totaltrash : doc.data().Totaltrash,
+            fullname : doc.data().fullname
           })
         })
       });
@@ -198,13 +198,14 @@ class Bubble extends Component{
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         userRef.doc(user.uid).get().then(getDoc => {
-        if (getDoc.data() === undefined ){
+        if (getDoc.data() === undefined){
           userRef.doc(user.uid).update({
-            imageSrc: "https://i.imgur.com/Of7XNtM.png",
-            Totaltrash: this.state.Totaltrash
+            imageSrc: "https://i.imgur.com/Of7XNtM.png"
           })
-
         }
+        userRef.doc(user.uid).update({
+          Totaltrash: this.state.Totaltrash
+        })
         userRef.doc(user.uid).get().then(getDoc => {
         this.setState({
             imgsrc: getDoc.data().imageSrc
@@ -256,10 +257,9 @@ class Bubble extends Component{
     return phrase + " at SW corner";
   }
   makeLetterCapital = (phrase, index) => {
-    if (index >= 0 && index < phrase.length){
+    if (index >= 0 && index < phrase.length)
       return phrase.substring(0, index) + phrase.substring(index, index+1).toUpperCase() + phrase.substring(index+1, phrase.length);
     return phrase;
-  }
   }
   makeLetterCapitalReverse = (phrase, index) => {
     if (index >= 0 && index < phrase.length)
@@ -702,11 +702,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                       image2visible: "hidden"});
       }
   }
-
   render(){
-
-
-
     this.state.list = this.sort_by_key(this.state.list, "Totaltrash");
     this.state.ActualTotalTrash = (this.state.list.reduce( function(cnt,o){ return cnt + o.Totaltrash; }, 0));
     this.state.list.reverse();
@@ -715,10 +711,10 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
     );
     return(
       <div>
-
         <img id = "bigHeader" src = {headergradient} alt = {"topgradient"}/>
           <div className= "headerItem" id = "logo">
             <a href = "/"> <img id = "greenyc" src = {greenyc} alt= "logo"/> </a>
+            <a href = "About" class = "normalText" id = "Indent2">About Us </a>
           </div>
             <form onSubmit = {this.getSearch}>
               <div className= "headerItem" id = "search">
@@ -817,7 +813,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
             </div>
             <div className = "bubble" id = "bub3">
 
-            <center><p id = "totalcount">TOTAL COUNT</p> <p id = "livecount"><b>{this.state.lbs}</b> lbs</p> <br />
+            <center><p id = "totalcount">TOTAL COUNT</p> <p id = "livecount"><b>{this.state.ActualTotalTrash}</b> lbs</p> <br />
             Weekly Leaderboard</center>
             <br />
             <p className = "small">

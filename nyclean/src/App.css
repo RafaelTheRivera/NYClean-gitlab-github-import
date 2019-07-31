@@ -25,9 +25,20 @@
   word-spacing: 2px;
   color: #000000;
 }
+.normalTextAbout{
+  font-family: 'Open Sans', sans-serif;
+  font-size: 110%;
+  letter-spacing: 1px;
+  word-spacing: 2px;
+  color: #000000;
+}
 #Indent1{
   position:absolute;
   left:120px;
+}
+#Indent2{
+  position:absolute;
+  left:750px;
 }
 #bigHeader{
   position: absolute;
@@ -543,8 +554,6 @@ footer {
   background:gray;
 }
 
-
-
 #profilecircle {
   margin-left: 100px;
 }
@@ -556,7 +565,30 @@ footer {
   object-fit: cover;
   object-position: center right;
 }
-
+#profileimg1 {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center right;
+  position:relative;
+  bottom:80px;
+  left:120px;
+}
+#profileimg2 {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center right;
+  position:relative;
+  bottom:80px;
+  left:180px;
+}
+#aboutText {
+  position:relative;
+  bottom:30px;
+}
 #username {
   position: absolute;
   top: 0;
