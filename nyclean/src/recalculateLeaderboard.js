@@ -48,7 +48,7 @@ class Recalc extends Component {
         }
         for (var i = 0; i < poundData.length; i = i + 2) {
           console.log(poundData[i]);
-          var id = userReferences[userReferences.indexOf(poundData[i])-1];
+          var id = userReferences[userReferences.indexOf(poundData[i])];
           console.log(id);
           var doc = db.collection('users').doc(id);
           var setWithMerge = doc.set({

@@ -641,7 +641,7 @@ footer {
 }
 #bubheader4{
   right: 0;
-  margin-top: 360px;
+  bottom: 352px;
   margin-right: 82px;
   z-index: 4;
 }
@@ -742,9 +742,8 @@ footer {
 #profileback{
   height: 12px;
   position: absolute;
-  top: 0;
+  bottom: 358px;
   right: 0;
-  margin-top: 367px;
   margin-right: 310px;
   z-index: 5;
 }
@@ -758,10 +757,21 @@ footer {
   z-index: 3;
   background-color:white;
   right:0;
-  margin-top: 385px;
+  bottom: 82px;
   margin-right: 82px;
   overflow: auto;
   padding-bottom: 10px;
+}
+
+.friendlistitem{
+  width: 230px;
+  height: 30px;
+  background-color: #2cded4;
+  margin-left: -26px;
+  border: 1px solid black;
+  margin-top:-1px;
+  padding-left: 10px;
+  padding-top: 5px;
 }
 
 #friendprofile{

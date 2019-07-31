@@ -71,7 +71,8 @@ class Bubble extends Component{
                   pinupdate: false,
                   editingImage: 1,
                   image1visible: "hidden",
-                  image2visible: "hidden"
+                  image2visible: "hidden",
+                  activeFriend: ""
                 }
       this.mouseDown = this.mouseDown.bind(this);
       this.mouseUp = this.mouseUp.bind(this);
@@ -130,12 +131,9 @@ class Bubble extends Component{
         var totalLbs = 0;
         querySnapshot.forEach(function(doc) {
             dataArray.push(doc.data());
-            console.log(doc.id, " => ", doc.data());
-            console.log(dataArray);
         });
         for (var i = 0; i < dataArray.length; i++) {
           totalLbs = totalLbs + dataArray[i].lbs;
-          console.log(totalLbs);
           const dataMark =  L.marker([dataArray[i].lat,[dataArray[i].long]]).addTo(map).bindPopup("<p id = 'set'>Pin location set</p>").openPopup();
         }
         for (var i = 0; i < dataArray.length; i++) {
@@ -145,6 +143,7 @@ class Bubble extends Component{
         }
         setState({lbs: totalLbs});
     });
+
     db.collection("users").get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         this.setState({
@@ -153,10 +152,30 @@ class Bubble extends Component{
             Totaltrash : doc.data().Totaltrash
           })
         })
-
-      console.log(doc.id, " => ", doc.data());
       });
     });
+
+    var userReferences = [];
+    const userData = db .collection("users").get().then((snapshot) =>{
+      snapshot.forEach(function(doc){
+        if(doc.data().fullname !== undefined){
+          userReferences.push(doc.data().fullname);
+        }
+      });
+          console.log(userReferences);
+          for (var j = 0; j < userReferences.length; j++) {
+            var friendItem = document.createElement("BUTTON");
+            var friendList = document.getElementById("friendinfo");
+            friendItem.id = "friend" + j
+            friendItem.className = "friendlistitem";
+            friendItem.innerText = userReferences[j];
+            friendList.appendChild(friendItem);
+
+            console.log("newItem");
+          }
+        this.setState({userReferences: userReferences});
+    });
+
   }
   sort_by_key(array, key)
   {
@@ -191,21 +210,13 @@ class Bubble extends Component{
             imgsrc: getDoc.data().imageSrc
           });
         })
-          console.log("srcset")
-          console.log(this.state.imgsrc)
       })
       this.setState({username: user.displayName,
                   profileWidth: user.displayName.length * 8.5 + 50 + "px"});
     }});
     this.updateDimensions();
 
-    var userReferences = [];
-    const userData = db .collection("users").get().then((snapshot) =>{
-      snapshot.forEach(function(doc){
-        userReferences.push(doc.data().fullname);
-      });
-        this.setState({userReferences: userReferences});
-    });
+
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
@@ -214,13 +225,11 @@ class Bubble extends Component{
     this.setState({
       [e.target.name]: e.target.value
     });
-    console.log(this.state.search);
   }
   updateBody(e){
     this.setState({
       body: e.target.value
     });
-    console.log(this.state.body);
   }
   phraseEachUpper = (phrase) => {
     var i = 0;
@@ -380,15 +389,12 @@ class Bubble extends Component{
   mouseUp(e){
     this.setState({mouseDown: 0});
     if (this.state.mouseLeavePin === true && this.state.dragEvent === true){
-      console.log(this.state.newMark)
       if(this.state.totalPins > 0){
         this.map.removeLayer(this.state.newMark);
       }
       this.setState({totalPins: this.state.totalPins + 1});
-      console.log(this.state.totalPins);
       var coords = this.map.mouseEventToLatLng(e);
       this.setState({coords: coords})
-      console.log(coords);
       this.setState({newMark: L.marker(coords).addTo(this.map).bindPopup("<p id = 'set'>Pin location set</p>").openPopup()});
       if (this.state.pinIsOpen === "hidden"){
         this.openPin();
@@ -512,21 +518,22 @@ class Bubble extends Component{
 
     if (this.state.FriendSearchIsOpen === "hidden"){
       this.setState({FriendSearchIsOpen: "visible",
-                    FriendPageIsOpen: "hidden"});
+                    FriendPageIsOpen: "hidden",
+                    activeFriend: ""});
     }
   }
 
-  openFriendPage(){
-
+  openFriendPage(name){
     if (this.state.FriendPageIsOpen === "hidden"){
       this.setState({FriendSearchIsOpen: "hidden",
-                    FriendPageIsOpen: "visible"});
+                    FriendPageIsOpen: "visible",
+                    activeFriend: name});
+      console.log("openFriendPage was activated");
     }
   }
 
   updateCaption = e => {
     this.setState({caption: e.target.value});
-    console.log(this.state.caption);
   }
   submitCaption = e => {
     e.preventDefault();
@@ -547,26 +554,21 @@ class Bubble extends Component{
   updateImage = e =>{
     if (this.state.image1visible === "visible"){
       this.setState({uploadImageBefore: e.target.value});
-      console.log(this.state.uploadImageBefore);
     }else if (this.state.image1visible === "hidden"){
       this.setState({uploadImageAfter: e.target.value});
-      console.log(this.state.uploadImageAfter);
     }
   }
 
   handleArrowClick(e){
-    console.log(this.state.editingImage);
       if(this.state.editingImage === 1){
         this.setState({editingImage: 2,
                       image1visible: "hidden",
                       image2visible: "visible"
                       });
-        console.log("handled");
       }else if (this.state.editingImage === 2){
         this.setState({editingImage: 1,
                       image1visible: "visible",
                       image2visible: "hidden"});
-        console.log("handled");
       }
   }
 
@@ -711,12 +713,12 @@ class Bubble extends Component{
 
                   <span style = {{visibility: this.state.FriendSearchIsOpen}}>
 
-                  <div className = "bubbleheader" id = "bubheader4"><center><p className = "small">FIND FRIENDS</p></center></div>
+                  <div className = "bubbleheader" id = "bubheader4" ><center><p className = "small">FIND FRIENDS</p></center></div>
 
                   <div className = "page" id = "friendsearch">
                     <p>insert search bar "Search by username"</p>
 
-                    <p id = "friendinfo" onClick = {this.openFriendPage}>{this.state.userReferences}</p>
+                    <div id = "friendinfo"></div>
 
                   </div>
                   </span>
