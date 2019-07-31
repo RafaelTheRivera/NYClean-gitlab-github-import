@@ -11,6 +11,8 @@ import friends from './../images/friendsicon1.png';
 import emptypinicon from './../images/emptypinicon.png';
 import emptypin from './../images/pin.png';
 import add from './../images/add.png';
+import search from './../images/search.png';
+import feedsubmit from './../images/feedsubmit.png';
 import cover from './../images/cover.png';
 import safetyicon from './../images/safetyicon.png';
 import back from './../images/back.png';
@@ -722,7 +724,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                   type = "text"
                   id="box"
                   name = "search"
-                  placeholder = " Search..."
+                  placeholder = " Search location..."
                   onChange = {this.updateSearchBar}
                   value = {this.state.search}></input>
                 <button type = "submit" id="submit" className= "headerItem">
@@ -759,7 +761,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                 <form onSubmit = {this.submitCaption}>
                   <input type = "text" style = {{visibility: this.state.image1visible}} onChange = {this.updateImage} id = "fileInput" value = {this.state.uploadImageBefore} placeholder = "Add image URL"/>
                   <input type = "text" style = {{visibility: this.state.image2visible}} onChange = {this.updateImage} id = "fileInput" value = {this.state.uploadImageAfter} placeholder = "Add image URL"/>
-                  <textarea placeholder = "Insert caption here" onChange = {this.updateCaption} value = {this.state.caption} id="caption"></textarea>
+                  <textarea placeholder = "Insert caption here..." onChange = {this.updateCaption} value = {this.state.caption} id="caption"></textarea>
                   <button type = "submit" id = "post"><center><p className = "small">POST</p></center></button>
                 </form>
               </div></center>
@@ -788,7 +790,12 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
               <span style = {{visibility: this.state.tab1IsOpen}}>
                 <div id = "line1"></div>
                 <div className = "tab" id = "tab1"></div>
-                <div className = "texttype">text box 1 here</div>
+                <div className = "texttype">
+                  <form>
+                    <input className = "feedform" type = "text" placeholder = "Add an update..."/>
+                    <button type = "submit" className = "feedbutton"></button>
+                  </form>
+                </div>
               </span>
 
 
@@ -796,7 +803,12 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
               <span style = {{visibility: this.state.tab2IsOpen}}>
                 <div id = "line2"></div>
                 <div className = "tab" id = "tab2"></div>
-                <div className = "texttype">text box 2 here</div>
+                <div className = "texttype">
+                  <form>
+                    <input className = "feedform" type = "text" placeholder = "Report a location..."/>
+                    <button type = "submit" className = "feedbutton"></button>
+                  </form>
+                </div>
               </span>
 
 
@@ -843,7 +855,10 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                   <div className = "bubbleheader" id = "bubheader4" ><center><p className = "small">FIND FRIENDS</p></center></div>
 
                   <div className = "page" id = "friendsearch">
-                    <p>insert search bar "Search by username"</p>
+                  <form>
+                    <input id = "friendform" type = "text" placeholder = "Search by username..." /> 
+                    <button type = "submit" className = "feedbutton"></button>
+                  </form>
 
                     <div id = "friendinfo">{this.state.userReferences}</div>
 
