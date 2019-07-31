@@ -148,7 +148,8 @@ class Bubble extends Component{
       querySnapshot.forEach((doc) => {
         this.setState({
           list: this.state.list.concat({
-            Totaltrash : doc.data().Totaltrash
+            Totaltrash : doc.data().Totaltrash,
+            fullname : doc.data().fullname
           })
         })
       });
@@ -688,7 +689,6 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                       image2visible: "hidden"});
       }
   }
-
   render(){
     this.state.list = this.sort_by_key(this.state.list, "Totaltrash");
     this.state.ActualTotalTrash = (this.state.list.reduce( function(cnt,o){ return cnt + o.Totaltrash; }, 0));
@@ -698,10 +698,10 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
     );
     return(
       <div>
-
         <img id = "bigHeader" src = {headergradient} alt = {"topgradient"}/>
           <div className= "headerItem" id = "logo">
             <a href = "/"> <img id = "greenyc" src = {greenyc} alt= "logo"/> </a>
+            <a href = "About" class = "normalText" id = "Indent2">About Us </a>
           </div>
             <form onSubmit = {this.getSearch}>
               <div className= "headerItem" id = "search">
