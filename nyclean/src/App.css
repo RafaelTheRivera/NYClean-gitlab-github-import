@@ -554,8 +554,6 @@ footer {
   background:gray;
 }
 
-
-
 #profilecircle {
   margin-left: 100px;
 }
@@ -587,9 +585,9 @@ footer {
   bottom:80px;
   left:180px;
 }
-#aboutTexet {
+#aboutText {
   position:relative;
-  bottom:80px;
+  bottom:30px;
 }
 #username {
   position: absolute;

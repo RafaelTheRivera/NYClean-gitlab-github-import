@@ -800,7 +800,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
             </div>
             <div className = "bubble" id = "bub3">
 
-            <center><p id = "totalcount">TOTAL COUNT</p> <p id = "livecount"><b>{this.state.lbs}</b> lbs</p> <br />
+            <center><p id = "totalcount">TOTAL COUNT</p> <p id = "livecount"><b>{this.state.ActualTotalTrash}</b> lbs</p> <br />
             Weekly Leaderboard</center>
             <br />
             <p className = "small">
