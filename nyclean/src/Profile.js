@@ -39,8 +39,7 @@ class Profile extends Component {
       if (user) {
         const userRef = db.collection("users");
         userRef.doc(user.uid).update({
-          imageSrc: this.state.imageSrc,
-          Totaltrash: this.state.Totaltrash
+          imageSrc: this.state.imageSrc
         })
       }
       });
@@ -71,7 +70,7 @@ class Profile extends Component {
               imageSrc: "https://i.imgur.com/Of7XNtM.png"
           })
         }
-          if(getDoc.data().Totaltrash === null) {
+          if(getDoc.data().Totaltrash === undefined) {
             userRef.doc(user.uid).update({
               Totaltrash: this.state.Totaltrash
             })
