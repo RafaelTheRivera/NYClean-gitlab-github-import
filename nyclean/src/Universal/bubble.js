@@ -12,6 +12,7 @@ import emptypinicon from './../images/emptypinicon.png';
 import emptypin from './../images/pin.png';
 import add from './../images/add.png';
 import search from './../images/search.png';
+import feedsubmit from './../images/feedsubmit.png';
 import cover from './../images/cover.png';
 import safetyicon from './../images/safetyicon.png';
 import back from './../images/back.png';
@@ -573,6 +574,7 @@ class Bubble extends Component{
   render(){
 
 
+
     this.state.list = this.sort_by_key(this.state.list, "Totaltrash");
     this.state.ActualTotalTrash = (this.state.list.reduce( function(cnt,o){ return cnt + o.Totaltrash; }, 0));
     this.state.list.reverse();
@@ -660,8 +662,8 @@ class Bubble extends Component{
                 <div className = "tab" id = "tab1"></div>
                 <div className = "texttype">
                   <form>
-                    <input className = "feedform" type = "text" placeholder = "Update your status..."/>
-                    <button type = "submit" className = "feedbutton"/>
+                    <input className = "feedform" type = "text" placeholder = "Add an update..."/>
+                    <button type = "submit" className = "feedbutton"></button>
                   </form>
                 </div>
               </span>
@@ -673,8 +675,8 @@ class Bubble extends Component{
                 <div className = "tab" id = "tab2"></div>
                 <div className = "texttype">
                   <form>
-                    <input id = "report" className = "feedform" type = "text" placeholder = "Report a location..."/>
-                    <button type = "submit" className = "feedbutton" />
+                    <input className = "feedform" type = "text" placeholder = "Report a location..."/>
+                    <button type = "submit" className = "feedbutton"></button>
                   </form>
                 </div>
               </span>

@@ -801,7 +801,14 @@ footer {
 
 .feedbutton{
   height: 17px;
-  width: 17;
+  width: 17px;
   margin-left: 7px;
-
+  border-radius: 50%;
+  border-width: 1px;
+  border-color: black;
+  background-color: white;
+  background-image: url(images/feedsubmit.png);
+  background-size: 12px auto;
+  background-repeat: no-repeat;
+  background-position: center;
 }
