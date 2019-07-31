@@ -73,7 +73,8 @@ class Bubble extends Component{
                   pinupdate: false,
                   editingImage: 1,
                   image1visible: "hidden",
-                  image2visible: "hidden"
+                  image2visible: "hidden",
+                  activeFriend: ""
                 }
       this.mouseDown = this.mouseDown.bind(this);
       this.mouseUp = this.mouseUp.bind(this);
@@ -132,12 +133,9 @@ class Bubble extends Component{
         var totalLbs = 0;
         querySnapshot.forEach(function(doc) {
             dataArray.push(doc.data());
-            console.log(doc.id, " => ", doc.data());
-            console.log(dataArray);
         });
         for (var i = 0; i < dataArray.length; i++) {
           totalLbs = totalLbs + dataArray[i].lbs;
-          console.log(totalLbs);
           const dataMark =  L.marker([dataArray[i].lat,[dataArray[i].long]]).addTo(map).bindPopup("<p id = 'set'>Pin location set</p>").openPopup();
         }
         for (var i = 0; i < dataArray.length; i++) {
@@ -147,18 +145,39 @@ class Bubble extends Component{
         }
         setState({lbs: totalLbs});
     });
+
     db.collection("users").get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         this.setState({
           list: this.state.list.concat({
-            fullname: doc.data().fullname,
-            Totaltrash : doc.data().Totaltrash
+            Totaltrash : doc.data().Totaltrash,
+            fullname : doc.data().fullname
           })
         })
-
-      console.log(doc.id, " => ", doc.data());
       });
     });
+
+    var userReferences = [];
+    const userData = db .collection("users").get().then((snapshot) =>{
+      snapshot.forEach(function(doc){
+        if(doc.data().fullname !== undefined){
+          userReferences.push(doc.data().fullname);
+        }
+      });
+          console.log(userReferences);
+          for (var j = 0; j < userReferences.length; j++) {
+            var friendItem = document.createElement("BUTTON");
+            var friendList = document.getElementById("friendinfo");
+            friendItem.id = "friend" + j
+            friendItem.className = "friendlistitem";
+            friendItem.innerText = userReferences[j];
+            friendList.appendChild(friendItem);
+
+            console.log("newItem");
+          }
+        this.setState({userReferences: userReferences});
+    });
+
   }
   sort_by_key(array, key)
   {
@@ -181,33 +200,26 @@ class Bubble extends Component{
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         userRef.doc(user.uid).get().then(getDoc => {
-        if (getDoc.data() === undefined ){
+        if (getDoc.data() === undefined){
           userRef.doc(user.uid).update({
-            imageSrc: "https://i.imgur.com/Of7XNtM.png",
-            Totaltrash: this.state.Totaltrash
+            imageSrc: "https://i.imgur.com/Of7XNtM.png"
           })
-
         }
+        userRef.doc(user.uid).update({
+          Totaltrash: this.state.Totaltrash
+        })
         userRef.doc(user.uid).get().then(getDoc => {
         this.setState({
             imgsrc: getDoc.data().imageSrc
           });
         })
-          console.log("srcset")
-          console.log(this.state.imgsrc)
       })
       this.setState({username: user.displayName,
                   profileWidth: user.displayName.length * 8.5 + 50 + "px"});
     }});
     this.updateDimensions();
 
-    var userReferences = [];
-    const userData = db .collection("users").get().then((snapshot) =>{
-      snapshot.forEach(function(doc){
-        userReferences.push(doc.data().fullname);
-      });
-        this.setState({userReferences: userReferences});
-    });
+
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
@@ -216,13 +228,11 @@ class Bubble extends Component{
     this.setState({
       [e.target.name]: e.target.value
     });
-    console.log(this.state.search);
   }
   updateBody(e){
     this.setState({
       body: e.target.value
     });
-    console.log(this.state.body);
   }
   phraseEachUpper = (phrase) => {
     var i = 0;
@@ -251,6 +261,16 @@ class Bubble extends Component{
   makeLetterCapital = (phrase, index) => {
     if (index >= 0 && index < phrase.length)
       return phrase.substring(0, index) + phrase.substring(index, index+1).toUpperCase() + phrase.substring(index+1, phrase.length);
+    return phrase;
+  }
+  makeLetterCapitalReverse = (phrase, index) => {
+    if (index >= 0 && index < phrase.length)
+      return phrase.substring(0, phrase.length-index) + phrase.substring(phrase.length-index, phrase.length-index+1).toUpperCase() + phrase.substring(phrase.length-index+1, phrase.length);
+    return phrase;
+  }
+  fly = (num1, num2, num3) =>
+  {
+    this.map.flyTo([num1, num2], num3)
   }
   getSearch = e => {
     //find search results based on updateSearchBar
@@ -267,10 +287,11 @@ class Bubble extends Component{
       if (status === 0){
       let lat = doc.data().lat
       let long = doc.data().long
-      this.setState({lat: lat, long: long});
-      this.map.flyTo([this.state.lat, this.state.long], 16);
+      this.setState({lat: lat, long: long},()=>{
+        this.fly(this.state.lat, this.state.long, 16);
+      });
     }})
-  })
+  }).then(()=>{
     let query1 = realtime.where('name', '==', this.phraseEachUpper(search.toLowerCase())).get().then(snapshot => {
       if (snapshot.empty){
         status = 2;
@@ -279,10 +300,11 @@ class Bubble extends Component{
       if (status === 1){
       let lat = doc.data().lat
       let long = doc.data().long
-      this.setState({lat: lat, long: long});
-      this.map.flyTo([this.state.lat, this.state.long], 16);
+      this.setState({lat: lat, long: long},()=>{
+        this.fly(this.state.lat, this.state.long, 16);
+      });
     }})
-  })
+  }).then(()=>{
     let query2 = realtime.where('name', '==', this.addCorner1(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
       if (snapshot.empty){
         status = 3;
@@ -291,10 +313,11 @@ class Bubble extends Component{
       if (status === 2){
       let lat = doc.data().lat
       let long = doc.data().long
-      this.setState({lat: lat, long: long});
-      this.map.flyTo([this.state.lat, this.state.long], 16);
+      this.setState({lat: lat, long: long},()=>{
+        this.fly(this.state.lat, this.state.long, 16);
+      });
     }})
-  })
+  }).then(()=>{
     let query3 = realtime.where('name', '==', this.addCorner2(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
       if (snapshot.empty){
         status = 4;
@@ -303,10 +326,11 @@ class Bubble extends Component{
       if (status === 3){
       let lat = doc.data().lat
       let long = doc.data().long
-      this.setState({lat: lat, long: long});
-      this.map.flyTo([this.state.lat, this.state.long], 16);
+      this.setState({lat: lat, long: long},()=>{
+        this.fly(this.state.lat, this.state.long, 16);
+      });
     }})
-  })
+  }).then(()=>{
     let query4 = realtime.where('name', '==', this.addCorner3(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
       if (snapshot.empty){
         status = 5;
@@ -315,10 +339,11 @@ class Bubble extends Component{
       if (status === 4){
       let lat = doc.data().lat
       let long = doc.data().long
-      this.setState({lat: lat, long: long});
-      this.map.flyTo([this.state.lat, this.state.long], 16);
+      this.setState({lat: lat, long: long},()=>{
+        this.fly(this.state.lat, this.state.long, 16);
+      });
     }})
-  })
+  }).then(()=>{
     let query5 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
       if (snapshot.empty){
       status = 6;
@@ -327,15 +352,12 @@ class Bubble extends Component{
       if (status === 5){
       let lat = doc.data().lat
       let long = doc.data().long
-      this.setState({lat: lat, long: long});
-      this.map.flyTo([this.state.lat, this.state.long], 16);
+      this.setState({lat: lat, long: long},()=>{
+        this.fly(this.state.lat, this.state.long, 16);
+      });
     }})
-  })
-    let query6 = realtime.where('name', '==', (this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 20))
-    || this.addCorner1(this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 20)))
-    || this.addCorner2(this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 20)))
-    || this.addCorner3(this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 20)))
-    || this.addCorner4(this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 20))))).get().then(snapshot => {
+  }).then(()=>{
+    let query6 = realtime.where('name', '==', this.phraseEachUpper(this.makeLetterCapital((search.toLowerCase()), 20))).get().then(snapshot => {
       if (snapshot.empty){
       status = 7;
       }
@@ -343,22 +365,128 @@ class Bubble extends Component{
       if (status === 6){
       let lat = doc.data().lat
       let long = doc.data().long
-      this.setState({lat: lat, long: long});
-      this.map.flyTo([this.state.lat, this.state.long], 16);
+      this.setState({lat: lat, long: long},()=>{
+        this.fly(this.state.lat, this.state.long, 16);
+      });
     }})
-  })
-    let query7 = realtime.where('name', '==', this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 2))).get().then(snapshot => {
+  }).then(()=>{
+    let query7 = realtime.where('name', '==', this.phraseEachUpper(this.makeLetterCapital((search.toLowerCase()), 2))).get().then(snapshot => {
       if (snapshot.empty){
-      return;
+      status = 8;
       }
       snapshot.forEach(doc => {
       if (status === 7){
       let lat = doc.data().lat
       let long = doc.data().long
-      this.setState({lat: lat, long: long});
-      this.map.flyTo([this.state.lat, this.state.long], 16);
+      this.setState({lat: lat, long: long},()=>{
+        this.fly(this.state.lat, this.state.long, 16);
+      });
     }})
-  })
+  }).then(()=>{
+  let query8 = realtime.where('name', '==', this.addCorner1(this.phraseEachUpper(this.makeLetterCapital((search.toLowerCase()), 20)))).get().then(snapshot => {
+    if (snapshot.empty){
+    status = 9;
+    }
+    snapshot.forEach(doc => {
+    if (status === 8){
+    let lat = doc.data().lat
+    let long = doc.data().long
+    this.setState({lat: lat, long: long},()=>{
+      this.fly(this.state.lat, this.state.long, 16);
+    });
+  }})
+}).then(()=>{
+let query9 = realtime.where('name', '==', this.addCorner2(this.phraseEachUpper(this.makeLetterCapital((search.toLowerCase()), 20)))).get().then(snapshot => {
+  if (snapshot.empty){
+  status = 10;
+  }
+  snapshot.forEach(doc => {
+  if (status === 9){
+  let lat = doc.data().lat
+  let long = doc.data().long
+  this.setState({lat: lat, long: long},()=>{
+    this.fly(this.state.lat, this.state.long, 16);
+  });
+}})
+}).then(()=>{
+let query10 = realtime.where('name', '==', this.addCorner3(this.phraseEachUpper(this.makeLetterCapital((search.toLowerCase()), 20)))).get().then(snapshot => {
+  if (snapshot.empty){
+  status = 11;
+  }
+  snapshot.forEach(doc => {
+  if (status === 10){
+  let lat = doc.data().lat
+  let long = doc.data().long
+  this.setState({lat: lat, long: long},()=>{
+    this.fly(this.state.lat, this.state.long, 16);
+  });
+}})
+}).then(()=>{
+let query11 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(this.makeLetterCapital((search.toLowerCase()), 20)))).get().then(snapshot => {
+  if (snapshot.empty){
+  status = 12;
+  }
+  snapshot.forEach(doc => {
+  if (status === 11){
+  let lat = doc.data().lat
+  let long = doc.data().long
+  this.setState({lat: lat, long: long},()=>{
+    this.fly(this.state.lat, this.state.long, 16);
+  });
+}})
+}).then(()=>{
+let query12 = realtime.where('name', '==', this.addCorner1(this.phraseEachUpper(this.makeLetterCapital((search.toLowerCase()), 2)))).get().then(snapshot => {
+  if (snapshot.empty){
+  status = 13;
+  }
+  snapshot.forEach(doc => {
+  if (status === 12){
+  let lat = doc.data().lat
+  let long = doc.data().long
+  this.setState({lat: lat, long: long},()=>{
+    this.fly(this.state.lat, this.state.long, 16);
+  });
+}})
+}).then(()=>{
+let query13 = realtime.where('name', '==', this.addCorner2(this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 2)))).get().then(snapshot => {
+  if (snapshot.empty){
+  status = 14;
+  }
+  snapshot.forEach(doc => {
+  if (status === 13){
+  let lat = doc.data().lat
+  let long = doc.data().long
+  this.setState({lat: lat, long: long},()=>{
+    this.fly(this.state.lat, this.state.long, 16);
+  });
+}})
+}).then(()=>{
+let query14 = realtime.where('name', '==', this.addCorner3(this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 2)))).get().then(snapshot => {
+  if (snapshot.empty){
+  status = 15;
+  }
+  snapshot.forEach(doc => {
+  if (status === 14){
+  let lat = doc.data().lat
+  let long = doc.data().long
+  this.setState({lat: lat, long: long},()=>{
+    this.fly(this.state.lat, this.state.long, 16);
+  });
+}})
+}).then(()=>{
+let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 2)))).get().then(snapshot => {
+  if (snapshot.empty){
+  return;
+  }
+  snapshot.forEach(doc => {
+  if (status === 15){
+  let lat = doc.data().lat
+  let long = doc.data().long
+  this.setState({lat: lat, long: long},()=>{
+    this.fly(this.state.lat, this.state.long, 16);
+  });
+}})
+})})})})})})})})})})})})})})})})
 }
 
 
@@ -381,15 +509,12 @@ class Bubble extends Component{
   mouseUp(e){
     this.setState({mouseDown: 0});
     if (this.state.mouseLeavePin === true && this.state.dragEvent === true){
-      console.log(this.state.newMark)
       if(this.state.totalPins > 0){
         this.map.removeLayer(this.state.newMark);
       }
       this.setState({totalPins: this.state.totalPins + 1});
-      console.log(this.state.totalPins);
       var coords = this.map.mouseEventToLatLng(e);
       this.setState({coords: coords})
-      console.log(coords);
       this.setState({newMark: L.marker(coords).addTo(this.map).bindPopup("<p id = 'set'>Pin location set</p>").openPopup()});
       if (this.state.pinIsOpen === "hidden"){
         this.openPin();
@@ -513,21 +638,22 @@ class Bubble extends Component{
 
     if (this.state.FriendSearchIsOpen === "hidden"){
       this.setState({FriendSearchIsOpen: "visible",
-                    FriendPageIsOpen: "hidden"});
+                    FriendPageIsOpen: "hidden",
+                    activeFriend: ""});
     }
   }
 
-  openFriendPage(){
-
+  openFriendPage(name){
     if (this.state.FriendPageIsOpen === "hidden"){
       this.setState({FriendSearchIsOpen: "hidden",
-                    FriendPageIsOpen: "visible"});
+                    FriendPageIsOpen: "visible",
+                    activeFriend: name});
+      console.log("openFriendPage was activated");
     }
   }
 
   updateCaption = e => {
     this.setState({caption: e.target.value});
-    console.log(this.state.caption);
   }
   submitCaption = e => {
     e.preventDefault();
@@ -548,33 +674,24 @@ class Bubble extends Component{
   updateImage = e =>{
     if (this.state.image1visible === "visible"){
       this.setState({uploadImageBefore: e.target.value});
-      console.log(this.state.uploadImageBefore);
     }else if (this.state.image1visible === "hidden"){
       this.setState({uploadImageAfter: e.target.value});
-      console.log(this.state.uploadImageAfter);
     }
   }
 
   handleArrowClick(e){
-    console.log(this.state.editingImage);
       if(this.state.editingImage === 1){
         this.setState({editingImage: 2,
                       image1visible: "hidden",
                       image2visible: "visible"
                       });
-        console.log("handled");
       }else if (this.state.editingImage === 2){
         this.setState({editingImage: 1,
                       image1visible: "visible",
                       image2visible: "hidden"});
-        console.log("handled");
       }
   }
-
   render(){
-
-
-
     this.state.list = this.sort_by_key(this.state.list, "Totaltrash");
     this.state.ActualTotalTrash = (this.state.list.reduce( function(cnt,o){ return cnt + o.Totaltrash; }, 0));
     this.state.list.reverse();
@@ -583,10 +700,10 @@ class Bubble extends Component{
     );
     return(
       <div>
-
         <img id = "bigHeader" src = {headergradient} alt = {"topgradient"}/>
           <div className= "headerItem" id = "logo">
             <a href = "/"> <img id = "greenyc" src = {greenyc} alt= "logo"/> </a>
+            <a href = "About" class = "normalText" id = "Indent2">About Us </a>
           </div>
             <form onSubmit = {this.getSearch}>
               <div className= "headerItem" id = "search">
@@ -695,7 +812,7 @@ class Bubble extends Component{
             </div>
             <div className = "bubble" id = "bub3">
 
-            <center><p id = "totalcount">TOTAL COUNT</p> <p id = "livecount"><b>{this.state.lbs}</b> lbs</p> <br />
+            <center><p id = "totalcount">TOTAL COUNT</p> <p id = "livecount"><b>{this.state.ActualTotalTrash}</b> lbs</p> <br />
             Weekly Leaderboard</center>
             <br />
             <p className = "small">
@@ -722,7 +839,7 @@ class Bubble extends Component{
 
                   <span style = {{visibility: this.state.FriendSearchIsOpen}}>
 
-                  <div className = "bubbleheader" id = "bubheader4"><center><p className = "small">FIND FRIENDS</p></center></div>
+                  <div className = "bubbleheader" id = "bubheader4" ><center><p className = "small">FIND FRIENDS</p></center></div>
 
                   <div className = "page" id = "friendsearch">
                   <form>
@@ -730,7 +847,7 @@ class Bubble extends Component{
                     <button type = "submit" className = "feedbutton"></button>
                   </form>
 
-                    <p id = "friendinfo" onClick = {this.openFriendPage}>{this.state.userReferences}</p>
+                    <div id = "friendinfo"></div>
 
                   </div>
                   </span>
