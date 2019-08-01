@@ -24,6 +24,10 @@ import aboutus from './../images/aboutus.png';
 import Tabs from 'react-bootstrap/Tabs';
 import ListItem from './friendprofiles.js'
 import { Redirect } from 'react-router-dom';
+import { render } from 'react-dom';
+import { Map, Marker, Popup, TileLayer, Polygon } from 'react-leaflet';
+import HeatmapLayer from './../HeatmapLayer';
+import { addressPoints } from './../realworld.10000.js';
 
 const db = firebase.firestore();
 db.settings ({
@@ -1112,7 +1116,8 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
         <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
   integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
   crossOrigin=""></script>
-        <div id="map" style = {{height: this.state.height - 40}}></div>
+        <div id="map" style = {{height: this.state.height - 40}}>
+        </div>
       </div>
     );
   }
