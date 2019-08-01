@@ -114,7 +114,7 @@ class Bubble extends Component{
   componentDidMount(props){
     window.addEventListener("resize", this.updateDimensions);
     this.height = this.state.height - 40;
-    this.corner1 = L.latLng(40.4079549, -74.2768574);
+    this.corner1 = L.latLng(40.4079549, -74.3768574);
     this.corner2 = L.latLng(41.0210528, -73.5697356);
     this.bounds = L.latLngBounds(this.corner1, this.corner2);
     this.overlayCoords = [
@@ -225,7 +225,7 @@ class Bubble extends Component{
       }
       console.log(correctedArray);
       const messages = correctedMessageTimestamps.map(l => (
-        <div className = "messageItem"><span className = "username">{correctedArray[correctedArray.indexOf(l)-2]}:</span> {correctedArray[correctedArray.indexOf(l)-1]} <span className = "timestamp">{l.substr(16,8)}</span></div>
+        <div className = "messageItem"><span className = "username">{correctedArray[correctedArray.indexOf(l)-2]}</span>  <span className = "timestamp">{l.substr(16,8)}</span> <br /> {correctedArray[correctedArray.indexOf(l)-1]}</div>
       ));
       this.setState({messages: messages,
                     loadScreen: "opacity(0%)",
@@ -859,7 +859,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
     {
     return(
       <div>
-      <div id = "loading" style = {{height: this.state.height, filter: this.state.loadScreen, visibility: this.state.loadScreen2}}><img src = "https://media2.giphy.com/media/26tPgy93ssTeTTSqA/source.gif" id = "loadingGif" alt = "" style = {{height: 200, width: 200}}/><span id="loadingText"> Loading...</span></div>
+      <div id = "loading" style = {{height: this.state.height, filter: this.state.loadScreen, visibility: this.state.loadScreen2}}><img src = "https://gifimage.net/wp-content/uploads/2018/04/loader-gif-images-free-download-12.gif" id = "loadingGif" alt = "" /><span id="loadingText"><small> Loading...</small></span></div>
         <img id = "bigHeader" src = {headergradient} alt = {"topgradient"}/>
           <div className= "headerItem" id = "logo">
             <a href = "/"> <img id = "greenyc" src = {greenyc} alt= "logo"/> </a>
@@ -948,9 +948,9 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
             <div id = "tabright" onClick = {this.opentab2}><center><p className = "small">REPORTS</p></center></div>
               <span style = {{visibility: this.state.tab2IsOpen}}>
                 <div id = "line2"></div>
-                <div className = "tab" id = "tab2"></div>
+                <div className = "tab" id = "tab2">{this.state.messages}</div>
                 <div className = "texttype">
-                  <form>
+                  <form onSubmit = {this.submitUpdate}>
                     <input className = "feedform" type = "text" placeholder = "Report a location..."/>
                     <button type = "submit" className = "feedbutton"></button>
                   </form>

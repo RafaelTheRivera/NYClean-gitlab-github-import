@@ -401,7 +401,7 @@ z-index:2;
   position: absolute;
   right:0;
   top: 0;
-  margin-top: 550px;
+  margin-top: 555px;
   margin-right: 25px;
   height: 40px;
   width: auto;
@@ -887,6 +887,8 @@ footer {
 }
 
 .messageItem{
+  padding-left: 15px;
+  padding-right: 15px;
   font-size: .8em;
 }
 
@@ -897,7 +899,6 @@ footer {
 .timestamp{
   font-size: .7em;
   color: grey;
-  float: right;
 }
 #friendprofile{
   background-color: lightgray;
@@ -938,7 +939,7 @@ footer {
 #loading{
   height: 100%;
   width: 100%;
-  background-color: #e5eff1;
+  background-color: white;
   position: absolute;
   z-index: 100;
   transition-duration: 400ms;
@@ -946,15 +947,18 @@ footer {
 
 #loadingGif{
   position: absolute;
-  top: 200px;
-  left: 40%
+  top: 280px;
+  left: 46%;
+  filter: hue-rotate(20deg);
+  height: 100px;
+  width: auto;
 }
 
 #loadingText{
   position: absolute;
-  font-size: 2em;
+  font-size: 20px;
   top: 400px;
-  left: 44%;
+  left: 47%;
 }
 
 .feedbutton{
@@ -1002,6 +1006,7 @@ footer {
   margin-left: 420px;
   margin-top: 90px;
   font-size: 25px;
+  text-align: left;
 }
 
 #clickmore{
@@ -1025,6 +1030,7 @@ footer {
   font-size: 20px;
   margin-left: 70px;
   margin-top: 320px;
+  text-align: left;
 
 }
 
@@ -1041,11 +1047,13 @@ footer {
   margin-left: 570px;
   margin-top: 90px;
   margin-right: 100px;
+  text-align: left;
 }
 
 #pplinfo{
   margin-bottom: 30px;
   margin-left: 30px;
+  text-align: left;
 }
 
 .ournames{
