@@ -784,6 +784,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
     if (this.state.FriendSearchIsOpen === "hidden"){
       this.setState({FriendSearchIsOpen: "visible",
                     FriendPageIsOpen: "hidden",
+                    userSearch:this.state.activeFriend,
                     activeFriend: ""});
     }
   }
@@ -1083,7 +1084,8 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                   <div className = "page" id = "friend">
                     <img id = "friendprofile" src = {this.state.activePfp}/>
                     <p id = "frienduser">{this.state.activeFriend}</p>
-                    <p id = "friendinfo"><div class = "page" id = "friendBio">{this.state.activeBio}</div><br /><br />
+                    <p id = "friendinfo"><div class = "page" id = "friendBio">{this.state.activeBio}</div>
+                    <a href = {"/ProfSearch/:" +this.state.activeFriend}><button id = "signout">Profile</button></a><br /><br />
                     Pins
                       <ol>
                         <li>pin</li>
