@@ -87,7 +87,8 @@ class Bubble extends Component{
                   friendplaceHolder:"",
                   messages: [],
                   loadScreen: "opacity(100%)",
-                  loadScreen2: "visible"
+                  loadScreen2: "visible",
+                  validSearch:true
                 }
       this.mouseDown = this.mouseDown.bind(this);
       this.mouseUp = this.mouseUp.bind(this);
@@ -842,14 +843,16 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
         })
       })
     this.setState({
-      friendplaceHolder:"Could Not Find User"
+      validSearch:false
     })
   }
   renderRedirect = (name) => {
       let redirect1 = '/ProfSearch/:' + name;
       return <Redirect to={redirect1}/>
   }
-
+  renderRedirect1 = () => {
+    return <Redirect to='/userlist'/>
+  }
   render(){
     this.state.list = this.sort_by_key(this.state.list, "Totaltrash");
     this.state.ActualTotalTrash = (this.state.list.reduce( function(cnt,o){ return cnt + o.Totaltrash; }, 0));
@@ -857,8 +860,14 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
     const items = this.state.list.slice(0, 5).map((trash) =>
       <li> {trash.fullname}: <b>{trash.Totaltrash}</b> lbs</li>
     );
-    if (this.state.redirect === false)
+    if (this.state.redirect === false && this.state.validSearch === false)
     {
+      return(
+        <div>{this.renderRedirect1()}</div>
+      )
+  }
+  else if (this.state.redirect === false)
+  {
     return(
       <div>
       <div id = "loading" style = {{height: this.state.height, filter: this.state.loadScreen, visibility: this.state.loadScreen2}}><img src = "https://media2.giphy.com/media/26tPgy93ssTeTTSqA/source.gif" id = "loadingGif" alt = "" style = {{height: 200, width: 200}}/><span id="loadingText"> Loading...</span></div>
@@ -1055,7 +1064,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
       </div>
     );
   }
-  else{
+  else {
     return(
       <div>{this.renderRedirect(this.state.userSearch)}</div>
     )

@@ -25,6 +25,9 @@
   word-spacing: 2px;
   color: #000000;
 }
+.red{
+  color: #FE0101;
+}
 .normalTextAbout{
   font-family: 'Open Sans', sans-serif;
   font-size: 110%;
@@ -842,8 +845,8 @@ footer {
   z-index: 3;
   background-color:white;
   right:0;
-  bottom: 82px;
-  margin-right: 82px;
+  bottom: 0px;
+  margin-right: 0px;
   overflow: auto;
   padding-bottom: 10px;
 }
