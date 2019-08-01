@@ -331,7 +331,7 @@ z-index:2;
   position:absolute;
   height: 25px;
   width: auto;
-  z-index:4;
+  z-index:5;
   right: 44px;
   top: 120px;
 }
@@ -807,6 +807,19 @@ footer {
   background-color: white;
 }
 
+.messageItem{
+  font-size: .8em;
+}
+
+.username{
+  color: grey;
+  font-size: .7em;
+}
+.timestamp{
+  font-size: .7em;
+  color: grey;
+  float: right;
+}
 #friendprofile{
   background-color: lightgray;
   height: 45px;
@@ -841,6 +854,28 @@ footer {
   border-style: none;
   margin-left: 10px;
   background-color:#DAF2F2;
+}
+
+#loading{
+  height: 100%;
+  width: 100%;
+  background-color: #e5eff1;
+  position: absolute;
+  z-index: 100;
+  transition-duration: 400ms;
+}
+
+#loadingGif{
+  position: absolute;
+  top: 200px;
+  left: 40%
+}
+
+#loadingText{
+  position: absolute;
+  font-size: 2em;
+  top: 400px;
+  left: 44%;
 }
 
 .feedbutton{

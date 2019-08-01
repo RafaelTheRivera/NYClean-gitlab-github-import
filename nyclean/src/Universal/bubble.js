@@ -79,7 +79,10 @@ class Bubble extends Component{
                   friendList: [],
                   activeBio: "",
                   activePfp: "",
-                  activeTrash: ""
+                  activeTrash: "",
+                  messages: [],
+                  loadScreen: "opacity(100%)",
+                  loadScreen2: "visible"
                 }
       this.mouseDown = this.mouseDown.bind(this);
       this.mouseUp = this.mouseUp.bind(this);
@@ -176,6 +179,50 @@ class Bubble extends Component{
            ));
         this.setState({userReferences: list,
                       idStuff: idStuff});
+    });
+
+    var currentTime = Date.now();
+    var currentDate = Date();
+    var currentDay = currentDate.substr(0, 15);
+    var currentHour = currentDate.substr(16,8);
+    console.log(currentDate);
+    var messagesToday = [];
+    var messageTimestamps = [];
+    db.collection("updates").get().then((updateSnapshot) => {
+      updateSnapshot.forEach((doc) =>{
+        if(doc.data().date.substr(0,15) === currentDay){
+          messagesToday.push(doc.data().username);
+          messagesToday.push(doc.data().message);
+          messagesToday.push(doc.data().date);
+          messagesToday.push(doc.data().time);
+          messageTimestamps.push(doc.data().date);
+        }
+      });
+      var correctedArray = [];
+      var correctedMessageTimestamps = [];
+      var newest = 0;
+      for (var i = 0; i < messagesToday.length; i = i + 4) {
+        console.log("hi");
+        if (correctedArray.length !== 0){
+          console.log("hello");
+          for (var j = 0; j < correctedArray.length; j = j + 4) {
+            console.log("sup");
+            if (correctedArray[j+3] < messagesToday[i+3] && (j <= newest || newest === 0)){
+              newest = j+4;
+              console.log(newest);
+            }
+          }
+        }
+        correctedArray.splice(newest, 0, messagesToday[i], messagesToday[i+1], messagesToday[i+2], messagesToday[i+3]);
+        correctedMessageTimestamps.splice(newest/4, 0, messagesToday[i+2]);
+      }
+      console.log(correctedArray);
+      const messages = correctedMessageTimestamps.map(l => (
+        <div className = "messageItem"><span className = "username">{correctedArray[correctedArray.indexOf(l)-2]}:</span> {correctedArray[correctedArray.indexOf(l)-1]} <span className = "timestamp">{l.substr(16,8)}</span></div>
+      ));
+      this.setState({messages: messages,
+                    loadScreen: "opacity(0%)",
+                    loadScreen2: "hidden"});
     });
 
   }
@@ -682,7 +729,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
       lbs: 3,
       body: this.state.caption
     })
-    this.setState({caption: "", pinupdate: true});
+    this.setState({caption: "", pinupdate: true, pinIsOpen: "hidden", image2visible: "hidden", image1visible: "hidden"});
   }
   updateImage = e =>{
     if (this.state.image1visible === "visible"){
@@ -704,6 +751,25 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                       image2visible: "hidden"});
       }
   }
+  updateUpdate = e =>{
+    this.setState({
+      updateMessage: e.target.value
+    })
+  }
+  submitUpdate = e =>{
+    e.preventDefault();
+    const updates = db.collection("updates");
+    updates.doc().set({
+      username: this.state.username,
+      date: Date(),
+      message: this.state.updateMessage,
+      time: Date.now()
+    });
+    this.setState({
+      updateMessage: ""
+    });
+  }
+
   render(){
     this.state.list = this.sort_by_key(this.state.list, "Totaltrash");
     this.state.ActualTotalTrash = (this.state.list.reduce( function(cnt,o){ return cnt + o.Totaltrash; }, 0));
@@ -713,10 +779,11 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
     );
     return(
       <div>
+      <div id = "loading" style = {{height: this.state.height, filter: this.state.loadScreen, visibility: this.state.loadScreen2}}><img src = "https://media2.giphy.com/media/26tPgy93ssTeTTSqA/source.gif" id = "loadingGif" alt = "" style = {{height: 200, width: 200}}/><span id="loadingText"> Loading...</span></div>
         <img id = "bigHeader" src = {headergradient} alt = {"topgradient"}/>
           <div className= "headerItem" id = "logo">
             <a href = "/"> <img id = "greenyc" src = {greenyc} alt= "logo"/> </a>
-            <a href = "About" class = "normalText" id = "Indent2">About Us </a>
+            <a href = "About" className = "normalText" id = "Indent2">About Us </a>
           </div>
             <form onSubmit = {this.getSearch}>
               <div className= "headerItem" id = "search">
@@ -769,7 +836,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
             </div>
 
           </div>
-          <img className = "cover" id = "cover1" src = {cover} alt = "cover"/>
+          <img className = "cover" id = "cover1" src = {cover} alt = "cover" onMouseEnter = {this.mouseEnterPin} onMouseLeave = {this.mouseLeavePin}/>
           </span>
 
         <img id = "feed" src = {feed} alt = {"feed"} onClick = {this.openFeed}/>
@@ -789,10 +856,10 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
             <div id = "tableft" onClick = {this.opentab1}><center><p className = "small">UPDATES</p></center></div>
               <span style = {{visibility: this.state.tab1IsOpen}}>
                 <div id = "line1"></div>
-                <div className = "tab" id = "tab1"></div>
+                <div className = "tab" id = "tab1">{this.state.messages}</div>
                 <div className = "texttype">
-                  <form>
-                    <input className = "feedform" type = "text" placeholder = "Add an update..."/>
+                  <form onSubmit = {this.submitUpdate}>
+                    <input className = "feedform" type = "text" placeholder = "Add an update..." onChange = {this.updateUpdate} value = {this.state.updateMessage}/>
                     <button type = "submit" className = "feedbutton"></button>
                   </form>
                 </div>
@@ -856,7 +923,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
 
                   <div className = "page" id = "friendsearch">
                   <form>
-                    <input id = "friendform" type = "text" placeholder = "Search by username..." /> 
+                    <input id = "friendform" type = "text" placeholder = "Search by username..." />
                     <button type = "submit" className = "feedbutton"></button>
                   </form>
 
