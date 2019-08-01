@@ -256,6 +256,15 @@ class Bubble extends Component{
   addCorner4 = (phrase) => {
     return phrase + " at SW corner";
   }
+  addCorner5 = (phrase) => {
+    return phrase + " at N corner";
+  }
+  addCorner6 = (phrase) => {
+    return phrase + " at S corner";
+  }
+  addCorner7 = (phrase) => {
+    return phrase + " at W corner";
+  }
   makeLetterCapital = (phrase, index) => {
     if (index >= 0 && index < phrase.length)
       return phrase.substring(0, index) + phrase.substring(index, index+1).toUpperCase() + phrase.substring(index+1, phrase.length);
@@ -344,10 +353,49 @@ class Bubble extends Component{
   }).then(()=>{
     let query5 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
       if (snapshot.empty){
-      status = 6;
+      status = 5.1;
       }
       snapshot.forEach(doc => {
       if (status === 5){
+      let lat = doc.data().lat
+      let long = doc.data().long
+      this.setState({lat: lat, long: long},()=>{
+        this.fly(this.state.lat, this.state.long, 16);
+      });
+    }})
+  }).then(()=>{
+    let query51 = realtime.where('name', '==', this.addCorner5(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
+      if (snapshot.empty){
+      status = 5.2;
+      }
+      snapshot.forEach(doc => {
+      if (status === 5.1){
+      let lat = doc.data().lat
+      let long = doc.data().long
+      this.setState({lat: lat, long: long},()=>{
+        this.fly(this.state.lat, this.state.long, 16);
+      });
+    }})
+  }).then(()=>{
+    let query52 = realtime.where('name', '==', this.addCorner6(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
+      if (snapshot.empty){
+      status = 5.3;
+      }
+      snapshot.forEach(doc => {
+      if (status === 5.2){
+      let lat = doc.data().lat
+      let long = doc.data().long
+      this.setState({lat: lat, long: long},()=>{
+        this.fly(this.state.lat, this.state.long, 16);
+      });
+    }})
+  }).then(()=>{
+    let query53 = realtime.where('name', '==', this.addCorner7(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
+      if (snapshot.empty){
+      status = 6;
+      }
+      snapshot.forEach(doc => {
+      if (status === 5.3){
       let lat = doc.data().lat
       let long = doc.data().long
       this.setState({lat: lat, long: long},()=>{
@@ -484,7 +532,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
     this.fly(this.state.lat, this.state.long, 16);
   });
 }})
-})})})})})})})})})})})})})})})})
+})})})})})})})})})})})})})})})})})})})
 }
 
 
@@ -689,6 +737,9 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                       image2visible: "hidden"});
       }
   }
+  renderNewProfPage = e => {
+
+  }
   render(){
     this.state.list = this.sort_by_key(this.state.list, "Totaltrash");
     this.state.ActualTotalTrash = (this.state.list.reduce( function(cnt,o){ return cnt + o.Totaltrash; }, 0));
@@ -701,7 +752,8 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
         <img id = "bigHeader" src = {headergradient} alt = {"topgradient"}/>
           <div className= "headerItem" id = "logo">
             <a href = "/"> <img id = "greenyc" src = {greenyc} alt= "logo"/> </a>
-            <a href = "About" class = "normalText" id = "Indent2">About Us </a>
+            <a href = "Mission" class = "normalTextAbout" id = "Indent2">Our Mission</a>
+            <a href = "About" class = "normalTextAbout" id = "Indent3">About Us</a>
           </div>
             <form onSubmit = {this.getSearch}>
               <div className= "headerItem" id = "search">

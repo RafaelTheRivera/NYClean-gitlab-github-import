@@ -32,13 +32,30 @@
   word-spacing: 2px;
   color: #000000;
 }
+.normalText1{
+  font-family: 'Open Sans', sans-serif;
+  font-size: 300%;
+  letter-spacing: 1px;
+  word-spacing: 2px;
+  color: #000000;
+}
 #Indent1{
   position:absolute;
   left:120px;
 }
-#Indent2{
+#Indent3{
   position:absolute;
   left:750px;
+  top:2px;
+}
+#Indent2{
+  position:absolute;
+  left:40px;
+  top:12px;
+}
+.Indent4{
+  position:relative;
+  left:40px;
 }
 #bigHeader{
   position: absolute;
@@ -557,8 +574,10 @@ footer {
 #profilecircle {
   margin-left: 100px;
 }
-
-#profileimg {
+#missionimg {
+  width: 250px;
+  height: 250px;
+}#profileimg {
   width: 250px;
   height: 250px;
   border-radius: 50%;
