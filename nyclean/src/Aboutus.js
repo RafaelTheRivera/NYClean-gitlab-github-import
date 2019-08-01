@@ -27,9 +27,8 @@ class About extends Component {
         for Social Good class.</p>
         <p id = "aboutusppl">
         <h3 className = "ournames"><img id = "pindeco" src = {pin} alt= "pin"/>Ethan Gu</h3>
-        <p id = "pplinfo">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-        ad minim veniam, quis nostrud </p>
+        <p id = "pplinfo">I'm a rising junior attending Scarsdale High School.
+        I enjoy playing chess and programming. </p>
         <h3 className = "ournames"><img id = "pindeco" src = {pin} alt= "pin"/>Ian Xiong</h3>
         <p id = "pplinfo">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim

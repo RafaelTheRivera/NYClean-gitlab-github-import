@@ -784,7 +784,6 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
     if (this.state.FriendSearchIsOpen === "hidden"){
       this.setState({FriendSearchIsOpen: "visible",
                     FriendPageIsOpen: "hidden",
-                    userSearch:this.state.activeFriend,
                     activeFriend: ""});
     }
   }
