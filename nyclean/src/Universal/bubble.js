@@ -854,11 +854,15 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
 
                   <div className = "bubbleheader" id = "bubheader4" ><center><p className = "small">FIND FRIENDS</p></center></div>
 
-                  <div className = "page" id = "friendsearch">
-                  <form>
-                    <input id = "friendform" type = "text" placeholder = "Search by username..." /> 
-                    <button type = "submit" className = "feedbutton"></button>
-                  </form>
+                  <div id = "friendsearchbarDiv">
+                    <form>
+                      <input id = "friendform" type = "text" placeholder = "Search by username..." />
+                      <button type = "submit" className = "feedbutton"></button>
+                    </form>
+                  </div>
+
+
+                  <div className = "searchpage" id = "friendsearch">
 
                     <div id = "friendinfo">{this.state.userReferences}</div>
 
@@ -897,7 +901,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
 
           </span>
 
-        <a href = "./safety"><img id = "safetyicon" src = {safetyicon} alt = {"safety"}  style = {{marginTop: this.state.height - 179}}/></a>
+        <a href = "./safety"><img id = "safetyicon" src = {safetyicon} alt = {"safety"} /></a>
 
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="

@@ -370,10 +370,10 @@ z-index:2;
 
 #safetyicon{
   position: absolute;
-  right:0;
+  left:0;
   top: 0;
-  margin-top: 555px;
-  margin-right: 25px;
+  margin-top: 570px;
+  margin-left: 25px;
   height: 40px;
   width: auto;
   z-index:4;
@@ -791,20 +791,46 @@ footer {
   overflow: auto;
   padding-bottom: 10px;
 }
+.searchpage{
+  height:241px;
+  width:246px;
+  border-bottom-left-radius:8px;
+  border-bottom-right-radius:8px;
+  position: absolute;
+  z-index: 3;
+  background-color:white;
+  right:0;
+  bottom: 82px;
+  margin-right: 82px;
+  overflow: auto;
+  padding-bottom: 10px;
+}
+
+#friendsearchbarDiv{
+  height: 30px;
+  width:246px;
+  background-color:white;
+  position: absolute;
+  margin-right: 82px;
+  right:0;
+  bottom: 323px;
+  z-index: 3;
+}
 
 .friendlistitem{
-  width: 230px;
+  width: 250px;
   height: 30px;
-  background-color: #2cded4;
+  background-color: white;
   margin-left: -26px;
-  border: 1px solid black;
+  border-style: none;
   margin-top:-1px;
-  padding-left: 10px;
+  text-align: left;
   padding-top: 5px;
+  padding-left: 30px;
 }
 
 .friendlistitem:hover{
-  background-color: white;
+  background-color: #DAF2F2;
 }
 
 #friendprofile{
@@ -864,6 +890,6 @@ footer {
   border-radius: 4px;
   border-style: none;
   background-color: #DAF2F2;
-  margin-top: 8px;
+  margin-top: 12px;
   margin-left: 10px;
 }
