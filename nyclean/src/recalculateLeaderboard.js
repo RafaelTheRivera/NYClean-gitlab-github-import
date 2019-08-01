@@ -57,10 +57,24 @@ class Recalc extends Component {
           }
       });
   }
+  cleanCache(){
+    const updateData = db.collection("updates").get().then((updateSnapshot) => {
+      updateSnapshot.forEach(function(doc){
+        if(Date().substr(0, 15) !== doc.data().date.substr(0,15)){
+          /*db.collection("updates").doc(doc.id).delete.then(()=>{
+            console.log("sup");
+          });*/
+          console.log("deleted " + doc.id);
+          db.collection("updates").doc(doc.id).delete();
+        }
+      });
+    });
+  }
   render(){
     return(
       <div>
-        <button onClick = {this.recalculateLeaderboard} style = {{height: 500, width: 500}}></button>
+        <button onClick = {this.recalculateLeaderboard} style = {{height: 200, width: 200}}>Recalculate Leaderboard</button>
+        <button onClick = {this.cleanCache} style = {{height: 200, width: 200}}>Clean message cache</button>
       </div>
     );
   }

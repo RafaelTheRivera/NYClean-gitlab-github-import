@@ -8,12 +8,19 @@
     "firebase": "^6.3.0",
     "firestore-export-import": "^0.2.6",
     "leaflet": "^1.5.1",
+    "lodash.filter": "^4.6.0",
+    "lodash.map": "^4.6.0",
+    "lodash.max": "^4.0.1",
+    "lodash.min": "^4.0.1",
+    "lodash.reduce": "^4.6.0",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.9",
     "react-dom": "^16.8.6",
     "react-firebaseui": "^3.1.2",
+    "react-leaflet": "^2.4.0",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.0.1"
+    "react-scripts": "3.0.1",
+    "simpleheat": "^0.4.0"
   },
   "scripts": {
     "start": "react-scripts start",

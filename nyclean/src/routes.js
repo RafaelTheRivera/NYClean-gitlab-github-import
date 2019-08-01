@@ -15,6 +15,7 @@ import React from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import Leaderboard from "./Leaderboard";
 import Recalc from "./recalculateLeaderboard"
+import HeatMap from "./heatmap.js";
 
 const Routes = () => (
     <Router>
@@ -34,7 +35,7 @@ const Routes = () => (
         <Route exact path = {"/leaderboard"} component = {() => <Leaderboard />}/>
         <Route exact path = {"/superSecretAdminRecalculate"} component = {() => <Recalc />}/>
         <Route path = "/ProfSearch/:name" component = {ProfSearch}/>
-
+        <Route exact path = {"/heatmap"} component = {() => <HeatMap />}/>
       </div>
     </Router>
 
