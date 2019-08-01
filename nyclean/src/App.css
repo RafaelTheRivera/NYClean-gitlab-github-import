@@ -32,13 +32,30 @@
   word-spacing: 2px;
   color: #000000;
 }
+.normalText1{
+  font-family: 'Open Sans', sans-serif;
+  font-size: 300%;
+  letter-spacing: 1px;
+  word-spacing: 2px;
+  color: #000000;
+}
 #Indent1{
   position:absolute;
   left:120px;
 }
-#Indent2{
+#Indent3{
   position:absolute;
   left:750px;
+  top:2px;
+}
+#Indent2{
+  position:absolute;
+  left:40px;
+  top:12px;
+}
+.Indent4{
+  position:relative;
+  left:40px;
 }
 #bigHeader{
   position: absolute;
@@ -368,17 +385,6 @@ z-index:2;
   z-index:2;
 }
 
-#safetyicon{
-  position: absolute;
-  right:0;
-  top: 0;
-  margin-top: 555px;
-  margin-right: 25px;
-  height: 40px;
-  width: auto;
-  z-index:4;
-}
-
 #friends{
   position: absolute;
   right:0;
@@ -388,6 +394,40 @@ z-index:2;
   height: 40px;
   width: auto;
   z-index:2;
+}
+
+
+#safetyicon{
+  position: absolute;
+  right:0;
+  top: 0;
+  margin-top: 550px;
+  margin-right: 25px;
+  height: 40px;
+  width: auto;
+  z-index:4;
+}
+
+#ourmissionicon{
+  position: absolute;
+  left:0;
+  top: 0;
+  margin-top: 625px;
+  margin-left: 25px;
+  height: 40px;
+  width: auto;
+  z-index:4;
+}
+
+#aboutusicon{
+  position: absolute;
+  left:0;
+  top: 0;
+  margin-top: 560px;
+  margin-left: 25px;
+  height: 40px;
+  width: auto;
+  z-index:4;
 }
 
 #profilepic{
@@ -557,8 +597,10 @@ footer {
 #profilecircle {
   margin-left: 100px;
 }
-
-#profileimg {
+#missionimg {
+  width: 250px;
+  height: 250px;
+}#profileimg {
   width: 250px;
   height: 250px;
   border-radius: 50%;
@@ -791,20 +833,46 @@ footer {
   overflow: auto;
   padding-bottom: 10px;
 }
+.searchpage{
+  height:241px;
+  width:246px;
+  border-bottom-left-radius:8px;
+  border-bottom-right-radius:8px;
+  position: absolute;
+  z-index: 3;
+  background-color:white;
+  right:0;
+  bottom: 82px;
+  margin-right: 82px;
+  overflow: auto;
+  padding-bottom: 10px;
+}
+
+#friendsearchbarDiv{
+  height: 30px;
+  width:246px;
+  background-color:white;
+  position: absolute;
+  margin-right: 82px;
+  right:0;
+  bottom: 323px;
+  z-index: 3;
+}
 
 .friendlistitem{
-  width: 230px;
+  width: 250px;
   height: 30px;
-  background-color: #2cded4;
+  background-color: white;
   margin-left: -26px;
-  border: 1px solid black;
+  border-style: none;
   margin-top:-1px;
-  padding-left: 10px;
+  text-align: left;
   padding-top: 5px;
+  padding-left: 30px;
 }
 
 .friendlistitem:hover{
-  background-color: white;
+  background-color: #DAF2F2;
 }
 
 #friendprofile{
@@ -864,6 +932,76 @@ footer {
   border-radius: 4px;
   border-style: none;
   background-color: #DAF2F2;
-  margin-top: 8px;
+  margin-top: 12px;
   margin-left: 10px;
+}
+
+.sdg{
+  height: 200px;
+  width: auto;
+  margin-left: 100px;
+  position: absolute;
+}
+
+#goal11{
+  margin-top: 40px;
+}
+
+#goal13{
+  margin-top: 260px;
+}
+
+#missiontext{
+  position: absolute;
+  margin-left: 420px;
+  margin-top: 90px;
+  font-size: 25px;
+}
+
+#clickmore{
+  position: absolute;
+  margin-left: 420px;
+  margin-top: 430px;
+}
+
+#hello{
+  position: absolute;
+  font-size: 30px;
+  color: #F06823;
+  font-style: oblique;
+  margin-left: 70px;
+  margin-top: 270px;
+
+}
+
+#aboutuscontent{
+  position: absolute;
+  font-size: 20px;
+  margin-left: 70px;
+  margin-top: 320px;
+
+}
+
+#earthdeco{
+  position: absolute;
+  height: 130px;
+  width: auto;
+  margin-left: 130px;
+  margin-top: 160px;
+}
+
+#aboutusppl{
+  position: absolute;
+  margin-left: 570px;
+  margin-top: 90px;
+  margin-right: 100px;
+}
+
+#pplinfo{
+  margin-bottom: 30px;
+  margin-left: 30px;
+}
+
+.ournames{
+  font-size: 25px;
 }

@@ -6,7 +6,8 @@ import EditUser from './EditUser';
 import EditPass from './EditPass';
 import EditBio from './EditBio';
 import Login from './Login';
-import About from './Aboutus'
+import About from './Aboutus';
+import Mission from './Mission';
 import LoginPassEdit from './LoginPassEdit';
 import LoginEmailEdit from './LoginEmailEdit';
 import React from 'react';
@@ -19,6 +20,7 @@ const Routes = () => (
     <Router>
       <div>
         <Route exact path = {"/"} component = {() => <App />}/>
+        <Route exact path = {"/Mission"} component = {() => <Mission />}/>
         <Route exact path = {"/About"} component = {() => <About />}/>
         <Route exact path = {"/profPage"} component = {() => <Profile />}/>
         <Route exact path = {"/editEmail"} component = {() => <EditEmail />}/>
