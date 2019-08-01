@@ -6,18 +6,21 @@ import EditUser from './EditUser';
 import EditPass from './EditPass';
 import EditBio from './EditBio';
 import Login from './Login';
-import About from './Aboutus'
+import About from './Aboutus';
+import Mission from './Mission';
 import LoginPassEdit from './LoginPassEdit';
 import LoginEmailEdit from './LoginEmailEdit';
 import React from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import Leaderboard from "./Leaderboard";
 import Recalc from "./recalculateLeaderboard"
+import HeatMap from "./heatmap.js";
 
 const Routes = () => (
     <Router>
       <div>
         <Route exact path = {"/"} component = {() => <App />}/>
+        <Route exact path = {"/Mission"} component = {() => <Mission />}/>
         <Route exact path = {"/About"} component = {() => <About />}/>
         <Route exact path = {"/profPage"} component = {() => <Profile />}/>
         <Route exact path = {"/editEmail"} component = {() => <EditEmail />}/>
@@ -30,6 +33,7 @@ const Routes = () => (
         <Route exact path = {"/LoginPassEdit"} component = {() => <LoginPassEdit />}/>
         <Route exact path = {"/leaderboard"} component = {() => <Leaderboard />}/>
         <Route exact path = {"/superSecretAdminRecalculate"} component = {() => <Recalc />}/>
+        <Route exact path = {"/heatmap"} component = {() => <HeatMap />}/>
 
       </div>
     </Router>

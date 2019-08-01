@@ -19,6 +19,8 @@ import back from './../images/back.png';
 import insertphoto from './../images/insertphoto.png';
 import picarrowleft from './../images/picarrowleft.png';
 import picarrowright from './../images/picarrowright.png';
+import ourmission from './../images/ourmission.png';
+import aboutus from './../images/aboutus.png';
 import Tabs from 'react-bootstrap/Tabs';
 import ListItem from './friendprofiles.js'
 
@@ -108,7 +110,7 @@ class Bubble extends Component{
   componentDidMount(props){
     window.addEventListener("resize", this.updateDimensions);
     this.height = this.state.height - 40;
-    this.corner1 = L.latLng(40.4079549, -74.5768574);
+    this.corner1 = L.latLng(40.4079549, -74.2768574);
     this.corner2 = L.latLng(41.0210528, -73.5697356);
     this.bounds = L.latLngBounds(this.corner1, this.corner2);
     this.overlayCoords = [
@@ -122,7 +124,7 @@ class Bubble extends Component{
     this.map = L.map('map', {
       center: [40.7280822, -73.9937973],
       zoom: 15,
-      minZoom:9,
+      minZoom:11,
       maxZoom: 16,
       maxBounds: this.bounds,
       zoomSnap: 0.2,
@@ -305,6 +307,15 @@ class Bubble extends Component{
   addCorner4 = (phrase) => {
     return phrase + " at SW corner";
   }
+  addCorner5 = (phrase) => {
+    return phrase + " at N corner";
+  }
+  addCorner6 = (phrase) => {
+    return phrase + " at S corner";
+  }
+  addCorner7 = (phrase) => {
+    return phrase + " at W corner";
+  }
   makeLetterCapital = (phrase, index) => {
     if (index >= 0 && index < phrase.length)
       return phrase.substring(0, index) + phrase.substring(index, index+1).toUpperCase() + phrase.substring(index+1, phrase.length);
@@ -393,10 +404,49 @@ class Bubble extends Component{
   }).then(()=>{
     let query5 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
       if (snapshot.empty){
-      status = 6;
+      status = 5.1;
       }
       snapshot.forEach(doc => {
       if (status === 5){
+      let lat = doc.data().lat
+      let long = doc.data().long
+      this.setState({lat: lat, long: long},()=>{
+        this.fly(this.state.lat, this.state.long, 16);
+      });
+    }})
+  }).then(()=>{
+    let query51 = realtime.where('name', '==', this.addCorner5(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
+      if (snapshot.empty){
+      status = 5.2;
+      }
+      snapshot.forEach(doc => {
+      if (status === 5.1){
+      let lat = doc.data().lat
+      let long = doc.data().long
+      this.setState({lat: lat, long: long},()=>{
+        this.fly(this.state.lat, this.state.long, 16);
+      });
+    }})
+  }).then(()=>{
+    let query52 = realtime.where('name', '==', this.addCorner6(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
+      if (snapshot.empty){
+      status = 5.3;
+      }
+      snapshot.forEach(doc => {
+      if (status === 5.2){
+      let lat = doc.data().lat
+      let long = doc.data().long
+      this.setState({lat: lat, long: long},()=>{
+        this.fly(this.state.lat, this.state.long, 16);
+      });
+    }})
+  }).then(()=>{
+    let query53 = realtime.where('name', '==', this.addCorner7(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
+      if (snapshot.empty){
+      status = 6;
+      }
+      snapshot.forEach(doc => {
+      if (status === 5.3){
       let lat = doc.data().lat
       let long = doc.data().long
       this.setState({lat: lat, long: long},()=>{
@@ -533,7 +583,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
     this.fly(this.state.lat, this.state.long, 16);
   });
 }})
-})})})})})})})})})})})})})})})})
+})})})})})})})})})})})})})})})})})})})
 }
 
 
@@ -769,6 +819,9 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
       updateMessage: ""
     });
   }
+  renderNewProfPage = e => {
+
+  }
 
   render(){
     this.state.list = this.sort_by_key(this.state.list, "Totaltrash");
@@ -921,11 +974,15 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
 
                   <div className = "bubbleheader" id = "bubheader4" ><center><p className = "small">FIND FRIENDS</p></center></div>
 
-                  <div className = "page" id = "friendsearch">
-                  <form>
-                    <input id = "friendform" type = "text" placeholder = "Search by username..." />
-                    <button type = "submit" className = "feedbutton"></button>
-                  </form>
+                  <div id = "friendsearchbarDiv">
+                    <form>
+                      <input id = "friendform" type = "text" placeholder = "Search by username..." />
+                      <button type = "submit" className = "feedbutton"></button>
+                    </form>
+                  </div>
+
+
+                  <div className = "searchpage" id = "friendsearch">
 
                     <div id = "friendinfo">{this.state.userReferences}</div>
 
@@ -963,8 +1020,9 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
 
 
           </span>
-
-        <a href = "./safety"><img id = "safetyicon" src = {safetyicon} alt = {"safety"}  style = {{marginTop: this.state.height - 179}}/></a>
+        <a href = "./About"><img id = "aboutusicon" src = {aboutus} alt = {"aboutus"} /></a>
+        <a href = "./Mission"><img id = "ourmissionicon" src = {ourmission} alt = {"ourmission"} /></a>
+        <a href = "./safety"><img id = "safetyicon" src = {safetyicon} alt = {"safety"} /></a>
 
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
