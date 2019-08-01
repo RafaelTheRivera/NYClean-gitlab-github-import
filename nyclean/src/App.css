@@ -385,17 +385,6 @@ z-index:2;
   z-index:2;
 }
 
-#safetyicon{
-  position: absolute;
-  left:0;
-  top: 0;
-  margin-top: 570px;
-  margin-left: 25px;
-  height: 40px;
-  width: auto;
-  z-index:4;
-}
-
 #friends{
   position: absolute;
   right:0;
@@ -405,6 +394,40 @@ z-index:2;
   height: 40px;
   width: auto;
   z-index:2;
+}
+
+
+#safetyicon{
+  position: absolute;
+  right:0;
+  top: 0;
+  margin-top: 550px;
+  margin-right: 25px;
+  height: 40px;
+  width: auto;
+  z-index:4;
+}
+
+#ourmissionicon{
+  position: absolute;
+  left:0;
+  top: 0;
+  margin-top: 625px;
+  margin-left: 25px;
+  height: 40px;
+  width: auto;
+  z-index:4;
+}
+
+#aboutusicon{
+  position: absolute;
+  left:0;
+  top: 0;
+  margin-top: 560px;
+  margin-left: 25px;
+  height: 40px;
+  width: auto;
+  z-index:4;
 }
 
 #profilepic{
@@ -911,4 +934,70 @@ footer {
   background-color: #DAF2F2;
   margin-top: 12px;
   margin-left: 10px;
+}
+
+.sdg{
+  height: 200px;
+  width: auto;
+  margin-left: 100px;
+  position: absolute;
+}
+
+#goal11{
+  margin-top: 40px;
+}
+
+#goal13{
+  margin-top: 260px;
+}
+
+#missiontext{
+  position: absolute;
+  margin-left: 420px;
+  margin-top: 90px;
+  font-size: 25px;
+}
+
+#clickmore{
+  position: absolute;
+  margin-left: 420px;
+  margin-top: 430px;
+}
+
+#hello{
+  position: absolute;
+  font-size: 30px;
+  color: #F06823;
+  font-style: oblique;
+  margin-left: 70px;
+  margin-top: 250px;
+
+}
+
+#aboutuscontent{
+  position: absolute;
+  font-size: 20px;
+  margin-left: 70px;
+  margin-top: 300px;
+
+}
+
+#earthdeco{
+  position: absolute;
+  height: 130px;
+  width: auto;
+  margin-left: 130px;
+  margin-top: 140px;
+}
+
+#aboutusppl{
+  position: absolute;
+  margin-left: 570px;
+  margin-top: 80px;
+  margin-right: 100px;
+}
+
+#pplinfo{
+  margin-bottom: 30px;
+  margin-left: 30px;
 }

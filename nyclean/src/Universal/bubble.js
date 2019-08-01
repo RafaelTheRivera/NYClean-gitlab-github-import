@@ -19,6 +19,8 @@ import back from './../images/back.png';
 import insertphoto from './../images/insertphoto.png';
 import picarrowleft from './../images/picarrowleft.png';
 import picarrowright from './../images/picarrowright.png';
+import ourmission from './../images/ourmission.png';
+import aboutus from './../images/aboutus.png';
 import Tabs from 'react-bootstrap/Tabs';
 import ListItem from './friendprofiles.js'
 
@@ -767,8 +769,6 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
         <img id = "bigHeader" src = {headergradient} alt = {"topgradient"}/>
           <div className= "headerItem" id = "logo">
             <a href = "/"> <img id = "greenyc" src = {greenyc} alt= "logo"/> </a>
-            <a href = "Mission" class = "normalTextAbout" id = "Indent2">Our Mission</a>
-            <a href = "About" class = "normalTextAbout" id = "Indent3">About Us</a>
           </div>
             <form onSubmit = {this.getSearch}>
               <div className= "headerItem" id = "search">
@@ -952,7 +952,8 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
 
 
           </span>
-
+        <a href = "./About"><img id = "aboutusicon" src = {aboutus} alt = {"aboutus"} /></a>
+        <a href = "./Mission"><img id = "ourmissionicon" src = {ourmission} alt = {"ourmission"} /></a>
         <a href = "./safety"><img id = "safetyicon" src = {safetyicon} alt = {"safety"} /></a>
 
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
