@@ -819,6 +819,16 @@ footer {
   z-index: 5;
 }
 
+#friendBio{
+  right: 0;
+  bottom: 0;
+  margin-right: 0;
+  position:relative;
+  background-color:transparent;
+  overflow-wrap: break-word;
+  width: 200px;
+  height: auto;
+}
 .page{
   height:271px;
   width:246px;
@@ -832,6 +842,7 @@ footer {
   margin-right: 82px;
   overflow: auto;
   padding-bottom: 10px;
+  overflow-x: hidden;
 }
 .searchpage{
   height:241px;
@@ -842,8 +853,8 @@ footer {
   z-index: 3;
   background-color:white;
   right:0;
-  bottom: 82px;
-  margin-right: 82px;
+  bottom: 0px;
+  margin-right: 0px;
   overflow: auto;
   padding-bottom: 10px;
 }

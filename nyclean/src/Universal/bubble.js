@@ -67,7 +67,7 @@ class Bubble extends Component{
                   uploadImageBefore: "",
                   uploadImageAfter: "",
                   fullname: "",
-                  Totaltrash: Math.floor(Math.random()*21),
+                  Totaltrash: null,
                   list: [],
                   ActualTotalTrash: 0,
                   caption: "",
@@ -170,6 +170,7 @@ class Bubble extends Component{
             fullname : doc.data().fullname
           })
         })
+        this.setState({})
       });
       querySnapshot.forEach(function(doc){
         if(doc.data().fullname !== undefined){
@@ -261,9 +262,6 @@ class Bubble extends Component{
             imageSrc: "https://i.imgur.com/Of7XNtM.png"
           })
         }
-        userRef.doc(user.uid).update({
-          Totaltrash: this.state.Totaltrash
-        })
         userRef.doc(user.uid).get().then(getDoc => {
         this.setState({
             imgsrc: getDoc.data().imageSrc
@@ -931,7 +929,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
             </div>
             <div className = "bubble" id = "bub2">
             </div>
-            <img className = "cover" id = "cover2" src = {cover} alt = "cover"/>
+            <img className = "cover" id = "cover2" src = {cover} onClick = {this.openFeed} alt = "cover"/>
 
 
             <div id = "tableft" onClick = {this.opentab1}><center><p className = "small">UPDATES</p></center></div>
@@ -973,7 +971,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
             </div>
             <div className = "bubble" id = "bub3">
 
-            <center><p id = "totalcount">TOTAL COUNT</p> <p id = "livecount"><b>{this.state.ActualTotalTrash}</b> lbs</p> <br />
+            <center><p id = "totalcount">TOTAL COUNT</p> <p id = "livecount"><b>{this.state.lbs}</b> lbs</p> <br />
             Weekly Leaderboard</center>
             <br />
             <p className = "small">
@@ -983,7 +981,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
             </p>
 
             </div>
-            <img className = "cover" id = "cover3" src = {cover} alt = "cover"/>
+            <img className = "cover" id = "cover3" src = {cover} onClick = {this.openLeader} alt = "cover"/>
           </span>
 
 
@@ -995,7 +993,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
             </div>
             <div className = "bubble" id = "bub4" style = {{top: this.state.height - 379}}>
             </div>
-            <img className = "cover" id = "cover4" style = {{top: this.state.height - 117}} src = {cover} alt = "cover"/>
+            <img className = "cover" id = "cover4" style = {{top: this.state.height - 117}} src = {cover} onClick = {this.openFriends} alt = "cover"/>
 
 
                   <span style = {{visibility: this.state.FriendSearchIsOpen}}>
@@ -1022,7 +1020,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                   <div className = "page" id = "friend">
                     <img id = "friendprofile" src = {this.state.activePfp}/>
                     <p id = "frienduser">{this.state.activeFriend}</p>
-                    <p id = "friendinfo">{this.state.activeBio}<br /><br />
+                    <p id = "friendinfo"><div class = "page" id = "friendBio">{this.state.activeBio}</div><br /><br />
                     Pins
                       <ol>
                         <li>pin</li>
