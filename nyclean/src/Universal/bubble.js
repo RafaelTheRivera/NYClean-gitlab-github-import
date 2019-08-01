@@ -107,7 +107,7 @@ class Bubble extends Component{
   componentDidMount(props){
     window.addEventListener("resize", this.updateDimensions);
     this.height = this.state.height - 40;
-    this.corner1 = L.latLng(40.4079549, -74.2768574);
+    this.corner1 = L.latLng(40.4079549, -74.3768574);
     this.corner2 = L.latLng(41.0210528, -73.5697356);
     this.bounds = L.latLngBounds(this.corner1, this.corner2);
     this.overlayCoords = [
