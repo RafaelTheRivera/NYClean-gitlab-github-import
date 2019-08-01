@@ -1059,3 +1059,7 @@ footer {
 .ournames{
   font-size: 25px;
 }
+
+.left{
+  text-align: left;
+}

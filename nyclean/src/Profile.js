@@ -126,7 +126,7 @@ class Profile extends Component {
     <h2 id = "username">{this.state.userName} <a href = "/EditUser" class = "linkText1"><img className = "edit" src = {edit} alt = "edit"/></a></h2>
     <br /><br />
     <h6 id = "profLinks">
-    <p><br />{this.state.userBio}
+    <p className = "left"><br />{this.state.userBio}
     <a href = "/EditBio" class = "linkText"><img className = "edit" src = {edit} alt = "edit"/></a></p>
     <br/>
     <a href = "/EditEmail" class ="linkText">Change Email</a><br/>
@@ -134,7 +134,7 @@ class Profile extends Component {
     </h6>
     <div id="profilecircle">
     <img alt = "" src = {this.state.imageSrc} id = "profileimg"/>
-          <p>Change Profile Picture:</p><form onSubmit = {this.submitInput}>
+          <p className = "left">Change Profile Picture:</p><form onSubmit = {this.submitInput}>
           <input
           type = "text"
           placeholder = "Image URL"
