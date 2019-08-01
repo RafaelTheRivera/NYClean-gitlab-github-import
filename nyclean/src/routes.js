@@ -10,6 +10,7 @@ import About from './Aboutus';
 import Mission from './Mission';
 import LoginPassEdit from './LoginPassEdit';
 import LoginEmailEdit from './LoginEmailEdit';
+import ProfSearch from './ProfSearch';
 import React from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import Leaderboard from "./Leaderboard";
@@ -32,6 +33,7 @@ const Routes = () => (
         <Route exact path = {"/LoginPassEdit"} component = {() => <LoginPassEdit />}/>
         <Route exact path = {"/leaderboard"} component = {() => <Leaderboard />}/>
         <Route exact path = {"/superSecretAdminRecalculate"} component = {() => <Recalc />}/>
+        <Route path = "/ProfSearch/:name" component = {ProfSearch}/>
 
       </div>
     </Router>

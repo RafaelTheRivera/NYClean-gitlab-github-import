@@ -21,7 +21,7 @@ import picarrowleft from './../images/picarrowleft.png';
 import picarrowright from './../images/picarrowright.png';
 import Tabs from 'react-bootstrap/Tabs';
 import ListItem from './friendprofiles.js'
-
+import { Redirect } from 'react-router-dom';
 
 const db = firebase.firestore();
 db.settings ({
@@ -79,7 +79,10 @@ class Bubble extends Component{
                   friendList: [],
                   activeBio: "",
                   activePfp: "",
-                  activeTrash: ""
+                  activeTrash: "",
+                  userSearch:"",
+                  redirect:false,
+                  friendplaceHolder:""
                 }
       this.mouseDown = this.mouseDown.bind(this);
       this.mouseUp = this.mouseUp.bind(this);
@@ -95,6 +98,7 @@ class Bubble extends Component{
       this.openFriendPage = this.openFriendPage.bind(this);
       this.updateDimensions = this.updateDimensions.bind(this);
       this.updateSearchBar = this.updateSearchBar.bind(this);
+      this.updateUserSearch = this.updateUserSearch.bind(this)
       this.updateBody = this.updateBody.bind(this);
       this.componentDidMount = this.componentDidMount.bind(this);
       this.getSearch = this.getSearch.bind(this);
@@ -187,6 +191,9 @@ class Bubble extends Component{
     return ((x < y) ? -1 : ((x > y) ? 1 : 0));
   });
   }
+  renderRedirect = () => {
+      return <Redirect to='/profpagesearch' />
+  }
    handleMouseMove(e){
      if(this.state.dragEvent === true){
        this.setState({x: e.clientX-7, y: e.clientY - 27});
@@ -227,6 +234,11 @@ class Bubble extends Component{
   updateSearchBar(e){
     this.setState({
       [e.target.name]: e.target.value
+    });
+  }
+  updateUserSearch(e){
+    this.setState({
+      userSearch: e.target.value
     });
   }
   updateBody(e){
@@ -753,7 +765,22 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
       }
   }
   renderNewProfPage = e => {
-
+    console.log('yup')
+    e.preventDefault();
+      let query = db.collection("users").where('fullname', '==', this.state.userSearch).get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          this.setState({
+            redirect:true
+          })
+        })
+      })
+    this.setState({
+      friendplaceHolder:"Could Not Find User"
+    })
+  }
+  renderRedirect = (name) => {
+      let redirect1 = '/ProfSearch/:' + name;
+      return <Redirect to={redirect1}/>
   }
   render(){
     this.state.list = this.sort_by_key(this.state.list, "Totaltrash");
@@ -762,6 +789,8 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
     const items = this.state.list.slice(0, 5).map((trash) =>
       <li> {trash.fullname}: <b>{trash.Totaltrash}</b> lbs</li>
     );
+    if (this.state.redirect === false)
+    {
     return(
       <div>
         <img id = "bigHeader" src = {headergradient} alt = {"topgradient"}/>
@@ -907,11 +936,11 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                   <div className = "bubbleheader" id = "bubheader4" ><center><p className = "small">FIND FRIENDS</p></center></div>
 
                   <div className = "page" id = "friendsearch">
-                  <form>
-                    <input id = "friendform" type = "text" placeholder = "Search by username..." /> 
+                  <form onSubmit = {this.renderNewProfPage}>
+                    <input id = "friendform" type = "text" placeholder = "Search by username..." onChange = {this.updateUserSearch} value = {this.state.userSearch}/>
                     <button type = "submit" className = "feedbutton"></button>
                   </form>
-
+                  <h4>{this.state.friendplaceHolder}</h4>
                     <div id = "friendinfo">{this.state.userReferences}</div>
 
                   </div>
@@ -960,6 +989,12 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
         <div id="map" style = {{height: this.state.height - 40}}></div>
       </div>
     );
+  }
+  else{
+    return(
+      <div>{this.renderRedirect(this.state.userSearch)}</div>
+    )
+  }
   }
 }
 export default Bubble;
