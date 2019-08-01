@@ -146,6 +146,8 @@ class Profile extends Component {
     </div>
 
     <div id="profilepin">
+
+      <h3>Trash Count: {this.state.Totaltrash} lbs</h3>
       <h3>Pins:</h3>
       <ol>
         <li>20 E 18th Street</li>
@@ -153,7 +155,7 @@ class Profile extends Component {
         <li>103 E 8th Street</li>
       </ol>
 
-    <p>Trash count: {this.state.Totaltrash} lbs</p>
+
     </div>
     <footer>
       <button id = "signout" className = "small" onClick = {this.signOut}>SIGN OUT</button>
