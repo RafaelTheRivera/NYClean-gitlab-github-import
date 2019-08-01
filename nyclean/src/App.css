@@ -970,7 +970,7 @@ footer {
   color: #F06823;
   font-style: oblique;
   margin-left: 70px;
-  margin-top: 250px;
+  margin-top: 270px;
 
 }
 
@@ -978,7 +978,7 @@ footer {
   position: absolute;
   font-size: 20px;
   margin-left: 70px;
-  margin-top: 300px;
+  margin-top: 320px;
 
 }
 
@@ -987,17 +987,21 @@ footer {
   height: 130px;
   width: auto;
   margin-left: 130px;
-  margin-top: 140px;
+  margin-top: 160px;
 }
 
 #aboutusppl{
   position: absolute;
   margin-left: 570px;
-  margin-top: 80px;
+  margin-top: 90px;
   margin-right: 100px;
 }
 
 #pplinfo{
   margin-bottom: 30px;
   margin-left: 30px;
+}
+
+.ournames{
+  font-size: 25px;
 }

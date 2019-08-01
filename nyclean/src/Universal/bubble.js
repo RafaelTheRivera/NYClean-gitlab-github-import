@@ -107,7 +107,7 @@ class Bubble extends Component{
   componentDidMount(props){
     window.addEventListener("resize", this.updateDimensions);
     this.height = this.state.height - 40;
-    this.corner1 = L.latLng(40.4079549, -74.5768574);
+    this.corner1 = L.latLng(40.4079549, -74.2768574);
     this.corner2 = L.latLng(41.0210528, -73.5697356);
     this.bounds = L.latLngBounds(this.corner1, this.corner2);
     this.overlayCoords = [
@@ -121,7 +121,7 @@ class Bubble extends Component{
     this.map = L.map('map', {
       center: [40.7280822, -73.9937973],
       zoom: 15,
-      minZoom:9,
+      minZoom:11,
       maxZoom: 16,
       maxBounds: this.bounds,
       zoomSnap: 0.2,

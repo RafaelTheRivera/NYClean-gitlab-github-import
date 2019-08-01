@@ -26,17 +26,24 @@ class About extends Component {
         other classmates in the Computer Science<br />
         for Social Good class.</p>
         <p id = "aboutusppl">
-        <h3><img id = "pindeco" src = {pin} alt= "pin"/>Ethan Gu</h3>
-        <p id = "pplinfo">information about person 1</p>
-        <h3><img id = "pindeco" src = {pin} alt= "pin"/>Ian Xiong</h3>
-        <p id = "pplinfo">information about person 1</p>
-        <h3><img id = "pindeco" src = {pin} alt= "pin"/>Paige Min</h3>
+        <h3 className = "ournames"><img id = "pindeco" src = {pin} alt= "pin"/>Ethan Gu</h3>
+        <p id = "pplinfo">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+        ad minim veniam, quis nostrud </p>
+        <h3 className = "ournames"><img id = "pindeco" src = {pin} alt= "pin"/>Ian Xiong</h3>
+        <p id = "pplinfo">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+        ad minim veniam, quis nostrud </p>
+        <h3 className = "ournames"><img id = "pindeco" src = {pin} alt= "pin"/>Paige Min</h3>
         <p id = "pplinfo">Hi! I'm a rising senior attending Bergen County Academies.
         I love art and technology, and I want to use my passions to help influence
         people and the world in a positive way. </p>
-        <h3><img id = "pindeco" src = {pin} alt= "pin"/>Rafael Riveras</h3>
-        <p id = "pplinfo">information about person 1</p>
+        <h3 className = "ournames"><img id = "pindeco" src = {pin} alt= "pin"/>Rafael Riveras</h3>
+        <p id = "pplinfo">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+        ad minim veniam, quis nostrud </p>
         </p>
+
 
       </div>
 
