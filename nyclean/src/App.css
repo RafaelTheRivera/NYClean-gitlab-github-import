@@ -348,7 +348,7 @@ z-index:2;
   position:absolute;
   height: 25px;
   width: auto;
-  z-index:4;
+  z-index:5;
   right: 44px;
   top: 120px;
 }
@@ -401,7 +401,7 @@ z-index:2;
   position: absolute;
   right:0;
   top: 0;
-  margin-top: 550px;
+  margin-top: 570px;
   margin-right: 25px;
   height: 40px;
   width: auto;
@@ -875,6 +875,19 @@ footer {
   background-color: #DAF2F2;
 }
 
+.messageItem{
+  font-size: .8em;
+}
+
+.username{
+  color: grey;
+  font-size: .7em;
+}
+.timestamp{
+  font-size: .7em;
+  color: grey;
+  float: right;
+}
 #friendprofile{
   background-color: lightgray;
   height: 45px;
@@ -909,6 +922,31 @@ footer {
   border-style: none;
   margin-left: 10px;
   background-color:#DAF2F2;
+}
+
+#loading{
+  height: 100%;
+  width: 100%;
+  background-color: white;
+  position: absolute;
+  z-index: 100;
+  transition-duration: 400ms;
+}
+
+#loadingGif{
+  position: absolute;
+  top: 280px;
+  left: 46%;
+  filter: hue-rotate(20deg);
+  height: 100px;
+  width: auto;
+}
+
+#loadingText{
+  position: absolute;
+  font-size: 20px;
+  top: 400px;
+  left: 47%;
 }
 
 .feedbutton{
@@ -956,6 +994,7 @@ footer {
   margin-left: 420px;
   margin-top: 90px;
   font-size: 25px;
+  text-align: left;
 }
 
 #clickmore{
@@ -979,6 +1018,7 @@ footer {
   font-size: 20px;
   margin-left: 70px;
   margin-top: 320px;
+  text-align: left;
 
 }
 
@@ -995,11 +1035,13 @@ footer {
   margin-left: 570px;
   margin-top: 90px;
   margin-right: 100px;
+  text-align: left;
 }
 
 #pplinfo{
   margin-bottom: 30px;
   margin-left: 30px;
+  text-align: left;
 }
 
 .ournames{
