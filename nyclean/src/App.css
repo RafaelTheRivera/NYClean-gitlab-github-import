@@ -401,7 +401,7 @@ z-index:2;
   position: absolute;
   right:0;
   top: 0;
-  margin-top: 570px;
+  margin-top: 555px;
   margin-right: 25px;
   height: 40px;
   width: auto;
@@ -842,8 +842,7 @@ footer {
   z-index: 3;
   background-color:white;
   right:0;
-  bottom: 82px;
-  margin-right: 82px;
+  bottom: 0;
   overflow: auto;
   padding-bottom: 10px;
 }
@@ -876,6 +875,8 @@ footer {
 }
 
 .messageItem{
+  padding-left: 15px;
+  padding-right: 15px;
   font-size: .8em;
 }
 
@@ -886,7 +887,6 @@ footer {
 .timestamp{
   font-size: .7em;
   color: grey;
-  float: right;
 }
 #friendprofile{
   background-color: lightgray;
