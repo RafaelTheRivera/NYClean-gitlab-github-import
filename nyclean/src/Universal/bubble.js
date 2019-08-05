@@ -812,7 +812,8 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
     if (this.state.FriendPageIsOpen === "hidden"){
       this.setState({FriendSearchIsOpen: "hidden",
                     FriendPageIsOpen: "visible",
-                    activeFriend: name},()=>{
+                    activeFriend: name,
+                    listPins: []},()=>{
                       console.log("openFriendPage was activated" + this.state.activeFriend);
                       var id = this.state.idStuff[this.state.idStuff.indexOf(this.state.activeFriend)-1];
                       console.log(id);
@@ -824,7 +825,6 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                           console.log(activePfp);
                           this.setState({activeBio: activeBio, activePfp: activePfp, activeTrash: activeTrash});
                           this.getPins();
-                          console.log(this.state.listPins)
                       }.bind(this))
                     }
                   )
@@ -934,8 +934,12 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
     const items = this.state.list.slice(0, 5).map((trash) =>
       <li> {trash.fullname}: <b>{trash.Totaltrash}</b> lbs</li>
     );
-    const pins = this.state.listPins.map((x) =>
-      <li><center>lat: {x.lat}, long: {x.long}</center></li>)
+    var pins = this.state.listPins.map((x) =>
+      <li><p class = "normalTextPins">lat: {x.lat} <br/>lng: {x.long}</p></li>)
+    if (pins.length === 0)
+  {
+    pins = <li><p class = "normalTextPins">no pins set</p></li>;
+  }
     if (this.state.redirect === false && this.state.validSearch === false)
     {
       return(
@@ -1109,9 +1113,9 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                     <p id = "friendinfo"><div class = "page" id = "friendBio">{this.state.activeBio}</div>
                     <a href = {"/ProfSearch/:" +this.state.activeFriend}><button id = "signout">Profile</button></a><br /><br />
                     Pins
-                      <ol>
+                    <ol>
                       {pins}
-                      </ol>
+                    </ol>
                       Trash count: {this.state.activeTrash} lbs
                     </p>
                   </div>

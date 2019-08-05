@@ -8,7 +8,6 @@ import greenyclogo from './images/greenyclogo.png';
 
 const db = firebase.firestore();
 
-
 class Profile extends Component {
   constructor(){
     super();
@@ -36,6 +35,7 @@ class Profile extends Component {
     this.setState({
       imageSrc: this.state.imageInput,
   })
+
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         const userRef = db.collection("users");
@@ -45,6 +45,20 @@ class Profile extends Component {
       }
       });
     }
+    getPins = () => {
+      db.collection("pins").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            if (this.state.userName === doc.data().username)
+            {
+              this.setState({
+                pinList:this.state.pinList.concat({
+                  lat:doc.data().lat,
+                  long:doc.data().long})
+              })
+            }
+        })
+      })
+  }
   componentWillMount(){
     firebase.auth().onAuthStateChanged(user => {
       this.setState({userName: user.displayName,
@@ -104,12 +118,19 @@ class Profile extends Component {
         })
       }
     });
+    this.getPins();
   }
 
   renderRedirect = () => {
       return <Redirect to='/Login' />
   }
   render(){
+    var pins = this.state.pinList.map((x) =>
+      <li><p class = "normalTextPins">lat: {x.lat} <br/>lng: {x.long}</p></li>)
+    if (pins.length === 0)
+  {
+    pins = <li><p class = "normalTextPins">no pins set</p></li>;
+  }
     if (!this.state.signedIn){
       return(
         <div>
@@ -150,9 +171,7 @@ class Profile extends Component {
       <h3>Trash Count: {this.state.Totaltrash} lbs</h3>
       <h3>Pins:</h3>
       <ol>
-        <li>20 E 18th Street</li>
-        <li>58 W 72nd Street</li>
-        <li>103 E 8th Street</li>
+      {pins}
       </ol>
 
 
