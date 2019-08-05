@@ -37,6 +37,7 @@ db.settings ({
 const userRef = db.collection("users");
 const ref = db.collection("locations");
 const realtime = db.collection('/subways');
+const pinList = db.collection("pins");
 
 
 class Bubble extends Component{
@@ -56,7 +57,7 @@ class Bubble extends Component{
                   mouseDown: 0,
                   x: 0,
                   y: 0,
-                  username: "",
+                  username: "Please Register/Sign In",
                   profileWidth: "",
                   height:null,
                   search: "",
@@ -95,7 +96,12 @@ class Bubble extends Component{
                   loadScreen: "opacity(100%)",
                   loadScreen2: "visible",
                   validSearch:true,
-                  reports: []
+                  reports: [],
+                  correctedArray: [],
+                  correctedMessageTimestamps: [],
+                  correctedReportArray: [],
+                  correctedReportTimestamps: [],
+                  signedIn:true
                 }
       this.mouseDown = this.mouseDown.bind(this);
       this.mouseUp = this.mouseUp.bind(this);
@@ -238,7 +244,9 @@ class Bubble extends Component{
       const reports = correctedReportTimestamps.map(l => (
         <div className = "messageItem"><span className = "username">{correctedReportArray[correctedReportArray.indexOf(l)-2]}</span>  <span className = "timestamp">{l.substr(16,8)}</span> <br /> {correctedReportArray[correctedReportArray.indexOf(l)-1]}</div>
       ));
-      this.setState({reports: reports});
+      this.setState({reports: reports,
+                    correctedReportTimestamps: correctedReportTimestamps,
+                    correctedReportArray: correctedReportArray});
 
 
     db.collection("updates").get().then((updateSnapshot) => {
@@ -274,6 +282,8 @@ class Bubble extends Component{
       ));
       this.map.setView([40.7280822, -73.9937973], 16);
       this.setState({messages: messages,
+                    correctedMessageTimestamps: correctedMessageTimestamps,
+                    correctedArray: correctedArray,
                     loadScreen: "opacity(0%)",
                     loadScreen2: "hidden"});
       });
@@ -290,6 +300,7 @@ class Bubble extends Component{
   renderRedirect = () => {
       return <Redirect to='/profpagesearch' />
   }
+
    handleMouseMove(e){
      if(this.state.dragEvent === true){
        this.setState({x: e.clientX-7, y: e.clientY - 27});
@@ -299,7 +310,18 @@ class Bubble extends Component{
     document.body.onmousedown = this.mouseDown;
     document.body.onmouseup = this.mouseUp;
     document.body.onmousemove = this.handleMouseMove.bind(this);
-
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.setState({
+          signedIn: true,
+          currentUser: user
+        });
+      } else{
+        this.setState({
+          signedIn: false
+        })
+      }
+    });
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         userRef.doc(user.uid).get().then(getDoc => {
@@ -399,6 +421,19 @@ class Bubble extends Component{
   fly = (num1, num2, num3) =>
   {
     this.map.flyTo([num1, num2], num3)
+  }
+  findNumIndex = (phrase) => {
+    var arr = [];
+    for (var i = 0; i<phrase.length-2; i++)
+    {
+      if (isNaN(phrase.substring(i,i+1)) && phrase.substring(i,i+1) != '.')
+      {
+        arr.push(parseFloat(phrase.substring(0, i)))
+        arr.push(parseFloat(phrase.substring(i+2, phrase.length)))
+        break;
+      }
+    }
+    return arr;
   }
   getSearch = e => {
     //find search results based on updateSearchBar
@@ -643,7 +678,7 @@ let query14 = realtime.where('name', '==', this.addCorner3(this.phraseEachUpper(
 }).then(()=>{
 let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 2)))).get().then(snapshot => {
   if (snapshot.empty){
-  return;
+  status = 16;
   }
   snapshot.forEach(doc => {
   if (status === 15){
@@ -653,7 +688,25 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
     this.fly(this.state.lat, this.state.long, 16);
   });
 }})
-})})})})})})})})})})})})})})})})})})})
+}).then(()=>{
+  let query16 = pinList.where('username', '==', search).get().then(snapshot => {
+    if (snapshot.empty){
+      status = 17;
+    }
+    snapshot.forEach(doc => {
+      if (status === 16){
+        let lat = doc.data().lat
+        let long = doc.data().long
+        this.setState({lat: lat, long: long},()=>{
+          this.fly(this.state.lat, this.state.long, 16);
+        })
+      }})
+}).then(()=>{
+  if (status === 17)
+    this.fly(this.findNumIndex(search)[0], this.findNumIndex(search)[1], 16);
+    console.log(this.findNumIndex(search)[0])
+    console.log(this.findNumIndex(search)[1])
+})})})})})})})})})})})})})})})})})})})});
 }
 
 
@@ -815,7 +868,8 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
     if (this.state.FriendPageIsOpen === "hidden"){
       this.setState({FriendSearchIsOpen: "hidden",
                     FriendPageIsOpen: "visible",
-                    activeFriend: name},()=>{
+                    activeFriend: name,
+                    listPins: []},()=>{
                       console.log("openFriendPage was activated" + this.state.activeFriend);
                       var id = this.state.idStuff[this.state.idStuff.indexOf(this.state.activeFriend)-1];
                       console.log(id);
@@ -827,7 +881,6 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                           console.log(activePfp);
                           this.setState({activeBio: activeBio, activePfp: activePfp, activeTrash: activeTrash});
                           this.getPins();
-                          console.log(this.state.listPins)
                       }.bind(this))
                     }
                   )
@@ -851,6 +904,8 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
       lbs: 3,
       body: this.state.caption
     })
+    this.map.removeLayer(this.state.newMark);
+    const postedMarker = L.marker([this.state.coords.lat,this.state.coords.lng]).addTo(this.map).bindPopup("<div id = 'popup'><p id = 'posttitle'>Post by:  "+ this.state.username +"<p id = 'date'> on "+ Date().substr(0, Date().indexOf("201" || "202")) +"</p></p><div id = 'controlbody'><p id = 'bodycaption'>"+ this.state.caption +"</p></div></div><div id='pictures'><img src = "+ this.state.uploadImageBefore +" id = 'imageBefore'/><img src = "+ this.state.uploadImageAfter +" id = 'imageAfter'/></div>", {maxWidth : 600}).openPopup();
     this.setState({caption: "", pinupdate: true, pinIsOpen: "hidden", image2visible: "hidden", image1visible: "hidden"});
   }
   updateImage = e =>{
@@ -887,6 +942,15 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
       message: this.state.updateMessage,
       time: Date.now()
     });
+    var addMessage = this.state.correctedArray;
+    addMessage.push(this.state.username, this.state.updateMessage, Date(), Date.now());
+    var newTimestamp = this.state.correctedMessageTimestamps;
+    newTimestamp.push(Date());
+    this.setState({correctedArray: addMessage, correctedMessageTimestamps: newTimestamp},() =>{
+      this.setState({messages: this.state.correctedMessageTimestamps.map(l => (
+        <div className = "messageItem"><span className = "username">{this.state.correctedArray[this.state.correctedArray.indexOf(l)-2]}</span>  <span className = "timestamp">{l.substr(16,8)}</span> <br /> {this.state.correctedArray[this.state.correctedArray.indexOf(l)-1]}</div>
+      ))});
+    });
     this.setState({
       updateMessage: ""
     });
@@ -904,6 +968,15 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
       date: Date(),
       message: this.state.reportMessage,
       time: Date.now()
+    });
+    var addReport = this.state.correctedReportArray;
+    addReport.push(this.state.username, this.state.reportMessage, Date(), Date.now());
+    var newReportTimestamp = this.state.correctedReportTimestamps;
+    newReportTimestamp.push(Date());
+    this.setState({correctedReportArray: addReport, correctedReportTimestamps: newReportTimestamp},() =>{
+      this.setState({reports: this.state.correctedReportTimestamps.map(l => (
+        <div className = "messageItem"><span className = "username">{this.state.correctedReportArray[this.state.correctedReportArray.indexOf(l)-2]}</span>  <span className = "timestamp">{l.substr(16,8)}</span> <br /> {this.state.correctedReportArray[this.state.correctedReportArray.indexOf(l)-1]}</div>
+      ))});
     });
     this.setState({
       reportMessage: ""
@@ -931,15 +1004,25 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
   renderRedirect1 = () => {
     return <Redirect to='/userlist'/>
   }
+  renderRedirect2 = () => {
+    return <Redirect to='/intro'/>
+  }
   render(){
+    var noPins = "";
     this.state.list = this.sort_by_key(this.state.list, "Totaltrash");
     this.state.ActualTotalTrash = (this.state.list.reduce( function(cnt,o){ return cnt + o.Totaltrash; }, 0));
     this.state.list.reverse();
     const items = this.state.list.slice(0, 5).map((trash) =>
       <li> {trash.fullname}: <b>{trash.Totaltrash}</b> lbs</li>
     );
-    const pins = this.state.listPins.map((x) =>
-      <li><center>lat: {x.lat}, long: {x.long}</center></li>)
+    var pins = this.state.listPins.map((x) =>
+      <li><p class = "normalTextPins">lat: {x.lat} <br/>lng: {x.long}</p></li>)
+    if (pins.length === 0)
+  {
+    noPins = "No Pins Set"
+  }
+  if (this.state.signedIn === true)
+  {
     if (this.state.redirect === false && this.state.validSearch === false)
     {
       return(
@@ -961,7 +1044,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                   type = "text"
                   id="box"
                   name = "search"
-                  placeholder = " Search location..."
+                  placeholder = " Search location/username/lat, long"
                   onChange = {this.updateSearchBar}
                   value = {this.state.search}></input>
                 <button type = "submit" id="submit" className= "headerItem">
@@ -1112,11 +1195,12 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                     <p id = "frienduser">{this.state.activeFriend}</p>
                     <p id = "friendinfo"><div class = "page" id = "friendBio">{this.state.activeBio}</div>
                     <a href = {"/ProfSearch/:" +this.state.activeFriend}><button id = "signout">Profile</button></a><br /><br />
-                    Pins
-                      <ol>
+                    <b>Pins</b>
+                    <ol>
                       {pins}
-                      </ol>
-                      Trash count: {this.state.activeTrash} lbs
+                    </ol>
+                    <p class = "NormalText">{noPins}</p>
+                      <b>Trash count:</b> {this.state.activeTrash} lbs
                     </p>
                   </div>
                   </span>
@@ -1142,5 +1226,11 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
     )
   }
   }
+  else {
+    return(
+      <div>{this.renderRedirect2()}</div>
+    );
+  }
+}
 }
 export default Bubble;

@@ -8,7 +8,6 @@ import greenyclogo from './images/greenyclogo.png';
 
 const db = firebase.firestore();
 
-
 class Profile extends Component {
   constructor(){
     super();
@@ -18,12 +17,14 @@ class Profile extends Component {
     imageInput: '',
     pinList: [],
     userBio:'Default Text',
-    signedIn:true};
+    signedIn:true,
+    redirect:false};
   }
   signOut = () => firebase.auth().signOut().then( () => {
     this.setState({
-      signedIn: false,
-      currentUser: null
+      currentUser: null,
+      redirect:true,
+      signedIn: false
     });
   });
   updateInput = e => {
@@ -36,6 +37,7 @@ class Profile extends Component {
     this.setState({
       imageSrc: this.state.imageInput,
   })
+
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         const userRef = db.collection("users");
@@ -45,6 +47,20 @@ class Profile extends Component {
       }
       });
     }
+    getPins = () => {
+      db.collection("pins").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            if (this.state.userName === doc.data().username)
+            {
+              this.setState({
+                pinList:this.state.pinList.concat({
+                  lat:doc.data().lat,
+                  long:doc.data().long})
+              })
+            }
+        })
+      })
+  }
   componentWillMount(){
     firebase.auth().onAuthStateChanged(user => {
       this.setState({userName: user.displayName,
@@ -104,21 +120,41 @@ class Profile extends Component {
         })
       }
     });
+    this.getPins();
   }
 
   renderRedirect = () => {
-      return <Redirect to='/Login' />
+    if (this.state.redirect)
+      return <Redirect to='/introsignout' />
+  }
+  renderRedirect1 = () => {
+    if (!this.state.signedIn)
+      return <Redirect to='/intro' />
   }
   render(){
-    if (!this.state.signedIn){
-      return(
-        <div>
-        {this.renderRedirect()}
-        </div>)
-      }
-      else {
-  return (
+    var noPins = ""
+    var pins = this.state.pinList.map((x) =>
+      <li><p class = "normalTextPins">lat: {x.lat} <br/>lng: {x.long}</p></li>)
+    if (pins.length === 0)
+  {
+    noPins = "No Pins Set"
+  }
+  if (this.state.redirect){
+    return(
     <div>
+    {this.renderRedirect()}
+    </div>
+  )
+  }
+  else if (!this.state.signedIn){
+    return(
+      <div>
+      {this.renderRedirect1()}
+      </div>)
+      }
+  else {
+  return (
+    <div style = {{overflow:'auto', height:'inherit'}}>
     <a href = "/"> <img id = "back" src = {back} alt= "back"/>
     <img id = "greenyclogo" src = {greenyclogo} alt= "logo"/>
     </a>
@@ -128,8 +164,8 @@ class Profile extends Component {
     <h6 id = "profLinks">
     <br /><div id = "bio">{this.state.userBio}
     <a href = "/EditBio" class = "linkText"><img className = "edit" src = {edit} alt = "edit"/></a></div>
-    <br/>
-    <a href = "/EditEmail" class ="linkText">Change Email</a><br/>
+    <br/><br/>
+    <a href = "/EditEmail" class ="linkText">Change Email</a><br/><br/><br/>
     <a href = "/EditPass" class = "linkText">Change Password</a><br/>
     </h6>
     <div id="profilecircle">
@@ -150,17 +186,14 @@ class Profile extends Component {
       <br/><h3>Trash Count: {this.state.Totaltrash} lbs</h3><br/><br />
       <h3>Pins:</h3>
       <ol>
-        <li>20 E 18th Street</li>
-        <li>58 W 72nd Street</li>
-        <li>103 E 8th Street</li>
+      {pins}
       </ol>
-
+      <h3 class = "normalText">{noPins}</h3>
 
 
     </div>
     <footer>
       <button id = "signout" className = "small" onClick = {this.signOut}>SIGN OUT</button>
-
     </footer>
     </div>
   );

@@ -11,6 +11,8 @@ import Mission from './Mission';
 import LoginPassEdit from './LoginPassEdit';
 import LoginEmailEdit from './LoginEmailEdit';
 import ProfSearch from './ProfSearch';
+import Introduction from './intro.js';
+import IntroSignOut from './introsignout';
 import UserList from './userlist';
 import React from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
@@ -22,6 +24,8 @@ const Routes = () => (
     <Router>
       <div>
         <Route exact path = {"/"} component = {() => <App />}/>
+        <Route exact path = {"/intro"} component = {() => <Introduction />}/>
+        <Route exact path = {"/introsignout"} component = {() => <IntroSignOut />}/>
         <Route exact path = {"/userlist"} component = {() => <UserList />}/>
         <Route exact path = {"/Mission"} component = {() => <Mission />}/>
         <Route exact path = {"/About"} component = {() => <About />}/>

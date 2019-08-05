@@ -5,7 +5,7 @@ import pin from './images/pin.png';
 import earthdeco from './images/earthdeco.png';
 import logodisplay from './images/logodisplay.png';
 
-class About extends Component {
+class Aboutintro extends Component {
   constructor(){
     super();
     this.state = {};
@@ -13,9 +13,6 @@ class About extends Component {
   render(){
     return(
       <div>
-        <a href = "/"> <img id = "back" src = {back} alt= "back"/>
-        <img id = "greenyclogo" src = {greenyclogo} alt= "logo"/>
-        </a>
         <center><h1 id = "safetyheader"><b>ABOUT US</b></h1></center>
         <img src = {earthdeco} id = "earthdeco"/>
         <p id = "hello">Hello!</p>
@@ -61,4 +58,4 @@ class About extends Component {
   }
 }
 
-export default About;
+export default Aboutintro;

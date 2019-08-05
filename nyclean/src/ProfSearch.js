@@ -14,9 +14,24 @@ class ProfSearch extends Component {
     this.state = {userName:"",
     Totaltrash: Math.floor(Math.random()*21),
     imageSrc: null,
+    pinList:[],
     userBio:'Default Text',
     name:this.props.match.params.name};
   }
+  getPins = () => {
+    db.collection("pins").get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+          if (this.state.userName === doc.data().username)
+          {
+            this.setState({
+              pinList:this.state.pinList.concat({
+                lat:doc.data().lat,
+                long:doc.data().long})
+            })
+          }
+      })
+    })
+}
   componentDidMount(){
     console.log(this.state.name)
     document.body.style.overflow = "hidden";
@@ -40,8 +55,15 @@ class ProfSearch extends Component {
             })
           })
         })
+        this.getPins();
     }
   render(){
+    var pins = this.state.pinList.map((x) =>
+      <li><p class = "normalTextPins">lat: {x.lat} <br/>lng: {x.long}</p></li>)
+    if (pins.length === 0)
+  {
+    pins = <li><p class = "normalTextPins">no pins set</p></li>;
+  }
   return (
     <div class = "appText">
     <a href = "/"> <img id = "back" src = {back} alt= "back"/>
@@ -63,9 +85,7 @@ class ProfSearch extends Component {
       <h3>Trash Count: {this.state.Totaltrash} lbs</h3>
       <h3>Pins:</h3>
       <ol>
-        <li>20 E 18th Street</li>
-        <li>58 W 72nd Street</li>
-        <li>103 E 8th Street</li>
+      {pins}
       </ol>
 
 
