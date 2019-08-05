@@ -37,6 +37,7 @@ db.settings ({
 const userRef = db.collection("users");
 const ref = db.collection("locations");
 const realtime = db.collection('/subways');
+const pinList = db.collection("pins");
 
 
 class Bubble extends Component{
@@ -651,7 +652,7 @@ let query14 = realtime.where('name', '==', this.addCorner3(this.phraseEachUpper(
 }).then(()=>{
 let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 2)))).get().then(snapshot => {
   if (snapshot.empty){
-  return;
+  status = 16;
   }
   snapshot.forEach(doc => {
   if (status === 15){
@@ -661,7 +662,21 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
     this.fly(this.state.lat, this.state.long, 16);
   });
 }})
-})})})})})})})})})})})})})})})})})})})
+}).then(()=>{
+  let query16 = pinList.where('username', '==', search).get().then(snapshot => {
+    if (snapshot.empty){
+      return;
+    }
+    snapshot.forEach(doc => {
+      if (status === 16){
+        let lat = doc.data().lat
+        let long = doc.data().long
+        this.setState({lat: lat, long: long},()=>{
+          this.fly(this.state.lat, this.state.long, 16);
+        })
+      }})
+    })
+})})})})})})})})})})})})})})})})})})});
 }
 
 
@@ -823,7 +838,8 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
     if (this.state.FriendPageIsOpen === "hidden"){
       this.setState({FriendSearchIsOpen: "hidden",
                     FriendPageIsOpen: "visible",
-                    activeFriend: name},()=>{
+                    activeFriend: name,
+                    listPins: []},()=>{
                       console.log("openFriendPage was activated" + this.state.activeFriend);
                       var id = this.state.idStuff[this.state.idStuff.indexOf(this.state.activeFriend)-1];
                       console.log(id);
@@ -835,7 +851,6 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                           console.log(activePfp);
                           this.setState({activeBio: activeBio, activePfp: activePfp, activeTrash: activeTrash});
                           this.getPins();
-                          console.log(this.state.listPins)
                       }.bind(this))
                     }
                   )
@@ -966,8 +981,12 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
     const items = this.state.list.slice(0, 5).map((trash) =>
       <li> {trash.fullname}: <b>{trash.Totaltrash}</b> lbs</li>
     );
-    const pins = this.state.listPins.map((x) =>
-      <li><center>lat: {x.lat}, long: {x.long}</center></li>)
+    var pins = this.state.listPins.map((x) =>
+      <li><p class = "normalTextPins">lat: {x.lat} <br/>lng: {x.long}</p></li>)
+    if (pins.length === 0)
+  {
+    pins = <li><p class = "normalTextPins">no pins set</p></li>;
+  }
     if (this.state.redirect === false && this.state.validSearch === false)
     {
       return(
@@ -989,7 +1008,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                   type = "text"
                   id="box"
                   name = "search"
-                  placeholder = " Search location..."
+                  placeholder = " Search location/pin by user"
                   onChange = {this.updateSearchBar}
                   value = {this.state.search}></input>
                 <button type = "submit" id="submit" className= "headerItem">
@@ -1141,9 +1160,9 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                     <p id = "friendinfo"><div class = "page" id = "friendBio">{this.state.activeBio}</div>
                     <a href = {"/ProfSearch/:" +this.state.activeFriend}><button id = "signout">Profile</button></a><br /><br />
                     Pins
-                      <ol>
+                    <ol>
                       {pins}
-                      </ol>
+                    </ol>
                       Trash count: {this.state.activeTrash} lbs
                     </p>
                   </div>
