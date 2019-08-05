@@ -139,7 +139,7 @@ class Profile extends Component {
       }
       else {
   return (
-    <div class = "appText">
+    <div>
     <a href = "/"> <img id = "back" src = {back} alt= "back"/>
     <img id = "greenyclogo" src = {greenyclogo} alt= "logo"/>
     </a>
@@ -147,15 +147,15 @@ class Profile extends Component {
     <h2 id = "username">{this.state.userName} <a href = "/EditUser" class = "linkText1"><img className = "edit" src = {edit} alt = "edit"/></a></h2>
     <br /><br />
     <h6 id = "profLinks">
-    <p><br />{this.state.userBio}
-    <a href = "/EditBio" class = "linkText"><img className = "edit" src = {edit} alt = "edit"/></a></p>
+    <br /><div id = "bio">{this.state.userBio}
+    <a href = "/EditBio" class = "linkText"><img className = "edit" src = {edit} alt = "edit"/></a></div>
     <br/>
     <a href = "/EditEmail" class ="linkText">Change Email</a><br/>
     <a href = "/EditPass" class = "linkText">Change Password</a><br/>
     </h6>
     <div id="profilecircle">
     <img alt = "" src = {this.state.imageSrc} id = "profileimg"/>
-          <p>Change Profile Picture:</p><form onSubmit = {this.submitInput}>
+          <p className = "left">Change Profile Picture:</p><form onSubmit = {this.submitInput}>
           <input
           type = "text"
           placeholder = "Image URL"
@@ -168,11 +168,12 @@ class Profile extends Component {
 
     <div id="profilepin">
 
-      <h3>Trash Count: {this.state.Totaltrash} lbs</h3>
+      <br/><h3>Trash Count: {this.state.Totaltrash} lbs</h3><br/><br />
       <h3>Pins:</h3>
       <ol>
       {pins}
       </ol>
+
 
 
     </div>

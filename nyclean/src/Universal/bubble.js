@@ -147,6 +147,8 @@ class Bubble extends Component{
         L.polygon(this.overlayCoords, {color: "#28BBB4", fillOpacity: .2, stroke: false})
       ]
     });
+
+
     window.addEventListener("resize", this.updateDimensions);
     const setState = this.setState.bind(this);
     const map = this.map;
@@ -165,6 +167,7 @@ class Bubble extends Component{
           const dataMark =  L.marker([dataArray[i].lat,[dataArray[i].long]]).addTo(map).bindPopup("<div id = 'popup'><p id = 'posttitle'>Post by:  "+ dataArray[i].username +"<p id = 'date'> on "+ date.substr(0, date.indexOf("201" || "202")) +"</p></p><div id = 'controlbody'><p id = 'bodycaption'>"+ dataArray[i].body +"</p></div></div><div id='pictures'><img src = "+ dataArray[i].beforeImage +" id = 'imageBefore'/><img src = "+ dataArray[i].afterImage +" id = 'imageAfter'/></div>", {maxWidth : 600}).openPopup();
           map.closePopup();
         }
+        console.log(dataArray);
         setState({lbs: totalLbs});
     });
 
@@ -219,17 +222,17 @@ class Bubble extends Component{
       });
       var correctedReportArray = [];
       var correctedReportTimestamps = [];
-      var newestReport = 0;
       for (var i = 0; i < reportsToday.length; i = i + 4) {
-        if (correctedReportArray.length !== 0){
-          for (var j = 0; j < correctedReportArray.length; j = j + 4) {
-            if (correctedReportArray[j+3] < reportsToday[i+3] && (j <= newestReport || newestReport === 0)){
-              newestReport = j+4;
-            }
+        var counter = 0
+        for (var j = 0; j < correctedReportArray.length; j = j + 4) {
+          console.log(correctedReportArray[j+3] + reportsToday[i+3]);
+          if (correctedReportArray[j+3] > reportsToday[i+3] || correctedReportArray === undefined){
+            break;
           }
+          counter = counter + 1
         }
-        correctedReportArray.splice(newestReport, 0, reportsToday[i], reportsToday[i+1], reportsToday[i+2], reportsToday[i+3]);
-        correctedReportTimestamps.splice(newestReport/4, 0, reportsToday[i+2]);
+        correctedReportArray.splice(counter * 4, 0, reportsToday[i], reportsToday[i+1], reportsToday[i+2], reportsToday[i+3]);
+        correctedReportTimestamps.splice(counter, 0, reportsToday[i+2]);
       }
       console.log(correctedReportArray);
       const reports = correctedReportTimestamps.map(l => (
@@ -252,24 +255,24 @@ class Bubble extends Component{
       var correctedMessageTimestamps = [];
       var newest = 0;
       for (var i = 0; i < messagesToday.length; i = i + 4) {
-        console.log("hi");
-        if (correctedArray.length !== 0){
-          console.log("hello");
+
+
+            var updateCounter = 0
           for (var j = 0; j < correctedArray.length; j = j + 4) {
-            console.log("sup");
-            if (correctedArray[j+3] < messagesToday[i+3] && (j <= newest || newest === 0)){
-              newest = j+4;
-              console.log(newest);
-            }
+              console.log(correctedArray[j+3] + messagesToday[i+3]);
+              if (correctedArray[j+3] > messagesToday[i+3] || correctedArray === undefined){
+                break;
           }
+          updateCounter = updateCounter + 1
         }
-        correctedArray.splice(newest, 0, messagesToday[i], messagesToday[i+1], messagesToday[i+2], messagesToday[i+3]);
-        correctedMessageTimestamps.splice(newest/4, 0, messagesToday[i+2]);
+        correctedArray.splice(updateCounter * 4, 0, messagesToday[i], messagesToday[i+1], messagesToday[i+2], messagesToday[i+3]);
+        correctedMessageTimestamps.splice(updateCounter, 0, messagesToday[i+2]);
       }
       console.log(correctedArray);
       const messages = correctedMessageTimestamps.map(l => (
         <div className = "messageItem"><span className = "username">{correctedArray[correctedArray.indexOf(l)-2]}</span>  <span className = "timestamp">{l.substr(16,8)}</span> <br /> {correctedArray[correctedArray.indexOf(l)-1]}</div>
       ));
+      this.map.setView([40.7280822, -73.9937973], 16);
       this.setState({messages: messages,
                     loadScreen: "opacity(0%)",
                     loadScreen2: "hidden"});
@@ -917,6 +920,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
         })
       })
     this.setState({
+      friendplaceHolder:"USER NOT FOUND.",
       validSearch:false
     })
   }
@@ -965,7 +969,6 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                   onChange = {this.updateSearchBar}
                   value = {this.state.search}></input>
                 <button type = "submit" id="submit" className= "headerItem">
-                  <img alt="" src="https://images.vexels.com/media/users/3/143356/isolated/preview/64e14fe0195557e3f18ea3becba3169b-search-magnifying-glass-by-vexels.png" id="magnifying"/>
                 </button>
               </div>
             </form>
@@ -1006,10 +1009,10 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
             </div>
 
           </div>
-          <img className = "cover" id = "cover1" src = {cover} alt = "cover" onMouseEnter = {this.mouseEnterPin} onMouseLeave = {this.mouseLeavePin}/>
+          <img className = "cover" id = "cover1" src = {cover} alt = "cover"/>
           </span>
 
-        <img id = "feed" src = {feed} alt = {"feed"} onClick = {this.openFeed}/>
+        <img id = "feed" src = {feed} alt = {"feed"} onClick = {this.openFeed} draggable = "false"/>
           <span style = {{visibility: this.state.feedIsOpen}}>
 
 
@@ -1051,7 +1054,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
 
           </span>
 
-        <img id = "leader" src = {leader} alt = {"leaderboard"} onClick = {this.openLeader}/>
+        <img id = "leader" src = {leader} alt = {"leaderboard"} onClick = {this.openLeader} draggable = "false"/>
           <span style = {{visibility: this.state.leaderIsOpen}}>
 
             <div className = "bubbleheader" id = "bubheader3"><center><p className = "small">LEADERBOARD</p></center></div>
@@ -1062,10 +1065,10 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
             </div>
             <div className = "bubble" id = "bub3">
 
-            <center><p id = "totalcount">TOTAL COUNT</p> <p id = "livecount"><b>{this.state.lbs}</b> lbs</p> <br />
+            <center><p id = "totalcount"><br/>TOTAL COUNT</p> <p id = "livecount"><b>{this.state.lbs}</b> lbs</p>
             Weekly Leaderboard</center>
             <br />
-            <p className = "small">
+            <p className = "small" id = "leftleader">
             <ol>
               {items}
             </ol>
@@ -1076,7 +1079,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
           </span>
 
 
-        <img id = "friends" src = {friends} alt = {"friends"} onClick = {this.openFriends}  style = {{marginTop: this.state.height - 119}}/>
+        <img id = "friends" src = {friends} alt = {"friends"} onClick = {this.openFriends}  style = {{marginTop: this.state.height - 119}} draggable = "false"/>
           <span style = {{visibility: this.state.friendsIsOpen}}>
             <div className = "connector" id = "con4" style = {{top: this.state.height - 119}}>
             </div>
@@ -1098,6 +1101,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                   </form>
 
                   <div className = "searchpage" id = "friendsearch">
+                  <p id = "nouser">{this.state.friendplaceHolder}</p>
                     <div id = "friendinfo">{this.state.userReferences}</div>
 
                   </div>
@@ -1121,9 +1125,9 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                   </div>
                   </span>
           </span>
-        <a href = "./About"><img id = "aboutusicon" src = {aboutus} alt = {"aboutus"} /></a>
-        <a href = "./Mission"><img id = "ourmissionicon" src = {ourmission} alt = {"ourmission"} /></a>
-        <a href = "./safety"><img id = "safetyicon" src = {safetyicon} alt = {"safety"} /></a>
+        <a href = "./About"><img id = "aboutusicon" src = {aboutus} alt = {"aboutus"} draggable = "false"/></a>
+        <a href = "./Mission"><img id = "ourmissionicon" src = {ourmission} alt = {"ourmission"} draggable = "false"/></a>
+        <a href = "./safety"><img id = "safetyicon" src = {safetyicon} alt = {"safety"} draggable = "false"/></a>
 
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="

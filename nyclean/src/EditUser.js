@@ -86,11 +86,11 @@ class EditUser extends Component {
   </a>
   <br></br><br></br>
   <form class = "editUserBar" onSubmit={e=>e.preventDefault()}>
-  New Username:
+  New Username:<br/><br />
   <input type = "text"
   onChange = {this.handleChange}
   value = {this.state.displayName}
-  />
+  /><br/><br />
   <button onClick={this.changeUser}>Change</button>
   </form>
   </div>

@@ -3,6 +3,7 @@ import back from './images/back.png';
 import greenyclogo from './images/greenyclogo.png';
 import pin from './images/pin.png';
 import earthdeco from './images/earthdeco.png';
+import logodisplay from './images/logodisplay.png';
 
 class About extends Component {
   constructor(){
@@ -37,11 +38,25 @@ class About extends Component {
         <p id = "pplinfo">Hi! I'm a rising senior attending Bergen County Academies.
         I love art and technology, and I want to use my passions to help influence
         people and the world in a positive way. </p>
-        <h3 className = "ournames"><img id = "pindeco" src = {pin} alt= "pin"/>Rafael Riveras</h3>
-        <p id = "pplinfo">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-        ad minim veniam, quis nostrud </p>
+        <h3 className = "ournames"><img id = "pindeco" src = {pin} alt= "pin"/>Rafael Rivera</h3>
+        <p id = "pplinfo">I'm a student from Regis High School. Dying isn't in my best interests, so in order to prove my worth to Charles Darwin, I intend to help stave off our inevitable self-destruction. Merry Christmas.</p>
         </p>
+        <img id = "logodisplay" src = {logodisplay} />
+        <p id = "logodescribe">This is our GREENYC logo and 2 different variations of our GREENYC icon.
+        The stylized "N" means that NYC can become green! We hope our website can be a step towards that goal.
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        
+
+        </p>
+
+
       </div>
 
     );

@@ -107,12 +107,13 @@ class EditEmail extends Component {
   <input type = "text"
   onChange = {this.handleChange}
   value = {this.state.userName}
-  />
+  /><br /><br />
   Re-enter Current Password:
   <input type = "text"
   onChange = {this.handleChangePass}
   value = {this.state.passWord}
   />
+  <br/><br />
   <button onClick={this.changeEmail}>Change</button>
   </form>
   </div>
