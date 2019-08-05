@@ -422,6 +422,19 @@ class Bubble extends Component{
   {
     this.map.flyTo([num1, num2], num3)
   }
+  findNumIndex = (phrase) => {
+    var arr = [];
+    for (var i = 0; i<phrase.length-2; i++)
+    {
+      if (isNaN(phrase.substring(i,i+1)) && phrase.substring(i,i+1) != '.')
+      {
+        arr.push(parseFloat(phrase.substring(0, i)))
+        arr.push(parseFloat(phrase.substring(i+2, phrase.length)))
+        break;
+      }
+    }
+    return arr;
+  }
   getSearch = e => {
     //find search results based on updateSearchBar
     //note: must call the search results bar
@@ -678,7 +691,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
 }).then(()=>{
   let query16 = pinList.where('username', '==', search).get().then(snapshot => {
     if (snapshot.empty){
-      return;
+      status = 17;
     }
     snapshot.forEach(doc => {
       if (status === 16){
@@ -688,8 +701,12 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
           this.fly(this.state.lat, this.state.long, 16);
         })
       }})
-    })
-})})})})})})})})})})})})})})})})})})});
+}).then(()=>{
+  if (status === 17)
+    this.fly(this.findNumIndex(search)[0], this.findNumIndex(search)[1], 16);
+    console.log(this.findNumIndex(search)[0])
+    console.log(this.findNumIndex(search)[1])
+})})})})})})})})})})})})})})})})})})})});
 }
 
 
@@ -991,6 +1008,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
     return <Redirect to='/intro'/>
   }
   render(){
+    var noPins = "";
     this.state.list = this.sort_by_key(this.state.list, "Totaltrash");
     this.state.ActualTotalTrash = (this.state.list.reduce( function(cnt,o){ return cnt + o.Totaltrash; }, 0));
     this.state.list.reverse();
@@ -1001,7 +1019,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
       <li><p class = "normalTextPins">lat: {x.lat} <br/>lng: {x.long}</p></li>)
     if (pins.length === 0)
   {
-    pins = <li><p class = "normalTextPins">no pins set</p></li>;
+    noPins = "No Pins Set"
   }
   if (this.state.signedIn === true)
   {
@@ -1026,7 +1044,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                   type = "text"
                   id="box"
                   name = "search"
-                  placeholder = " Search location/pin by user"
+                  placeholder = " Search location/username/lat, long"
                   onChange = {this.updateSearchBar}
                   value = {this.state.search}></input>
                 <button type = "submit" id="submit" className= "headerItem">
@@ -1177,11 +1195,12 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                     <p id = "frienduser">{this.state.activeFriend}</p>
                     <p id = "friendinfo"><div class = "page" id = "friendBio">{this.state.activeBio}</div>
                     <a href = {"/ProfSearch/:" +this.state.activeFriend}><button id = "signout">Profile</button></a><br /><br />
-                    Pins
+                    <b>Pins</b>
                     <ol>
                       {pins}
                     </ol>
-                      Trash count: {this.state.activeTrash} lbs
+                    <p class = "NormalText">{noPins}</p>
+                      <b>Trash count:</b> {this.state.activeTrash} lbs
                     </p>
                   </div>
                   </span>
