@@ -37,6 +37,7 @@ db.settings ({
 const userRef = db.collection("users");
 const ref = db.collection("locations");
 const realtime = db.collection('/subways');
+const pinList = db.collection("pins");
 
 
 class Bubble extends Component{
@@ -643,7 +644,7 @@ let query14 = realtime.where('name', '==', this.addCorner3(this.phraseEachUpper(
 }).then(()=>{
 let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 2)))).get().then(snapshot => {
   if (snapshot.empty){
-  return;
+  status = 16;
   }
   snapshot.forEach(doc => {
   if (status === 15){
@@ -653,7 +654,21 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
     this.fly(this.state.lat, this.state.long, 16);
   });
 }})
-})})})})})})})})})})})})})})})})})})})
+}).then(()=>{
+  let query16 = pinList.where('username', '==', search).get().then(snapshot => {
+    if (snapshot.empty){
+      return;
+    }
+    snapshot.forEach(doc => {
+      if (status === 16){
+        let lat = doc.data().lat
+        let long = doc.data().long
+        this.setState({lat: lat, long: long},()=>{
+          this.fly(this.state.lat, this.state.long, 16);
+        })
+      }})
+    })
+})})})})})})})})})})})})})})})})})})});
 }
 
 
@@ -965,7 +980,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                   type = "text"
                   id="box"
                   name = "search"
-                  placeholder = " Search location..."
+                  placeholder = " Search location/pin by user"
                   onChange = {this.updateSearchBar}
                   value = {this.state.search}></input>
                 <button type = "submit" id="submit" className= "headerItem">
