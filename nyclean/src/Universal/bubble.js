@@ -57,7 +57,7 @@ class Bubble extends Component{
                   mouseDown: 0,
                   x: 0,
                   y: 0,
-                  username: "",
+                  username: "Please Register/Sign In",
                   profileWidth: "",
                   height:null,
                   search: "",
@@ -100,7 +100,8 @@ class Bubble extends Component{
                   correctedArray: [],
                   correctedMessageTimestamps: [],
                   correctedReportArray: [],
-                  correctedReportTimestamps: []
+                  correctedReportTimestamps: [],
+                  signedIn:true
                 }
       this.mouseDown = this.mouseDown.bind(this);
       this.mouseUp = this.mouseUp.bind(this);
@@ -299,6 +300,7 @@ class Bubble extends Component{
   renderRedirect = () => {
       return <Redirect to='/profpagesearch' />
   }
+
    handleMouseMove(e){
      if(this.state.dragEvent === true){
        this.setState({x: e.clientX-7, y: e.clientY - 27});
@@ -308,7 +310,18 @@ class Bubble extends Component{
     document.body.onmousedown = this.mouseDown;
     document.body.onmouseup = this.mouseUp;
     document.body.onmousemove = this.handleMouseMove.bind(this);
-
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.setState({
+          signedIn: true,
+          currentUser: user
+        });
+      } else{
+        this.setState({
+          signedIn: false
+        })
+      }
+    });
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         userRef.doc(user.uid).get().then(getDoc => {
@@ -974,6 +987,9 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
   renderRedirect1 = () => {
     return <Redirect to='/userlist'/>
   }
+  renderRedirect2 = () => {
+    return <Redirect to='/intro'/>
+  }
   render(){
     this.state.list = this.sort_by_key(this.state.list, "Totaltrash");
     this.state.ActualTotalTrash = (this.state.list.reduce( function(cnt,o){ return cnt + o.Totaltrash; }, 0));
@@ -987,6 +1003,8 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
   {
     pins = <li><p class = "normalTextPins">no pins set</p></li>;
   }
+  if (this.state.signedIn === true)
+  {
     if (this.state.redirect === false && this.state.validSearch === false)
     {
       return(
@@ -1189,5 +1207,11 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
     )
   }
   }
+  else {
+    return(
+      <div>{this.renderRedirect2()}</div>
+    );
+  }
+}
 }
 export default Bubble;

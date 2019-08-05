@@ -9,12 +9,14 @@ import firebase from './Firestore';
 class App extends Component {
   constructor(){
     super();
-    this.state = {signedIn:true};
+    this.state = {signedIn:true,
+                  redirect:false};
   }
   signOut = () => firebase.auth().signOut().then( () => {
     this.setState({
       signedIn: false,
-      currentUser: null
+      currentUser: null,
+      redirect:true
     });
   });
 
@@ -46,7 +48,8 @@ class App extends Component {
     });
   }
   renderRedirect = () => {
-      return <Redirect to='/Login' />
+    if(this.state.redirect)
+      return <Redirect to='/intro' />
   }
   render(){
     if (this.state.signedIn){
@@ -56,9 +59,10 @@ class App extends Component {
 
           <Bubble />
 
-          
+
           <footer>
             <button id = "signout" className = "small" onClick = {this.signOut}>SIGN OUT</button>
+            <div>{this.renderRedirect()}</div>
 
           </footer>
 
@@ -67,8 +71,11 @@ class App extends Component {
     }
     else if (!this.state.signedIn){
       return(
-        <div>
-        {this.renderRedirect()}
+
+        <div style = {{overflow: "hidden"}}>
+
+          <Bubble />
+
         </div>
       );
     }

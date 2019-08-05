@@ -125,11 +125,12 @@ class Profile extends Component {
       return <Redirect to='/Login' />
   }
   render(){
+    var noPins = ""
     var pins = this.state.pinList.map((x) =>
       <li><p class = "normalTextPins">lat: {x.lat} <br/>lng: {x.long}</p></li>)
     if (pins.length === 0)
   {
-    pins = <li><p class = "normalTextPins">no pins set</p></li>;
+    noPins = "No Pins Set"
   }
     if (!this.state.signedIn){
       return(
@@ -139,7 +140,7 @@ class Profile extends Component {
       }
       else {
   return (
-    <div>
+    <div style = {{overflow:'auto', height:'inherit'}}>
     <a href = "/"> <img id = "back" src = {back} alt= "back"/>
     <img id = "greenyclogo" src = {greenyclogo} alt= "logo"/>
     </a>
@@ -149,8 +150,8 @@ class Profile extends Component {
     <h6 id = "profLinks">
     <br /><div id = "bio">{this.state.userBio}
     <a href = "/EditBio" class = "linkText"><img className = "edit" src = {edit} alt = "edit"/></a></div>
-    <br/>
-    <a href = "/EditEmail" class ="linkText">Change Email</a><br/>
+    <br/><br/>
+    <a href = "/EditEmail" class ="linkText">Change Email</a><br/><br/><br/>
     <a href = "/EditPass" class = "linkText">Change Password</a><br/>
     </h6>
     <div id="profilecircle">
@@ -173,7 +174,7 @@ class Profile extends Component {
       <ol>
       {pins}
       </ol>
-
+      <h3 class = "normalText">{noPins}</h3>
 
 
     </div>

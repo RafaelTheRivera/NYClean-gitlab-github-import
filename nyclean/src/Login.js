@@ -3,6 +3,7 @@ import firebase from './Firestore';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { Redirect } from 'react-router-dom'
 import './App.css'
+import logodisplay from './images/logodisplay.png';
 
 const uiConfig = {
   signInFlow: 'popup' ,   //or can be redirect instead
@@ -75,9 +76,9 @@ class Login extends Component {
       console.log('false')
       return(
         <div>
-          <br /><br /><br /><h1><center class = "normalText">Please Log In/Sign Up</center></h1>
+          <br /><br /><br /><h1><center class = "normalText"><img id = "logodisplay" src = {logodisplay} />Please Log In/Sign Up</center></h1>
           <StyledFirebaseAuth uiConfig = {uiConfig} firebaseAuth = {firebase.auth()}/>
-          
+          <img id = "logodisplay" src = {logodisplay} />
         </div>
       );
     }
