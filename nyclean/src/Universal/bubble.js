@@ -147,6 +147,8 @@ class Bubble extends Component{
         L.polygon(this.overlayCoords, {color: "#28BBB4", fillOpacity: .2, stroke: false})
       ]
     });
+
+
     window.addEventListener("resize", this.updateDimensions);
     const setState = this.setState.bind(this);
     const map = this.map;
@@ -253,11 +255,13 @@ class Bubble extends Component{
       var correctedMessageTimestamps = [];
       var newest = 0;
       for (var i = 0; i < messagesToday.length; i = i + 4) {
-        var updateCounter = 0
-        for (var j = 0; j < correctedArray.length; j = j + 4) {
-          console.log(correctedArray[j+3] + messagesToday[i+3]);
-          if (correctedArray[j+3] > messagesToday[i+3] || correctedArray === undefined){
-            break;
+
+
+            var updateCounter = 0
+          for (var j = 0; j < correctedArray.length; j = j + 4) {
+              console.log(correctedArray[j+3] + messagesToday[i+3]);
+              if (correctedArray[j+3] > messagesToday[i+3] || correctedArray === undefined){
+                break;
           }
           updateCounter = updateCounter + 1
         }
@@ -916,6 +920,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
         })
       })
     this.setState({
+      friendplaceHolder:"USER NOT FOUND.",
       validSearch:false
     })
   }
@@ -960,7 +965,6 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                   onChange = {this.updateSearchBar}
                   value = {this.state.search}></input>
                 <button type = "submit" id="submit" className= "headerItem">
-                  <img alt="" src="https://images.vexels.com/media/users/3/143356/isolated/preview/64e14fe0195557e3f18ea3becba3169b-search-magnifying-glass-by-vexels.png" id="magnifying"/>
                 </button>
               </div>
             </form>
@@ -1057,10 +1061,10 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
             </div>
             <div className = "bubble" id = "bub3">
 
-            <center><p id = "totalcount">TOTAL COUNT</p> <p id = "livecount"><b>{this.state.lbs}</b> lbs</p> <br />
+            <center><p id = "totalcount"><br/>TOTAL COUNT</p> <p id = "livecount"><b>{this.state.lbs}</b> lbs</p>
             Weekly Leaderboard</center>
             <br />
-            <p className = "small">
+            <p className = "small" id = "leftleader">
             <ol>
               {items}
             </ol>
@@ -1093,6 +1097,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                   </form>
 
                   <div className = "searchpage" id = "friendsearch">
+                  <p id = "nouser">{this.state.friendplaceHolder}</p>
                     <div id = "friendinfo">{this.state.userReferences}</div>
 
                   </div>

@@ -15,13 +15,13 @@ class Safety extends Component {
         <a href = "/"> <img id = "back" src = {back} alt= "back"/>
         <img id = "greenyclogo" src = {greenyclogo} alt= "logo"/>
         </a>
-        
+
 
         <center><h1 id = "safetyheader"><b>SAFETY INFORMATION</b></h1></center>
         <br />
 
         <div id = "safetycontent">
-          <p>It can be dangerous to handle waste without taking important safety precautions. To avoid
+          <p className = "left">It can be dangerous to handle waste without taking important safety precautions. To avoid
           injuries and harmful chemicals, please follow the safety tips below.
           Happy cleaning! :-)</p>
           <br />
