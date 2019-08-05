@@ -39,7 +39,7 @@ class About extends Component {
         I love art and technology, and I want to use my passions to help influence
         people and the world in a positive way. </p>
         <h3 className = "ournames"><img id = "pindeco" src = {pin} alt= "pin"/>Rafael Rivera</h3>
-        <p id = "pplinfo">I'm a student from Regis High School. Dying isn't in my best interests, so in order to prove my worth to Charles Darwin, I intend to help stave off our inevitable self-destruction. Merry Christmas.</p>
+        <p id = "pplinfo">I'm a rising senior from Regis High School. Programming has been a hobby of mine for a while, so I wanted to do something cool with it for once.</p>
         </p>
         <img id = "logodisplay" src = {logodisplay} />
         <p id = "logodescribe">This is our GREENYC logo and 2 different variations of our GREENYC icon.
@@ -52,7 +52,7 @@ class About extends Component {
         <br />
         <br />
         <br />
-        
+
 
         </p>
 
