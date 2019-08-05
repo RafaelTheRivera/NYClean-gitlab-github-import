@@ -27,9 +27,8 @@ class About extends Component {
         for Social Good class.</p>
         <p id = "aboutusppl">
         <h3 className = "ournames"><img id = "pindeco" src = {pin} alt= "pin"/>Ethan Gu</h3>
-        <p id = "pplinfo">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-        ad minim veniam, quis nostrud </p>
+        <p id = "pplinfo">I'm a rising junior attending Scarsdale High School.
+        I enjoy playing chess and programming. </p>
         <h3 className = "ournames"><img id = "pindeco" src = {pin} alt= "pin"/>Ian Xiong</h3>
         <p id = "pplinfo">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
@@ -41,8 +40,6 @@ class About extends Component {
         <h3 className = "ournames"><img id = "pindeco" src = {pin} alt= "pin"/>Rafael Rivera</h3>
         <p id = "pplinfo">I'm a student from Regis High School. Dying isn't in my best interests, so in order to prove my worth to Charles Darwin, I intend to help stave off our inevitable self-destruction. Merry Christmas.</p>
         </p>
-
-
       </div>
 
     );

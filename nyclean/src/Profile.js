@@ -69,7 +69,7 @@ class Profile extends Component {
           if(getDoc.data().imageSrc === null || getDoc.data().imageSrc === "" || getDoc.data().imageSrc === "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png") {
           userRef.doc(user.uid).update({
               imageSrc: "https://i.imgur.com/Of7XNtM.png",
-              Totaltrash: this.state.Totaltrash
+              Totaltrash: 0
           })
         }
           if(getDoc.data().Totaltrash === undefined) {

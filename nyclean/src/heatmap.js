@@ -5,16 +5,42 @@ import HeatmapLayer from '../src/HeatmapLayer';
 import { addressPoints } from './realworld.10000.js';
 
 class HeatMap extends React.Component {
+
+  updateDimensions() {
+   const height = window.innerWidth >= 992 ? window.innerHeight : 400
+   this.setState({ height: height })
+ }
+
+ componentWillMount() {
+   this.updateDimensions()
+ }
+
+ componentDidMount() {
+   window.addEventListener("resize", this.updateDimensions.bind(this))
+ }
+
+ componentWillUnmount() {
+   window.removeEventListener("resize", this.updateDimensions.bind(this))
+ }
+
   render() {
     return (
-      <div>
+      <div class="map-container" style={{ height: this.state.height }}>
       <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
  crossOrigin=""/>
         <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
   integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
   crossOrigin=""></script>
-        <Map center={[0,0]} zoom={16} bounds = {[[40.4079549, -74.5768574],[41.0210528, -73.5697356]]} maxBounds = {[[40.4079549, -74.5768574],[41.0210528, -73.5697356]]} maxZoom = {19} minZoom = {10}>
+  <div class="map-container" style={{ height: this.state.height }}>
+        <Map
+        center={[0,0]}
+        zoom={18}
+        bounds = {[[40.4079549, -74.5768574],[41.0210528, -73.5697356]]}
+        maxBounds = {[[40.4079549, -74.5768574],[41.0210528, -73.5697356]]}
+        maxZoom = {19}
+        minZoom = {11}
+        style={{height:"720px"}}>
           <HeatmapLayer
             fitBoundsOnLoad
             fitBoundsOnUpdate
@@ -35,6 +61,7 @@ class HeatMap extends React.Component {
                     [40.5581952, -74.216163], [40.6308063, -74.2023198], [40.6464677, -74.1808265], [40.6423436, -74.1423563], [40.6517223,-74.0660873]] // hole
                   ]} />
         </Map>
+        </div>
       </div>
     );
   }
