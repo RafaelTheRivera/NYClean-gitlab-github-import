@@ -38,10 +38,8 @@ class About extends Component {
         <p id = "pplinfo">Hi! I'm a rising senior attending Bergen County Academies.
         I love art and technology, and I want to use my passions to help influence
         people and the world in a positive way. </p>
-        <h3 className = "ournames"><img id = "pindeco" src = {pin} alt= "pin"/>Rafael Riveras</h3>
-        <p id = "pplinfo">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-        ad minim veniam, quis nostrud </p>
+        <h3 className = "ournames"><img id = "pindeco" src = {pin} alt= "pin"/>Rafael Rivera</h3>
+        <p id = "pplinfo">I'm a student from Regis High School. Dying isn't in my best interests, so in order to prove my worth to Charles Darwin, I intend to help stave off our inevitable self-destruction. Merry Christmas.</p>
         </p>
 
 
