@@ -126,13 +126,8 @@ class Profile extends Component {
     <h2 id = "username">{this.state.userName} <a href = "/EditUser" class = "linkText1"><img className = "edit" src = {edit} alt = "edit"/></a></h2>
     <br /><br />
     <h6 id = "profLinks">
-<<<<<<< HEAD
-    <br /><div id = "usersBio">{this.state.userBio}
+    <br /><div id = "bio">{this.state.userBio}
     <a href = "/EditBio" class = "linkText"><img className = "edit" src = {edit} alt = "edit"/></a></div>
-=======
-    <p id = "bio"><br />{this.state.userBio}
-    <a href = "/EditBio" class = "linkText"><img className = "edit" src = {edit} alt = "edit"/></a></p>
->>>>>>> 78b7632deef4f952583b68a6939f159366dabbf4
     <br/>
     <a href = "/EditEmail" class ="linkText">Change Email</a><br/>
     <a href = "/EditPass" class = "linkText">Change Password</a><br/>
