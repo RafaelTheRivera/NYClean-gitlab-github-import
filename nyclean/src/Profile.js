@@ -118,7 +118,7 @@ class Profile extends Component {
       }
       else {
   return (
-    <div class = "appText">
+    <div>
     <a href = "/"> <img id = "back" src = {back} alt= "back"/>
     <img id = "greenyclogo" src = {greenyclogo} alt= "logo"/>
     </a>
@@ -126,7 +126,7 @@ class Profile extends Component {
     <h2 id = "username">{this.state.userName} <a href = "/EditUser" class = "linkText1"><img className = "edit" src = {edit} alt = "edit"/></a></h2>
     <br /><br />
     <h6 id = "profLinks">
-    <p className = "left"><br />{this.state.userBio}
+    <p id = "bio"><br />{this.state.userBio}
     <a href = "/EditBio" class = "linkText"><img className = "edit" src = {edit} alt = "edit"/></a></p>
     <br/>
     <a href = "/EditEmail" class ="linkText">Change Email</a><br/>
@@ -147,13 +147,14 @@ class Profile extends Component {
 
     <div id="profilepin">
 
-      <h3>Trash Count: {this.state.Totaltrash} lbs</h3>
+      <br/><h3>Trash Count: {this.state.Totaltrash} lbs</h3><br/><br />
       <h3>Pins:</h3>
       <ol>
         <li>20 E 18th Street</li>
         <li>58 W 72nd Street</li>
         <li>103 E 8th Street</li>
       </ol>
+
 
 
     </div>

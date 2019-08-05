@@ -67,7 +67,7 @@ class Bubble extends Component{
                   uploadImageBefore: "",
                   uploadImageAfter: "",
                   fullname: "",
-                  Totaltrash: Math.floor(Math.random()*21),
+                  Totaltrash: null,
                   list: [],
                   ActualTotalTrash: 0,
                   caption: "",
@@ -82,12 +82,14 @@ class Bubble extends Component{
                   activeBio: "",
                   activePfp: "",
                   activeTrash: "",
+                  reportMessage: "",
                   userSearch:"",
                   redirect:false,
                   friendplaceHolder:"",
                   messages: [],
                   loadScreen: "opacity(100%)",
-                  loadScreen2: "visible"
+                  loadScreen2: "visible",
+                  reports: []
                 }
       this.mouseDown = this.mouseDown.bind(this);
       this.mouseUp = this.mouseUp.bind(this);
@@ -139,6 +141,8 @@ class Bubble extends Component{
         L.polygon(this.overlayCoords, {color: "#28BBB4", fillOpacity: .2, stroke: false})
       ]
     });
+
+
     window.addEventListener("resize", this.updateDimensions);
     const setState = this.setState.bind(this);
     const map = this.map;
@@ -157,6 +161,7 @@ class Bubble extends Component{
           const dataMark =  L.marker([dataArray[i].lat,[dataArray[i].long]]).addTo(map).bindPopup("<div id = 'popup'><p id = 'posttitle'>Post by:  "+ dataArray[i].username +"<p id = 'date'> on "+ date.substr(0, date.indexOf("201" || "202")) +"</p></p><div id = 'controlbody'><p id = 'bodycaption'>"+ dataArray[i].body +"</p></div></div><div id='pictures'><img src = "+ dataArray[i].beforeImage +" id = 'imageBefore'/><img src = "+ dataArray[i].afterImage +" id = 'imageAfter'/></div>", {maxWidth : 600}).openPopup();
           map.closePopup();
         }
+        console.log(dataArray);
         setState({lbs: totalLbs});
     });
 
@@ -170,6 +175,7 @@ class Bubble extends Component{
             fullname : doc.data().fullname
           })
         })
+        this.setState({})
       });
       querySnapshot.forEach(function(doc){
         if(doc.data().fullname !== undefined){
@@ -194,8 +200,40 @@ class Bubble extends Component{
     console.log(currentDate);
     var messagesToday = [];
     var messageTimestamps = [];
+    var reportsToday = [];
+    var reportTimestamps = [];
 
-    
+
+    db.collection("reports").get().then((reportSnapshot) => {
+      reportSnapshot.forEach((doc) =>{
+        if(doc.data().date.substr(0,15) === currentDay){
+          reportsToday.push(doc.data().username);
+          reportsToday.push(doc.data().message);
+          reportsToday.push(doc.data().date);
+          reportsToday.push(doc.data().time);
+          reportTimestamps.push(doc.data().date);
+        }
+      });
+      var correctedReportArray = [];
+      var correctedReportTimestamps = [];
+      var newestReport = 0;
+      for (var i = 0; i < reportsToday.length; i = i + 4) {
+        if (correctedReportArray.length !== 0){
+          for (var j = 0; j < correctedReportArray.length; j = j + 4) {
+            if (correctedReportArray[j+3] < reportsToday[i+3] && (j <= newestReport || newestReport === 0)){
+              newestReport = j+4;
+            }
+          }
+        }
+        correctedReportArray.splice(newestReport, 0, reportsToday[i], reportsToday[i+1], reportsToday[i+2], reportsToday[i+3]);
+        correctedReportTimestamps.splice(newestReport/4, 0, reportsToday[i+2]);
+      }
+      console.log(correctedReportArray);
+      const reports = correctedReportTimestamps.map(l => (
+        <div className = "messageItem"><span className = "username">{correctedReportArray[correctedReportArray.indexOf(l)-2]}</span>  <span className = "timestamp">{l.substr(16,8)}</span> <br /> {correctedReportArray[correctedReportArray.indexOf(l)-1]}</div>
+      ));
+      this.setState({reports: reports});
+
 
     db.collection("updates").get().then((updateSnapshot) => {
       updateSnapshot.forEach((doc) =>{
@@ -211,14 +249,10 @@ class Bubble extends Component{
       var correctedMessageTimestamps = [];
       var newest = 0;
       for (var i = 0; i < messagesToday.length; i = i + 4) {
-        console.log("hi");
         if (correctedArray.length !== 0){
-          console.log("hello");
           for (var j = 0; j < correctedArray.length; j = j + 4) {
-            console.log("sup");
             if (correctedArray[j+3] < messagesToday[i+3] && (j <= newest || newest === 0)){
               newest = j+4;
-              console.log(newest);
             }
           }
         }
@@ -232,8 +266,8 @@ class Bubble extends Component{
       this.setState({messages: messages,
                     loadScreen: "opacity(0%)",
                     loadScreen2: "hidden"});
+      });
     });
-
   }
   sort_by_key(array, key)
   {
@@ -264,9 +298,6 @@ class Bubble extends Component{
             imageSrc: "https://i.imgur.com/Of7XNtM.png"
           })
         }
-        userRef.doc(user.uid).update({
-          Totaltrash: this.state.Totaltrash
-        })
         userRef.doc(user.uid).get().then(getDoc => {
         this.setState({
             imgsrc: getDoc.data().imageSrc
@@ -834,6 +865,24 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
       updateMessage: ""
     });
   }
+  updateReport = e =>{
+    this.setState({
+      reportMessage: e.target.value
+    })
+  }
+  submitReport = e =>{
+    e.preventDefault();
+    const reports = db.collection("reports");
+    reports.doc().set({
+      username: this.state.username,
+      date: Date(),
+      message: this.state.reportMessage,
+      time: Date.now()
+    });
+    this.setState({
+      reportMessage: ""
+    });
+  }
   renderNewProfPage = e => {
     console.log('yup')
     e.preventDefault();
@@ -845,7 +894,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
         })
       })
     this.setState({
-      friendplaceHolder:"Could Not Find User"
+      friendplaceHolder:"USER NOT FOUND."
     })
   }
   renderRedirect = (name) => {
@@ -879,7 +928,6 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                   onChange = {this.updateSearchBar}
                   value = {this.state.search}></input>
                 <button type = "submit" id="submit" className= "headerItem">
-                  <img alt="" src="https://images.vexels.com/media/users/3/143356/isolated/preview/64e14fe0195557e3f18ea3becba3169b-search-magnifying-glass-by-vexels.png" id="magnifying"/>
                 </button>
               </div>
             </form>
@@ -934,7 +982,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
             </div>
             <div className = "bubble" id = "bub2">
             </div>
-            <img className = "cover" id = "cover2" src = {cover} alt = "cover"/>
+            <img className = "cover" id = "cover2" src = {cover} onClick = {this.openFeed} alt = "cover"/>
 
 
             <div id = "tableft" onClick = {this.opentab1}><center><p className = "small">UPDATES</p></center></div>
@@ -953,10 +1001,10 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
             <div id = "tabright" onClick = {this.opentab2}><center><p className = "small">REPORTS</p></center></div>
               <span style = {{visibility: this.state.tab2IsOpen}}>
                 <div id = "line2"></div>
-                <div className = "tab" id = "tab2">{this.state.messages}</div>
+                <div className = "tab" id = "tab2">{this.state.reports}</div>
                 <div className = "texttype">
-                  <form onSubmit = {this.submitUpdate}>
-                    <input className = "feedform" type = "text" placeholder = "Report a location..."/>
+                  <form onSubmit = {this.submitReport}>
+                    <input className = "feedform" type = "text" placeholder = "Report a location..." onChange = {this.updateReport} value = {this.state.reportMessage}/>
                     <button type = "submit" className = "feedbutton"></button>
                   </form>
                 </div>
@@ -976,17 +1024,17 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
             </div>
             <div className = "bubble" id = "bub3">
 
-            <center><p id = "totalcount">TOTAL COUNT</p> <p id = "livecount"><b>{this.state.ActualTotalTrash}</b> lbs</p> <br />
+            <center><p id = "totalcount"><br/>TOTAL COUNT</p> <p id = "livecount"><b>{this.state.lbs}</b> lbs</p>
             Weekly Leaderboard</center>
             <br />
-            <p className = "small">
+            <p className = "small" id = "leftleader">
             <ol>
               {items}
             </ol>
             </p>
 
             </div>
-            <img className = "cover" id = "cover3" src = {cover} alt = "cover"/>
+            <img className = "cover" id = "cover3" src = {cover} onClick = {this.openLeader} alt = "cover"/>
           </span>
 
 
@@ -998,7 +1046,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
             </div>
             <div className = "bubble" id = "bub4" style = {{top: this.state.height - 379}}>
             </div>
-            <img className = "cover" id = "cover4" style = {{top: this.state.height - 117}} src = {cover} alt = "cover"/>
+            <img className = "cover" id = "cover4" style = {{top: this.state.height - 117}} src = {cover} onClick = {this.openFriends} alt = "cover"/>
 
 
                   <span style = {{visibility: this.state.FriendSearchIsOpen}}>
@@ -1012,7 +1060,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                   </form>
 
                   <div className = "searchpage" id = "friendsearch">
-                  <h4>{this.state.friendplaceHolder}</h4>
+                  <p id = "nouser">{this.state.friendplaceHolder}</p>
                     <div id = "friendinfo">{this.state.userReferences}</div>
 
                   </div>
@@ -1025,7 +1073,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                   <div className = "page" id = "friend">
                     <img id = "friendprofile" src = {this.state.activePfp}/>
                     <p id = "frienduser">{this.state.activeFriend}</p>
-                    <p id = "friendinfo">{this.state.activeBio}<br /><br />
+                    <p id = "friendinfo"><div class = "page" id = "friendBio">{this.state.activeBio}</div><br /><br />
                     Pins
                       <ol>
                         <li>pin</li>

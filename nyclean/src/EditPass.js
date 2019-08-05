@@ -107,12 +107,12 @@ class EditPass extends Component {
     <input type = "text"
     onChange = {this.handleChange}
     value = {this.state.newPass}
-    />
+    /><br/><br />
     Re-enter Current Password:
     <input type = "text"
     onChange = {this.handleChangePass}
     value = {this.state.passWord}
-    />
+    /><br/><br />
     <button onClick={this.changePass}>Change</button>
     </form>
     </div>

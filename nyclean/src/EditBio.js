@@ -93,14 +93,14 @@ class EditBio extends Component {
   <img id = "greenyclogo" src = {greenyclogo} alt= "logo"/>
   </a>
   <br></br><br></br>
-  <p>New Bio:</p>
   <form class = "editUserBar" onSubmit={e=>e.preventDefault()}>
+  New Bio:<br /><br/>
   <textarea type = "text"
   rows = "5"
   cols = "50"
   onChange = {this.handleChange}
   value = {this.state.userBio}
-  /><br />
+  /><br /><br/>
   <button onClick={this.changeBio}>Change</button>
   </form>
   </div>
