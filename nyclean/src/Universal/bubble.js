@@ -268,6 +268,7 @@ class Bubble extends Component{
       const messages = correctedMessageTimestamps.map(l => (
         <div className = "messageItem"><span className = "username">{correctedArray[correctedArray.indexOf(l)-2]}</span>  <span className = "timestamp">{l.substr(16,8)}</span> <br /> {correctedArray[correctedArray.indexOf(l)-1]}</div>
       ));
+      this.map.setView([40.7280822, -73.9937973], 16);
       this.setState({messages: messages,
                     loadScreen: "opacity(0%)",
                     loadScreen2: "hidden"});
