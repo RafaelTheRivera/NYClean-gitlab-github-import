@@ -73,6 +73,7 @@ class Bubble extends Component{
                   fullname: "",
                   Totaltrash: null,
                   list: [],
+                  listPins: [],
                   ActualTotalTrash: 0,
                   caption: "",
                   filelink: "",
@@ -177,7 +178,6 @@ class Bubble extends Component{
             fullname : doc.data().fullname
           })
         })
-        this.setState({})
       });
       querySnapshot.forEach(function(doc){
         if(doc.data().fullname !== undefined){
@@ -193,7 +193,8 @@ class Bubble extends Component{
            ));
         this.setState({userReferences: list,
                       idStuff: idStuff});
-    });
+});
+
 
     var currentTime = Date.now();
     var currentDate = Date();
@@ -335,6 +336,20 @@ class Bubble extends Component{
       body: e.target.value
     });
   }
+  getPins = () => {
+    db.collection("pins").get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+          if (this.state.activeFriend === doc.data().username)
+          {
+            this.setState({
+              listPins:this.state.listPins.concat({
+                lat:doc.data().lat,
+                long:doc.data().long})
+            })
+          }
+      })
+      })
+}
   phraseEachUpper = (phrase) => {
     var i = 0;
       phrase = phrase.substring(i, i+1).toUpperCase() + phrase.substring(i+1, phrase.length);
@@ -808,9 +823,11 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                           activeTrash = doc.data().Totaltrash;
                           console.log(activePfp);
                           this.setState({activeBio: activeBio, activePfp: activePfp, activeTrash: activeTrash});
+                          this.getPins();
+                          console.log(this.state.listPins)
                       }.bind(this))
                     }
-                  );
+                  )
     }
   }
 
@@ -917,6 +934,8 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
     const items = this.state.list.slice(0, 5).map((trash) =>
       <li> {trash.fullname}: <b>{trash.Totaltrash}</b> lbs</li>
     );
+    const pins = this.state.listPins.map((x) =>
+      <li><center>lat: {x.lat}, long: {x.long}</center></li>)
     if (this.state.redirect === false && this.state.validSearch === false)
     {
       return(
@@ -1091,15 +1110,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                     <a href = {"/ProfSearch/:" +this.state.activeFriend}><button id = "signout">Profile</button></a><br /><br />
                     Pins
                       <ol>
-                        <li>pin</li>
-                        <li>pin</li>
-                        <li>pin</li>
-                        <li>pin</li>
-                        <li>pin</li>
-                        <li>pin</li>
-                        <li>pin</li>
-                        <li>pin</li>
-                        <li>pin</li>
+                      {pins}
                       </ol>
                       Trash count: {this.state.activeTrash} lbs
                     </p>
