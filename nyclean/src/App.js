@@ -14,9 +14,9 @@ class App extends Component {
   }
   signOut = () => firebase.auth().signOut().then( () => {
     this.setState({
+      redirect:true,
       signedIn: false,
-      currentUser: null,
-      redirect:true
+      currentUser: null
     });
   });
 
@@ -48,10 +48,29 @@ class App extends Component {
     });
   }
   renderRedirect = () => {
-    if(this.state.redirect)
+    if(!this.state.signedIn)
       return <Redirect to='/intro' />
   }
+  renderRedirect1 = () => {
+    if(this.state.redirect)
+      return <Redirect to='/introsignout' />
+  }
   render(){
+    if (this.state.redirect){
+      return(
+        <div>
+        {this.renderRedirect1()}
+        </div>
+      )
+    }
+    else if (!this.state.signedIn)
+    {
+      return(
+        <div>
+        {this.renderRedirect()}
+        </div>
+      )
+    }
     if (this.state.signedIn){
       return(
 
@@ -65,16 +84,6 @@ class App extends Component {
             <div>{this.renderRedirect()}</div>
 
           </footer>
-
-        </div>
-      );
-    }
-    else if (!this.state.signedIn){
-      return(
-
-        <div style = {{overflow: "hidden"}}>
-
-          <Bubble />
 
         </div>
       );

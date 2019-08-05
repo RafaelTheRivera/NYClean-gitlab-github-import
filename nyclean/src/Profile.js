@@ -17,12 +17,14 @@ class Profile extends Component {
     imageInput: '',
     pinList: [],
     userBio:'Default Text',
-    signedIn:true};
+    signedIn:true,
+    redirect:false};
   }
   signOut = () => firebase.auth().signOut().then( () => {
     this.setState({
-      signedIn: false,
-      currentUser: null
+      currentUser: null,
+      redirect:true,
+      signedIn: false
     });
   });
   updateInput = e => {
@@ -122,7 +124,12 @@ class Profile extends Component {
   }
 
   renderRedirect = () => {
-      return <Redirect to='/Login' />
+    if (this.state.redirect)
+      return <Redirect to='/introsignout' />
+  }
+  renderRedirect1 = () => {
+    if (!this.state.signedIn)
+      return <Redirect to='/intro' />
   }
   render(){
     var noPins = ""
@@ -132,13 +139,20 @@ class Profile extends Component {
   {
     noPins = "No Pins Set"
   }
-    if (!this.state.signedIn){
-      return(
-        <div>
-        {this.renderRedirect()}
-        </div>)
+  if (this.state.redirect){
+    return(
+    <div>
+    {this.renderRedirect()}
+    </div>
+  )
+  }
+  else if (!this.state.signedIn){
+    return(
+      <div>
+      {this.renderRedirect1()}
+      </div>)
       }
-      else {
+  else {
   return (
     <div style = {{overflow:'auto', height:'inherit'}}>
     <a href = "/"> <img id = "back" src = {back} alt= "back"/>
@@ -180,7 +194,6 @@ class Profile extends Component {
     </div>
     <footer>
       <button id = "signout" className = "small" onClick = {this.signOut}>SIGN OUT</button>
-
     </footer>
     </div>
   );
