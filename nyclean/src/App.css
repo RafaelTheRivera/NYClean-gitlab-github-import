@@ -709,6 +709,13 @@ footer {
   bottom: 5;
 }
 
+#signoutbutactuallyprofile{
+    background-color: white;
+    border-color: black;
+    border-radius: 5px;
+    bottom: 5;
+}
+
 .edit{
   height: 15px;
   width: auto;
