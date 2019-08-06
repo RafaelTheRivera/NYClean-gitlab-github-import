@@ -25,7 +25,7 @@ class HeatMap extends React.Component {
 
   render() {
     return (
-      <div class="map-container" style={{ height: this.state.height }}>
+      <div class="map-container" style={{ height: this.state.height - 40}}>
       <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
  crossOrigin=""/>
@@ -40,7 +40,7 @@ class HeatMap extends React.Component {
         maxBounds = {[[40.4079549, -74.5768574],[41.0210528, -73.5697356]]}
         maxZoom = {19}
         minZoom = {11}
-        style={{height:"720px"}}>
+        style={{height: this.state.height - 40}}>
           <HeatmapLayer
             fitBoundsOnLoad
             fitBoundsOnUpdate

@@ -1,4 +1,4 @@
-{
+var districts = [{
 "users": [{
   "meta" : {
     "view" : {
@@ -518,4 +518,5 @@
 , [ "row-9hbu-jduc_7cjj", "00000000-0000-0000-4A3F-10891D0BB287", 0, 1450726363, null, 1450726363, null, "{ }", "POINT (-73.948415153289 40.609377701137696)", "299", "Madison", "1", "Madison", "", "", "0.0", "Brooklyn" ]
  ]
 }]
-}
+}]
+module.exports.districts = districts;
