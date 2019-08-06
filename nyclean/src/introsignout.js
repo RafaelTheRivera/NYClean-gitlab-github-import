@@ -22,7 +22,7 @@ class IntroSignOut extends Component {
     return(
       <div><br/>
       <h4>Successfully Signed Out!</h4>
-      <a href = "/login"><center><button id = "signout" className = "large">REGISTER/SIGN IN</button></center></a><br/><br/>
+      <a href = "/login"><button id = "signout" className = "large">REGISTER/SIGN IN</button></a><br/><br/><br/><br/><br/><br/><br/>
       <Aboutintro />
       <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
       <Missionintro />
