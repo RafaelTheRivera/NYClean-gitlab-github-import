@@ -39,6 +39,13 @@ const ref = db.collection("locations");
 const realtime = db.collection('/subways');
 const pinList = db.collection("pins");
 
+const getUsers = db.collection("users").get();
+const getLocations = db.collection("locations").get();
+const getSubways = db.collection("subways").get();
+const getPins = db.collection("pins").get();
+const getReports = db.collection("reports").get();
+const getUpdates = db.collection("updates").get();
+
 
 class Bubble extends Component{
   constructor(props){
@@ -100,7 +107,15 @@ class Bubble extends Component{
                   correctedArray: [],
                   correctedMessageTimestamps: [],
                   correctedReportArray: [],
-                  correctedReportTimestamps: []
+                  correctedReportTimestamps: [],
+                  greenIcon: L.icon({
+                      iconUrl: emptypin,
+                      iconSize:     [20, 35], // size of the icon
+                      shadowSize:   [50, 64], // size of the shadow
+                      iconAnchor:   [11, 34], // point of the icon which will correspond to marker's location
+                      shadowAnchor: [4, 62],  // the same for the shadow
+                      popupAnchor:  [0, -20] // point from which the popup should open relative to the iconAnchor
+                  })
                 }
       this.mouseDown = this.mouseDown.bind(this);
       this.mouseUp = this.mouseUp.bind(this);
@@ -153,11 +168,11 @@ class Bubble extends Component{
       ]
     });
 
-
     window.addEventListener("resize", this.updateDimensions);
     const setState = this.setState.bind(this);
     const map = this.map;
-    const pinData = db.collection("pins").get().then(function(querySnapshot) {
+    const state = this.state
+    const pinData = getPins.then(function(querySnapshot) {
         var dataArray = [];
         var totalLbs = 0;
         querySnapshot.forEach(function(doc) {
@@ -165,20 +180,19 @@ class Bubble extends Component{
         });
         for (var i = 0; i < dataArray.length; i++) {
           totalLbs = totalLbs + dataArray[i].lbs;
-          const dataMark =  L.marker([dataArray[i].lat,[dataArray[i].long]]).addTo(map).bindPopup("<p id = 'set'>Pin location set</p>").openPopup();
+          const dataMark =  L.marker([dataArray[i].lat,[dataArray[i].long]], {icon: state.greenIcon}).addTo(map).bindPopup("<p id = 'set'>Pin location set</p>").openPopup();
         }
         for (var i = 0; i < dataArray.length; i++) {
           const date = dataArray[i].date
-          const dataMark =  L.marker([dataArray[i].lat,[dataArray[i].long]]).addTo(map).bindPopup("<div id = 'popup'><p id = 'posttitle'>Post by:  "+ dataArray[i].username +"<p id = 'date'> on "+ date.substr(0, date.indexOf("201" || "202")) +"</p></p><div id = 'controlbody'><p id = 'bodycaption'>"+ dataArray[i].body +"</p></div></div><div id='pictures'><img src = "+ dataArray[i].beforeImage +" id = 'imageBefore'/><img src = "+ dataArray[i].afterImage +" id = 'imageAfter'/></div>", {maxWidth : 600}).openPopup();
+          const dataMark =  L.marker([dataArray[i].lat,[dataArray[i].long]], {icon: state.greenIcon}).addTo(map).bindPopup("<div id = 'popup'><p id = 'posttitle'>Post by:  "+ dataArray[i].username +"<p id = 'date'> on "+ date.substr(0, date.indexOf("201" || "202")) +"</p></p><div id = 'controlbody'><p id = 'bodycaption'>"+ dataArray[i].body +"</p></div></div><div id='pictures'><img src = "+ dataArray[i].beforeImage +" id = 'imageBefore'/><img src = "+ dataArray[i].afterImage +" id = 'imageAfter'/></div>", {maxWidth : 600}).openPopup();
           map.closePopup();
         }
-        console.log(dataArray);
         setState({lbs: totalLbs});
     });
 
     var userReferences = [];
     var idStuff = [];
-    db.collection("users").get().then((querySnapshot) => {
+    getUsers.then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         this.setState({
           list: this.state.list.concat({
@@ -194,8 +208,6 @@ class Bubble extends Component{
           idStuff.push(doc.data().fullname);
         }
       });
-          console.log(idStuff);
-          console.log(userReferences);
           const list = userReferences.map(l =>(
              <ListItem item={l} clickFunction={this.openFriendPage}/>
            ));
@@ -208,14 +220,13 @@ class Bubble extends Component{
     var currentDate = Date();
     var currentDay = currentDate.substr(0, 15);
     var currentHour = currentDate.substr(16,8);
-    console.log(currentDate);
     var messagesToday = [];
     var messageTimestamps = [];
     var reportsToday = [];
     var reportTimestamps = [];
 
 
-    db.collection("reports").get().then((reportSnapshot) => {
+    getReports.then((reportSnapshot) => {
       reportSnapshot.forEach((doc) =>{
         if(doc.data().date.substr(0,15) === currentDay){
           reportsToday.push(doc.data().username);
@@ -230,8 +241,7 @@ class Bubble extends Component{
       for (var i = 0; i < reportsToday.length; i = i + 4) {
         var counter = 0
         for (var j = 0; j < correctedReportArray.length; j = j + 4) {
-          console.log(correctedReportArray[j+3] + reportsToday[i+3]);
-          if (correctedReportArray[j+3] > reportsToday[i+3] || correctedReportArray === undefined){
+          if (correctedReportArray[j+3] < reportsToday[i+3] || correctedReportArray === undefined){
             break;
           }
           counter = counter + 1
@@ -239,7 +249,6 @@ class Bubble extends Component{
         correctedReportArray.splice(counter * 4, 0, reportsToday[i], reportsToday[i+1], reportsToday[i+2], reportsToday[i+3]);
         correctedReportTimestamps.splice(counter, 0, reportsToday[i+2]);
       }
-      console.log(correctedReportArray);
       const reports = correctedReportTimestamps.map(l => (
         <div className = "messageItem"><span className = "username">{correctedReportArray[correctedReportArray.indexOf(l)-2]}</span>  <span className = "timestamp">{l.substr(16,8)}</span> <br /> {correctedReportArray[correctedReportArray.indexOf(l)-1]}</div>
       ));
@@ -248,7 +257,7 @@ class Bubble extends Component{
                     correctedReportArray: correctedReportArray});
 
 
-    db.collection("updates").get().then((updateSnapshot) => {
+    getUpdates.then((updateSnapshot) => {
       updateSnapshot.forEach((doc) =>{
         if(doc.data().date.substr(0,15) === currentDay){
           messagesToday.push(doc.data().username);
@@ -266,8 +275,7 @@ class Bubble extends Component{
 
             var updateCounter = 0
           for (var j = 0; j < correctedArray.length; j = j + 4) {
-              console.log(correctedArray[j+3] + messagesToday[i+3]);
-              if (correctedArray[j+3] > messagesToday[i+3] || correctedArray === undefined){
+              if (correctedArray[j+3] < messagesToday[i+3] || correctedArray === undefined){
                 break;
           }
           updateCounter = updateCounter + 1
@@ -275,7 +283,6 @@ class Bubble extends Component{
         correctedArray.splice(updateCounter * 4, 0, messagesToday[i], messagesToday[i+1], messagesToday[i+2], messagesToday[i+3]);
         correctedMessageTimestamps.splice(updateCounter, 0, messagesToday[i+2]);
       }
-      console.log(correctedArray);
       const messages = correctedMessageTimestamps.map(l => (
         <div className = "messageItem"><span className = "username">{correctedArray[correctedArray.indexOf(l)-2]}</span>  <span className = "timestamp">{l.substr(16,8)}</span> <br /> {correctedArray[correctedArray.indexOf(l)-1]}</div>
       ));
@@ -349,7 +356,7 @@ class Bubble extends Component{
     });
   }
   getPins = () => {
-    db.collection("pins").get().then((querySnapshot) => {
+    getPins.then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
           if (this.state.activeFriend === doc.data().username)
           {
@@ -705,7 +712,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
       this.setState({totalPins: this.state.totalPins + 1});
       var coords = this.map.mouseEventToLatLng(e);
       this.setState({coords: coords})
-      this.setState({newMark: L.marker(coords).addTo(this.map).bindPopup("<p id = 'set'>Pin location set</p>").openPopup()});
+      this.setState({newMark: L.marker(coords, {icon: this.state.greenIcon}).addTo(this.map).bindPopup("<p id = 'set'>Pin location set</p>").openPopup()});
       if (this.state.pinIsOpen === "hidden"){
         this.openPin();
       }
@@ -840,15 +847,12 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                     FriendPageIsOpen: "visible",
                     activeFriend: name,
                     listPins: []},()=>{
-                      console.log("openFriendPage was activated" + this.state.activeFriend);
                       var id = this.state.idStuff[this.state.idStuff.indexOf(this.state.activeFriend)-1];
-                      console.log(id);
-                      var documentReference = db.collection('users').doc(id);
-                      documentReference.get().then(function(doc) {
+                      var documentReference = getUsers.doc(id);
+                      documentReference/*.get*/.then(function(doc) {
                           activeBio = doc.data().bio;
                           activePfp = doc.data().imageSrc;
                           activeTrash = doc.data().Totaltrash;
-                          console.log(activePfp);
                           this.setState({activeBio: activeBio, activePfp: activePfp, activeTrash: activeTrash});
                           this.getPins();
                       }.bind(this))
@@ -875,7 +879,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
       body: this.state.caption
     })
     this.map.removeLayer(this.state.newMark);
-    const postedMarker = L.marker([this.state.coords.lat,this.state.coords.lng]).addTo(this.map).bindPopup("<div id = 'popup'><p id = 'posttitle'>Post by:  "+ this.state.username +"<p id = 'date'> on "+ Date().substr(0, Date().indexOf("201" || "202")) +"</p></p><div id = 'controlbody'><p id = 'bodycaption'>"+ this.state.caption +"</p></div></div><div id='pictures'><img src = "+ this.state.uploadImageBefore +" id = 'imageBefore'/><img src = "+ this.state.uploadImageAfter +" id = 'imageAfter'/></div>", {maxWidth : 600}).openPopup();
+    const postedMarker = L.marker([this.state.coords.lat,this.state.coords.lng], {icon: this.state.greenIcon}).addTo(this.map).bindPopup("<div id = 'popup'><p id = 'posttitle'>Post by:  "+ this.state.username +"<p id = 'date'> on "+ Date().substr(0, Date().indexOf("201" || "202")) +"</p></p><div id = 'controlbody'><p id = 'bodycaption'>"+ this.state.caption +"</p></div></div><div id='pictures'><img src = "+ this.state.uploadImageBefore +" id = 'imageBefore'/><img src = "+ this.state.uploadImageAfter +" id = 'imageAfter'/></div>", {maxWidth : 600}).openPopup();
     this.setState({caption: "", pinupdate: true, pinIsOpen: "hidden", image2visible: "hidden", image1visible: "hidden"});
   }
   updateImage = e =>{
@@ -913,14 +917,16 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
       time: Date.now()
     });
     var addMessage = this.state.correctedArray;
-    addMessage.push(this.state.username, this.state.updateMessage, Date(), Date.now());
+    addMessage.splice(0,0,this.state.username, this.state.updateMessage, Date(), Date.now());
     var newTimestamp = this.state.correctedMessageTimestamps;
-    newTimestamp.push(Date());
+    newTimestamp.splice(0,0,Date());
     this.setState({correctedArray: addMessage, correctedMessageTimestamps: newTimestamp},() =>{
       this.setState({messages: this.state.correctedMessageTimestamps.map(l => (
         <div className = "messageItem"><span className = "username">{this.state.correctedArray[this.state.correctedArray.indexOf(l)-2]}</span>  <span className = "timestamp">{l.substr(16,8)}</span> <br /> {this.state.correctedArray[this.state.correctedArray.indexOf(l)-1]}</div>
       ))});
     });
+    var messageScroll = document.getElementById('tab1');
+    messageScroll.scrollTo(0, 0);
     this.setState({
       updateMessage: ""
     });
@@ -940,14 +946,16 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
       time: Date.now()
     });
     var addReport = this.state.correctedReportArray;
-    addReport.push(this.state.username, this.state.reportMessage, Date(), Date.now());
+    addReport.splice(0,0,this.state.username, this.state.reportMessage, Date(), Date.now());
     var newReportTimestamp = this.state.correctedReportTimestamps;
-    newReportTimestamp.push(Date());
-    this.setState({correctedReportArray: addReport, correctedReportTimestamps: newReportTimestamp},() =>{
+    newReportTimestamp.splice(0,0,Date());
+    this.setState({correctedReportArray: addReport, correctedReportTimestamps: newReportTimestamp, writing: false},() =>{
       this.setState({reports: this.state.correctedReportTimestamps.map(l => (
         <div className = "messageItem"><span className = "username">{this.state.correctedReportArray[this.state.correctedReportArray.indexOf(l)-2]}</span>  <span className = "timestamp">{l.substr(16,8)}</span> <br /> {this.state.correctedReportArray[this.state.correctedReportArray.indexOf(l)-1]}</div>
       ))});
     });
+    var reportScroll = document.getElementById('tab2');
+    reportScroll.scrollTo(0, 0);
     this.setState({
       reportMessage: ""
     });

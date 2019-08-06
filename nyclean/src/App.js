@@ -48,15 +48,17 @@ class App extends Component {
   renderRedirect = () => {
       return <Redirect to='/Login' />
   }
+  shouldComponentUpdate = () =>{
+    return false
+  }
   render(){
+    console.log("render Call");
     if (this.state.signedIn){
       return(
 
-        <div style = {{overflow: "hidden"}}>
+        <div id="mainpage" style = {{overflow: "hidden"}}>
 
-          <Bubble />
-
-          
+          <Bubble/>
           <footer>
             <button id = "signout" className = "small" onClick = {this.signOut}>SIGN OUT</button>
 

@@ -55,6 +55,7 @@ class Recalc extends Component {
               Totaltrash: poundData[i+1]
               });
           }
+          console.log("finished");
       });
   }
   cleanCache(){
@@ -79,6 +80,7 @@ class Recalc extends Component {
           db.collection("reports").doc(doc.id).delete();
         }
       });
+      console.log("finished");
     });
   }
   deleteRepeats(){
@@ -118,6 +120,8 @@ class Recalc extends Component {
           console.log(safeArray);
         }
       }
+
+      console.log("finished");
     });
   }
   render(){
