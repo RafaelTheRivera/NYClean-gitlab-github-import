@@ -1,4 +1,10 @@
-import firebase from "./Firestore"
+import React, {Component} from 'react';
+import './App.css';
+import firebase from './Firestore'
+import { Redirect } from 'react-router-dom';
+import back from './images/back.png';
+import edit from './images/edit.png';
+import greenyclogo from './images/greenyclogo.png';
 
 const places = firebase.database().ref("/users/0/data");
 
