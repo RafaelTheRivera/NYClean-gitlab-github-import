@@ -636,7 +636,27 @@ class Bubble extends Component{
                   )
     }
   }
-
+  openFriendPage1 = e => {
+    e.preventDefault();
+    var activeBio, activePfp, activeTrash;
+    if (this.state.FriendPageIsOpen === "hidden"){
+      this.setState({FriendSearchIsOpen: "hidden",
+                    FriendPageIsOpen: "visible",
+                    activeFriend: this.state.userSearch,
+                    listPins: []},()=>{
+                      var id = this.state.idStuff[this.state.idStuff.indexOf(this.state.activeFriend)-1];
+                      console.log(id);
+                      db.collection("users").doc(id).get().then(function(doc) {
+                          activeBio = doc.data().bio;
+                          activePfp = doc.data().imageSrc;
+                          activeTrash = doc.data().Totaltrash;
+                          this.setState({activeBio: activeBio, activePfp: activePfp, activeTrash: activeTrash});
+                          this.getPins();
+                      }.bind(this))
+                    }
+                  )
+    }
+  }
   updateCaption = e => {
     this.setState({caption: e.target.value});
   }
@@ -754,11 +774,12 @@ class Bubble extends Component{
             redirect:true
           })
         })
+      }).then(()=>{
+        this.setState({
+          friendplaceHolder:"USER NOT FOUND.",
+          validSearch:false
+        })
       })
-    this.setState({
-      friendplaceHolder:"USER NOT FOUND.",
-      validSearch:false
-    })
   }
   renderRedirect = (name) => {
       let redirect1 = '/ProfSearch/:' + name;
@@ -801,7 +822,7 @@ class Bubble extends Component{
                   type = "text"
                   id="box"
                   name = "search"
-                  placeholder = " Search location/pin by user"
+                  placeholder = " Search location/pin by user/lat, long"
                   onChange = {this.updateSearchBar}
                   value = {this.state.search}></input>
                 <button type = "submit" id="submit" className= "headerItem">
@@ -932,7 +953,7 @@ class Bubble extends Component{
                   <div className = "bubbleheader" id = "bubheader4" ><center><p className = "small">FIND FRIENDS</p></center></div>
 
                   <div className = "page" id = "friendsearch">
-                  <form onSubmit = {this.renderNewProfPage}>
+                  <form onSubmit = {this.openFriendPage1}>
                     <input id = "friendform" type = "text" placeholder = "Search by username..." onChange = {this.updateUserSearch} value = {this.state.userSearch}/>
                     <button type = "submit" className = "feedbutton"></button>
                   </form>
