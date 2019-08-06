@@ -20,7 +20,7 @@ findBlankIndex(phrase){
 }
 for (var i = 0; i<100; i++)
 {
-let addDoc = db.collection('place').add({
+let addDoc = db.collection('places').add({
   name: places[i][10],
   lat: findBlankIndex(places[i][8])[1],
   long: findBlankIndex(places[i](8))[0]
