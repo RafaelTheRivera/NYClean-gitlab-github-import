@@ -20,6 +20,7 @@ class ProfSearch extends Component {
   }
   getPins = () => {
     db.collection("pins").get().then((querySnapshot) => {
+      console.log("got");
       querySnapshot.forEach((doc) => {
           if (this.state.userName === doc.data().username)
           {
@@ -41,6 +42,7 @@ class ProfSearch extends Component {
         });
         const userRef = db.collection("users");
         let findUser = userRef.where('fullname', '==', this.state.name.substring(1)).get().then((snapshot) => {
+          console.log("got");
           snapshot.forEach(doc => {
             if (!doc.data().bio === undefined)
             {

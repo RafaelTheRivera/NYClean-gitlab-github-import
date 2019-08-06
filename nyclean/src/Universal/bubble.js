@@ -38,13 +38,13 @@ const userRef = db.collection("users");
 const ref = db.collection("locations");
 const realtime = db.collection('/subways');
 const pinList = db.collection("pins");
-
+/*
 const getUsers = db.collection("users").get();
 const getLocations = db.collection("locations").get();
 const getSubways = db.collection("subways").get();
 const getPins = db.collection("pins").get();
 const getReports = db.collection("reports").get();
-const getUpdates = db.collection("updates").get();
+const getUpdates = db.collection("updates").get();*/
 
 
 class Bubble extends Component{
@@ -172,7 +172,8 @@ class Bubble extends Component{
     const setState = this.setState.bind(this);
     const map = this.map;
     const state = this.state
-    const pinData = getPins.then(function(querySnapshot) {
+    const pinData = pinList.get().then(function(querySnapshot) {
+        console.log("got");
         var dataArray = [];
         var totalLbs = 0;
         querySnapshot.forEach(function(doc) {
@@ -192,7 +193,8 @@ class Bubble extends Component{
 
     var userReferences = [];
     var idStuff = [];
-    getUsers.then((querySnapshot) => {
+    userRef.get().then((querySnapshot) => {
+      console.log("got");
       querySnapshot.forEach((doc) => {
         this.setState({
           list: this.state.list.concat({
@@ -226,7 +228,8 @@ class Bubble extends Component{
     var reportTimestamps = [];
 
 
-    getReports.then((reportSnapshot) => {
+    db.collection("reports").get().then((reportSnapshot) => {
+      console.log("got");
       reportSnapshot.forEach((doc) =>{
         if(doc.data().date.substr(0,15) === currentDay){
           reportsToday.push(doc.data().username);
@@ -257,7 +260,8 @@ class Bubble extends Component{
                     correctedReportArray: correctedReportArray});
 
 
-    getUpdates.then((updateSnapshot) => {
+    db.collection("updates").get().then((updateSnapshot) => {
+      console.log("got");
       updateSnapshot.forEach((doc) =>{
         if(doc.data().date.substr(0,15) === currentDay){
           messagesToday.push(doc.data().username);
@@ -318,13 +322,17 @@ class Bubble extends Component{
 
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
+        //you can probably do getUser.doc(user.uid)
         userRef.doc(user.uid).get().then(getDoc => {
+          console.log("got");
         if (getDoc.data() === undefined){
           userRef.doc(user.uid).update({
             imageSrc: "https://i.imgur.com/Of7XNtM.png"
           })
         }
+        //same
         userRef.doc(user.uid).get().then(getDoc => {
+          console.log("got");
         this.setState({
             imgsrc: getDoc.data().imageSrc
           });
@@ -356,7 +364,8 @@ class Bubble extends Component{
     });
   }
   getPins = () => {
-    getPins.then((querySnapshot) => {
+    pinList.get().then((querySnapshot) => {
+      console.log("got");
       querySnapshot.forEach((doc) => {
           if (this.state.activeFriend === doc.data().username)
           {
@@ -424,6 +433,7 @@ class Bubble extends Component{
     const search = this.state.search;
     //program function to find distances based on an inputted location and search coordinates
     let query0 = realtime.where('name', '==', search).get().then(snapshot => {
+      console.log("got");
       if (snapshot.empty){
         status = 1;
       }
@@ -437,6 +447,7 @@ class Bubble extends Component{
     }})
   }).then(()=>{
     let query1 = realtime.where('name', '==', this.phraseEachUpper(search.toLowerCase())).get().then(snapshot => {
+      console.log("got");
       if (snapshot.empty){
         status = 2;
       }
@@ -450,6 +461,7 @@ class Bubble extends Component{
     }})
   }).then(()=>{
     let query2 = realtime.where('name', '==', this.addCorner1(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
+      console.log("got");
       if (snapshot.empty){
         status = 3;
       }
@@ -463,6 +475,7 @@ class Bubble extends Component{
     }})
   }).then(()=>{
     let query3 = realtime.where('name', '==', this.addCorner2(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
+      console.log("got");
       if (snapshot.empty){
         status = 4;
       }
@@ -476,6 +489,7 @@ class Bubble extends Component{
     }})
   }).then(()=>{
     let query4 = realtime.where('name', '==', this.addCorner3(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
+      console.log("got");
       if (snapshot.empty){
         status = 5;
       }
@@ -489,6 +503,7 @@ class Bubble extends Component{
     }})
   }).then(()=>{
     let query5 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
+      console.log("got");
       if (snapshot.empty){
       status = 5.1;
       }
@@ -502,6 +517,7 @@ class Bubble extends Component{
     }})
   }).then(()=>{
     let query51 = realtime.where('name', '==', this.addCorner5(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
+      console.log("got");
       if (snapshot.empty){
       status = 5.2;
       }
@@ -515,6 +531,7 @@ class Bubble extends Component{
     }})
   }).then(()=>{
     let query52 = realtime.where('name', '==', this.addCorner6(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
+      console.log("got");
       if (snapshot.empty){
       status = 5.3;
       }
@@ -528,6 +545,7 @@ class Bubble extends Component{
     }})
   }).then(()=>{
     let query53 = realtime.where('name', '==', this.addCorner7(this.phraseEachUpper(search.toLowerCase()))).get().then(snapshot => {
+      console.log("got");
       if (snapshot.empty){
       status = 6;
       }
@@ -541,6 +559,7 @@ class Bubble extends Component{
     }})
   }).then(()=>{
     let query6 = realtime.where('name', '==', this.phraseEachUpper(this.makeLetterCapital((search.toLowerCase()), 20))).get().then(snapshot => {
+      console.log("got");
       if (snapshot.empty){
       status = 7;
       }
@@ -554,6 +573,7 @@ class Bubble extends Component{
     }})
   }).then(()=>{
     let query7 = realtime.where('name', '==', this.phraseEachUpper(this.makeLetterCapital((search.toLowerCase()), 2))).get().then(snapshot => {
+      console.log("got");
       if (snapshot.empty){
       status = 8;
       }
@@ -567,6 +587,7 @@ class Bubble extends Component{
     }})
   }).then(()=>{
   let query8 = realtime.where('name', '==', this.addCorner1(this.phraseEachUpper(this.makeLetterCapital((search.toLowerCase()), 20)))).get().then(snapshot => {
+    console.log("got");
     if (snapshot.empty){
     status = 9;
     }
@@ -580,6 +601,7 @@ class Bubble extends Component{
   }})
 }).then(()=>{
 let query9 = realtime.where('name', '==', this.addCorner2(this.phraseEachUpper(this.makeLetterCapital((search.toLowerCase()), 20)))).get().then(snapshot => {
+  console.log("got");
   if (snapshot.empty){
   status = 10;
   }
@@ -593,6 +615,7 @@ let query9 = realtime.where('name', '==', this.addCorner2(this.phraseEachUpper(t
 }})
 }).then(()=>{
 let query10 = realtime.where('name', '==', this.addCorner3(this.phraseEachUpper(this.makeLetterCapital((search.toLowerCase()), 20)))).get().then(snapshot => {
+  console.log("got");
   if (snapshot.empty){
   status = 11;
   }
@@ -606,6 +629,7 @@ let query10 = realtime.where('name', '==', this.addCorner3(this.phraseEachUpper(
 }})
 }).then(()=>{
 let query11 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(this.makeLetterCapital((search.toLowerCase()), 20)))).get().then(snapshot => {
+  console.log("got");
   if (snapshot.empty){
   status = 12;
   }
@@ -619,6 +643,7 @@ let query11 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
 }})
 }).then(()=>{
 let query12 = realtime.where('name', '==', this.addCorner1(this.phraseEachUpper(this.makeLetterCapital((search.toLowerCase()), 2)))).get().then(snapshot => {
+  console.log("got");
   if (snapshot.empty){
   status = 13;
   }
@@ -632,6 +657,7 @@ let query12 = realtime.where('name', '==', this.addCorner1(this.phraseEachUpper(
 }})
 }).then(()=>{
 let query13 = realtime.where('name', '==', this.addCorner2(this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 2)))).get().then(snapshot => {
+  console.log("got");
   if (snapshot.empty){
   status = 14;
   }
@@ -645,6 +671,7 @@ let query13 = realtime.where('name', '==', this.addCorner2(this.phraseEachUpper(
 }})
 }).then(()=>{
 let query14 = realtime.where('name', '==', this.addCorner3(this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 2)))).get().then(snapshot => {
+  console.log("got");
   if (snapshot.empty){
   status = 15;
   }
@@ -658,6 +685,7 @@ let query14 = realtime.where('name', '==', this.addCorner3(this.phraseEachUpper(
 }})
 }).then(()=>{
 let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(this.makeLetterCapital(search.toLowerCase(), 2)))).get().then(snapshot => {
+  console.log("got");
   if (snapshot.empty){
   status = 16;
   }
@@ -671,6 +699,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
 }})
 }).then(()=>{
   let query16 = pinList.where('username', '==', search).get().then(snapshot => {
+    console.log("got");
     if (snapshot.empty){
       return;
     }
@@ -848,8 +877,8 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                     activeFriend: name,
                     listPins: []},()=>{
                       var id = this.state.idStuff[this.state.idStuff.indexOf(this.state.activeFriend)-1];
-                      var documentReference = getUsers.doc(id);
-                      documentReference/*.get*/.then(function(doc) {
+                      console.log(id);
+                      db.collection("users").doc(id).get().then(function(doc) {
                           activeBio = doc.data().bio;
                           activePfp = doc.data().imageSrc;
                           activeTrash = doc.data().Totaltrash;
@@ -964,6 +993,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
     console.log('yup')
     e.preventDefault();
       let query = db.collection("users").where('fullname', '==', this.state.userSearch).get().then((querySnapshot) => {
+        console.log("got");
         querySnapshot.forEach((doc) => {
           this.setState({
             redirect:true

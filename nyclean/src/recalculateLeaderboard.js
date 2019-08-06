@@ -15,6 +15,7 @@ class Recalc extends Component {
   recalculateLeaderboard(){
     var userReferences = [];
     const userData = db.collection("users").get().then((snapshot) =>{
+      console.log("got");
       snapshot.forEach(function(doc){
           userReferences.push(doc.id);
           userReferences.push(doc.data().fullname);
@@ -22,6 +23,7 @@ class Recalc extends Component {
       console.log(userReferences);
     });
     const pinData = db.collection("pins").get().then((querySnapshot) => {
+      console.log("got");
         var dataArray = [];
         var poundData = [];
         querySnapshot.forEach(function(doc){
@@ -60,6 +62,7 @@ class Recalc extends Component {
   }
   cleanCache(){
     const updateData = db.collection("updates").get().then((updateSnapshot) => {
+      console.log("got");
       updateSnapshot.forEach(function(doc){
         if(Date().substr(0, 15) !== doc.data().date.substr(0,15)){
           /*db.collection("updates").doc(doc.id).delete.then(()=>{
@@ -71,6 +74,7 @@ class Recalc extends Component {
       });
     });
     const reportData = db.collection("reports").get().then((updateSnapshot) => {
+      console.log("got");
       updateSnapshot.forEach(function(doc){
         if(Date().substr(0, 15) !== doc.data().date.substr(0,15)){
           /*db.collection("updates").doc(doc.id).delete.then(()=>{
@@ -87,6 +91,7 @@ class Recalc extends Component {
     var pinArray = [];
     var safeArray = [];
     const pinData = db.collection("pins").get().then((updateSnapshot) => {
+      console.log("got");
       updateSnapshot.forEach(function(doc){
         pinArray.push(doc.id);
         pinArray.push(doc.data().username);

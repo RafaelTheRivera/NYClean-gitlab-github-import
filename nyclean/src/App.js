@@ -31,6 +31,7 @@ class App extends Component {
         const userRef = db.collection("users");
 
         userRef.doc(user.uid).get().then(getDoc => {
+          console.log("got");
           if (!getDoc.exists){
             userRef.doc(user.uid).set({
               fullname: user.displayName,
@@ -52,7 +53,7 @@ class App extends Component {
     return false
   }
   render(){
-    console.log("render Call");
+    console.log("Render call on Bubble");
     if (this.state.signedIn){
       return(
 

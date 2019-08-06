@@ -17,12 +17,14 @@ class Profile extends Component {
     imageInput: '',
     pinList: [],
     userBio:'Default Text',
-    signedIn:true};
+    signedIn:true,
+    redirect:false};
   }
   signOut = () => firebase.auth().signOut().then( () => {
     this.setState({
-      signedIn: false,
-      currentUser: null
+      currentUser: null,
+      redirect:true,
+      signedIn: false
     });
   });
   updateInput = e => {
@@ -47,6 +49,7 @@ class Profile extends Component {
     }
     getPins = () => {
       db.collection("pins").get().then((querySnapshot) => {
+        console.log("got");
         querySnapshot.forEach((doc) => {
             if (this.state.userName === doc.data().username)
             {
@@ -80,6 +83,7 @@ class Profile extends Component {
         const userRef = db.collection("users");
 
         userRef.doc(user.uid).get().then(getDoc => {
+          console.log("got");
           if(getDoc.data().imageSrc === null || getDoc.data().imageSrc === "" || getDoc.data().imageSrc === "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png") {
           userRef.doc(user.uid).update({
               imageSrc: "https://i.imgur.com/Of7XNtM.png",
@@ -108,6 +112,7 @@ class Profile extends Component {
             });
         }});
         userRef.doc(user.uid).get().then(getDoc => {
+          console.log("got");
             this.setState({
               userBio: getDoc.data().bio
             })
@@ -122,24 +127,37 @@ class Profile extends Component {
   }
 
   renderRedirect = () => {
-      return <Redirect to='/Login' />
+    if (this.state.redirect)
+      return <Redirect to='/introsignout' />
+  }
+  renderRedirect1 = () => {
+    if (!this.state.signedIn)
+      return <Redirect to='/intro' />
   }
   render(){
+    var noPins = ""
     var pins = this.state.pinList.map((x) =>
       <li><p class = "normalTextPins">lat: {x.lat} <br/>lng: {x.long}</p></li>)
     if (pins.length === 0)
   {
-    pins = <li><p class = "normalTextPins">no pins set</p></li>;
+    noPins = "No Pins Set"
   }
-    if (!this.state.signedIn){
-      return(
-        <div>
-        {this.renderRedirect()}
-        </div>)
-      }
-      else {
-  return (
+  if (this.state.redirect){
+    return(
     <div>
+    {this.renderRedirect()}
+    </div>
+  )
+  }
+  else if (!this.state.signedIn){
+    return(
+      <div>
+      {this.renderRedirect1()}
+      </div>)
+      }
+  else {
+  return (
+    <div style = {{overflow:'auto', height:'inherit'}}>
     <a href = "/"> <img id = "back" src = {back} alt= "back"/>
     <img id = "greenyclogo" src = {greenyclogo} alt= "logo"/>
     </a>
@@ -149,8 +167,8 @@ class Profile extends Component {
     <h6 id = "profLinks">
     <br /><div id = "bio">{this.state.userBio}
     <a href = "/EditBio" class = "linkText"><img className = "edit" src = {edit} alt = "edit"/></a></div>
-    <br/>
-    <a href = "/EditEmail" class ="linkText">Change Email</a><br/>
+    <br/><br/>
+    <a href = "/EditEmail" class ="linkText">Change Email</a><br/><br/><br/>
     <a href = "/EditPass" class = "linkText">Change Password</a><br/>
     </h6>
     <div id="profilecircle">
@@ -173,13 +191,12 @@ class Profile extends Component {
       <ol>
       {pins}
       </ol>
-
+      <h3 class = "normalText">{noPins}</h3>
 
 
     </div>
     <footer>
       <button id = "signout" className = "small" onClick = {this.signOut}>SIGN OUT</button>
-
     </footer>
     </div>
   );
