@@ -46,7 +46,6 @@ const getPins = db.collection("pins").get();
 const getReports = db.collection("reports").get();
 const getUpdates = db.collection("updates").get();*/
 
-
 class Bubble extends Component{
   constructor(props){
     super(props);

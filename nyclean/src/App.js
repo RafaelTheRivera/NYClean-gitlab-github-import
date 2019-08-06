@@ -47,7 +47,9 @@ class App extends Component {
     });
   }
   renderRedirect = () => {
-      return <Redirect to='/Login' />
+    if(!this.state.signedIn)
+      return <Redirect to='/intro' />
+    console.log("redirect")
   }
   shouldComponentUpdate = () =>{
     return false
