@@ -102,7 +102,8 @@ class Profile extends Component {
           }
         this.setState({
           imageSrc: getDoc.data().imageSrc,
-          Totaltrash: getDoc.data().Totaltrash
+          Totaltrash: getDoc.data().Totaltrash,
+          userBio: getDoc.data().bio
         });
         console.log(this.state.imageSrc);
           if (!getDoc.exists){
@@ -111,12 +112,6 @@ class Profile extends Component {
               email: user.email,
             });
         }});
-        userRef.doc(user.uid).get().then(getDoc => {
-          console.log("got");
-            this.setState({
-              userBio: getDoc.data().bio
-            })
-        })
       } else{
         this.setState({
           signedIn: false
