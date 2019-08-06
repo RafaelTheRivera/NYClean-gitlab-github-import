@@ -39,7 +39,6 @@ const ref = db.collection("locations");
 const realtime = db.collection('/subways');
 const pinList = db.collection("pins");
 
-
 class Bubble extends Component{
   constructor(props){
     super(props);

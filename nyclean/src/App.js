@@ -50,6 +50,7 @@ class App extends Component {
   renderRedirect = () => {
     if(!this.state.signedIn)
       return <Redirect to='/intro' />
+    console.log("redirect")
   }
   renderRedirect1 = () => {
     if(this.state.redirect)
@@ -81,8 +82,6 @@ class App extends Component {
 
           <footer>
             <button id = "signout" className = "small" onClick = {this.signOut}>SIGN OUT</button>
-            <div>{this.renderRedirect()}</div>
-
           </footer>
 
         </div>

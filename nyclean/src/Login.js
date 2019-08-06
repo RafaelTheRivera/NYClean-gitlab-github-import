@@ -76,9 +76,8 @@ class Login extends Component {
       console.log('false')
       return(
         <div>
-          <br /><br /><br /><h1><center class = "normalText"><img id = "logodisplay" src = {logodisplay} />Please Log In/Sign Up</center></h1>
+          <br /><br /><br /><h1><center class = "normalText">Please Log In/Sign Up</center></h1>
           <StyledFirebaseAuth uiConfig = {uiConfig} firebaseAuth = {firebase.auth()}/>
-          <img id = "logodisplay" src = {logodisplay} />
         </div>
       );
     }
