@@ -33,7 +33,7 @@ class ProfSearch extends Component {
       })
     })
 }
-  componentDidMount(){
+  componentWillMount(){
     console.log(this.state.name)
     document.body.style.overflow = "hidden";
         const db = firebase.firestore();
@@ -44,7 +44,8 @@ class ProfSearch extends Component {
         let findUser = userRef.where('fullname', '==', this.state.name.substring(1)).get().then((snapshot) => {
           console.log("got");
           snapshot.forEach(doc => {
-            if (!doc.data().bio === undefined)
+            console.log(this.state.name)
+            if (!(doc.data().bio === undefined))
             {
               this.setState({
                 userBio:doc.data().bio
@@ -62,7 +63,7 @@ class ProfSearch extends Component {
   render(){
     var noPins = ""
     var pins = this.state.pinList.map((x) =>
-      <li><p class = "normalTextPins">lat: {x.lat} <br/>lng: {x.long}</p></li>)
+      <li><p class = "normalTextPins" id = "leftleader">lat: {x.lat} <br/>lng: {x.long}</p></li>)
     if (pins.length === 0)
   {
     noPins = "No Pins Set"
