@@ -2,12 +2,17 @@ import React, {Component} from 'react';
 import back from './../images/back.png';
 import greenyclogo from './../images/greenyclogo.png';
 import pin from './../images/pin.png';
+import safetydeco from './../images/safetydeco.png';
 
 class Safety extends Component {
   constructor(){
     super();
     this.state = {};
+    document.body.style.overflowX = "hidden";
   }
+
+
+
   render(){
     return(
       <div>
@@ -64,6 +69,7 @@ class Safety extends Component {
           <br />
           <br />
         </div>
+        <img id = "safetydeco" src = {safetydeco}/>
 
     </div>
     );

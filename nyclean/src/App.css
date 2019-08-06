@@ -663,8 +663,8 @@ footer {
 }
 #bio {
   text-align: left;
-  margin-right: 100px;
-  width: 500px;
+  margin-right: 200px;
+
   height: auto;
   overflow: auto;
   word-wrap: break-word;
@@ -1119,4 +1119,14 @@ footer {
 .leaflet-left{
   margin-top: 50px;
   margin-left: 17px;
+}
+
+#safetydeco{
+  height: 750px;
+  width: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-top: 280px;
+  margin-right: -50px;
 }

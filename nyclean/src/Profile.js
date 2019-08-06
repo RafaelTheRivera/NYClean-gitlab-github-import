@@ -66,7 +66,7 @@ class Profile extends Component {
       this.setState({userName: user.displayName,
                      userBio: user.bio});
     });
-    document.body.style.overflow = "hidden";
+    
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({
