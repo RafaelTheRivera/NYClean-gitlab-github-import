@@ -1183,7 +1183,7 @@ footer {
   z-index: 3;
   transform: rotate(270deg);
   width: 40px;
-  margin-top: 735px;
+  margin-top: 52.5%;
   margin-left: 48%;
 }
 
@@ -1191,7 +1191,7 @@ footer {
   position: absolute;
   z-index: 4;
   color: black;
-  margin-top: 715px;
+  margin-top: 51%;
   margin-left: 41.5%;
 }
 
