@@ -9,14 +9,19 @@ import firebase from './Firestore';
 class App extends Component {
   constructor(){
     super();
-    this.state = {signedIn:true};
+    this.state = {signedIn:true,
+                  redirect:false};
   }
-  signOut = () => firebase.auth().signOut().then( () => {
+  signOut = () => {
+    console.log("signed out")
     this.setState({
+      redirect:true,
       signedIn: false,
       currentUser: null
-    });
-  });
+    },()=>{
+    firebase.auth().signOut()
+  })
+  }
 
   componentWillMount(){
     document.body.style.overflow = "hidden";
@@ -47,33 +52,39 @@ class App extends Component {
     });
   }
   renderRedirect = () => {
-    if(!this.state.signedIn)
-      return <Redirect to='/intro' />
     console.log("redirect")
+      return <Redirect to='/intro' />
   }
-  shouldComponentUpdate = () =>{
-    return false
+  renderRedirect1 = () => {
+    console.log("redirect")
+      return <Redirect to='/introsignout' />
   }
   render(){
     console.log("Render call on Bubble");
-    if (this.state.signedIn){
+    if (this.state.redirect){
       return(
-
-        <div id="mainpage" style = {{overflow: "hidden"}}>
-
-          <Bubble/>
-          <footer>
-            <center><a href = "/introsignout"><button id = "signout" className = "small" onClick = {this.signOut}>SIGN OUT</button></a></center>
-
-          </footer>
-
+        <div>
+          {this.renderRedirect1()}
         </div>
       );
     }
     else if (!this.state.signedIn){
       return(
         <div>
-        {this.renderRedirect()}
+          {this.renderRedirect()}
+        </div>
+      );
+    }
+    else{
+      return(
+        <div id="mainpage" style = {{overflow: "hidden"}}>
+        {console.log(this.state.redirect)}
+          <Bubble/>
+          <footer>
+            <center><button id = "signout" className = "small" onClick = {this.signOut}>SIGN OUT</button></center>
+
+          </footer>
+
         </div>
       );
     }
