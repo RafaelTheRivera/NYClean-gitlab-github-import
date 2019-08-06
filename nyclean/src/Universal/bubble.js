@@ -162,6 +162,7 @@ class Bubble extends Component{
       maxBounds: this.bounds,
       zoomSnap: 0.2,
       inertiaDeceleration: 7000,
+      maxBoundsViscosity: 1.0,
       layers: [
         L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
 	         attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
