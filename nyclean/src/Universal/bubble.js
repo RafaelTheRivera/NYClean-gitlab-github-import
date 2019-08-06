@@ -633,7 +633,21 @@ class Bubble extends Component{
     }
   }
   openFriendPage1 = e => {
+    var count = 0;
+    userRef.where('name', '==', this.state.userSearch).get().then((snapshot)=>{
+      snapshot.forEach((doc)=>{
+        count++;
+      })
+    })
+    if (count === 0)
+    {
+      this.setState({
+        friendplaceHolder:"USER NOT FOUND"
+      })
+    }
     e.preventDefault();
+    if (count === 0)
+      return;
     var activeBio, activePfp, activeTrash;
     if (this.state.FriendPageIsOpen === "hidden"){
       this.setState({FriendSearchIsOpen: "hidden",

@@ -12,7 +12,7 @@ class ProfSearch extends Component {
   constructor(props){
     super(props);
     this.state = {userName:"",
-    Totaltrash: Math.floor(Math.random()*21),
+    Totaltrash:0,
     imageSrc: null,
     pinList:[],
     userBio:'Default Text',
