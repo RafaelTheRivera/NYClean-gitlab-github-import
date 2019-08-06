@@ -63,7 +63,7 @@ class App extends Component {
 
           <Bubble/>
           <footer>
-            <center><a href = "/introsignout"><button id = "signout" className = "small">SIGN OUT</button></a></center>
+            <center><a href = "/introsignout"><button id = "signout" className = "small" onClick = {this.signOut}>SIGN OUT</button></a></center>
 
           </footer>
 
