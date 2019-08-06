@@ -663,7 +663,6 @@ class Bubble extends Component{
   }
   submitCaption = e => {
     e.preventDefault();
-<<<<<<< HEAD
     if(this.state.coords !== null){
       const pinData = db.collection('pins');
       pinData.doc().set({
@@ -686,37 +685,7 @@ class Bubble extends Component{
         this.setState({noPin: "hidden", noPinOpa: "opacity(0%)"});
       }.bind(this), 4000);
     }
-=======
-    const pinData = db.collection('pins');
-    pinData.doc().set({
-      username: this.state.username,
-      lat: this.state.coords.lat,
-      long: this.state.coords.lng,
-      date: Date(),
-      likes: 0,
-      afterImage: this.state.uploadImageAfter,
-      beforeImage: this.state.uploadImageBefore,
-      lbs: 3,
-      body: this.state.caption
-    })
-
-
-    this.map.removeLayer(this.state.newMark);
-    const postedMarker = L.marker([this.state.coords.lat,this.state.coords.lng], {icon: this.state.greenIcon}).addTo(this.map).bindPopup("<div id = 'popup'><p id = 'posttitle'>Post by:  "+ this.state.username +"<p id = 'date'> on "+ Date().substr(0, Date().indexOf("201" || "202")) +"</p></p><div id = 'controlbody'><p id = 'bodycaption'>"+ this.state.caption +"</p></div></div><div id='pictures'><img src = "+ this.state.uploadImageBefore +" id = 'imageBefore'/><img src = "+ this.state.uploadImageAfter +" id = 'imageAfter'/></div>", {maxWidth : 600}).openPopup();
-    this.setState({caption: "", pinupdate: true, pinIsOpen: "hidden", image2visible: "hidden", image1visible: "hidden"});
-
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-    userRef.doc(user.uid).get().then(getDoc => {
-      console.log("got");
-      userRef.doc(user.uid).update({
-          Totaltrash: getDoc.data().Totaltrash + 3
-      })
-    })
->>>>>>> 757367eba332c395ac3adfce59765f84fad2bfff
   }
-})
- }
   updateImage = e =>{
     if (this.state.image1visible === "visible"){
       this.setState({uploadImageBefore: e.target.value});

@@ -20,6 +20,9 @@ class Introduction extends Component {
   renderRedirect = () => {
     return <Redirect to='/Login'/>
   }
+  componentWillMount(){
+    document.body.style.overflowY = "auto";
+  }
   render(){
     return(
 
