@@ -36,7 +36,7 @@ db.settings ({
 
 const userRef = db.collection("users");
 const ref = db.collection("locations");
-const realtime = db.collection('/places');
+const realtime = db.collection('places');
 const pinList = db.collection("pins");
 /*
 const getUsers = db.collection("users").get();
@@ -451,7 +451,7 @@ class Bubble extends Component{
         })
       }})
     }).then(()=>{
-      if (status === 3){
+      if (status === 3 && !isNaN(this.findNumIndex(search)[0]) && !isNaN(this.findNumIndex(search)[1])){
         this.fly(this.findNumIndex(search)[0], this.findNumIndex(search)[1], 16)
       }
     })
