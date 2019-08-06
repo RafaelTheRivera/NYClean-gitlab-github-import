@@ -1,4 +1,10 @@
-import firebase from "./Firestore"
+import React, {Component} from 'react';
+import './App.css';
+import firebase from './Firestore'
+import { Redirect } from 'react-router-dom';
+import back from './images/back.png';
+import edit from './images/edit.png';
+import greenyclogo from './images/greenyclogo.png';
 
 const places = firebase.database().ref("/users/0/data");
 
@@ -20,7 +26,7 @@ findBlankIndex(phrase){
 }
 for (var i = 0; i<100; i++)
 {
-let addDoc = db.collection('place').add({
+let addDoc = db.collection('places').add({
   name: places[i][10],
   lat: findBlankIndex(places[i][8])[1],
   long: findBlankIndex(places[i](8))[0]
