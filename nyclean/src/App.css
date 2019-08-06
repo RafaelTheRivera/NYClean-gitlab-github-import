@@ -1114,6 +1114,17 @@ footer {
   font-size: 20px;
 }
 
+#noPin{
+  position: absolute;
+  background-color: white;
+  font-size: 1.5em;
+  border-radius: 10px;
+  height: 80px;
+  width: 200px;
+  transition-duration: 500;
+  z-index: 10;
+}
+
 #nouser{
   font-size: 12px;
   float: left;
