@@ -664,8 +664,8 @@ footer {
 #bio {
   text-align: left;
   margin-right: 200px;
-
   height: auto;
+  width: 600px;
   overflow: auto;
   word-wrap: break-word;
 }
@@ -705,6 +705,8 @@ footer {
   background-color: white;
   border-color: black;
   border-radius: 5px;
+  position: fixed;
+  bottom: 5;
 }
 
 .edit{

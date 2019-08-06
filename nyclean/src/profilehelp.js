@@ -22,6 +22,7 @@ class Reviewer extends React.Component {
   }
   componentDidMount(){
     db.collection("users").get().then((querySnapshot) => {
+      console.log("got");
       querySnapshot.forEach((doc) => {
         this.setState({
           list: this.state.list.concat({
@@ -61,6 +62,7 @@ class Reviewer extends React.Component {
         restReviews:{}
       });
       db.collection("users").get().then((querySnapshot) => {
+        console.log("got");
         querySnapshot.forEach((doc) => {
           this.setState({
             list: this.state.list.concat({

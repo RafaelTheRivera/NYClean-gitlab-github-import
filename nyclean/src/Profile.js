@@ -49,6 +49,7 @@ class Profile extends Component {
     }
     getPins = () => {
       db.collection("pins").get().then((querySnapshot) => {
+        console.log("got");
         querySnapshot.forEach((doc) => {
             if (this.state.userName === doc.data().username)
             {
@@ -66,7 +67,7 @@ class Profile extends Component {
       this.setState({userName: user.displayName,
                      userBio: user.bio});
     });
-    
+    document.body.style.overflowX = "hidden";
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.setState({
@@ -82,6 +83,7 @@ class Profile extends Component {
         const userRef = db.collection("users");
 
         userRef.doc(user.uid).get().then(getDoc => {
+          console.log("got");
           if(getDoc.data().imageSrc === null || getDoc.data().imageSrc === "" || getDoc.data().imageSrc === "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png") {
           userRef.doc(user.uid).update({
               imageSrc: "https://i.imgur.com/Of7XNtM.png",
@@ -110,6 +112,7 @@ class Profile extends Component {
             });
         }});
         userRef.doc(user.uid).get().then(getDoc => {
+          console.log("got");
             this.setState({
               userBio: getDoc.data().bio
             })

@@ -9,12 +9,10 @@ import firebase from './Firestore';
 class App extends Component {
   constructor(){
     super();
-    this.state = {signedIn:true,
-                  redirect:false};
+    this.state = {signedIn:true};
   }
   signOut = () => firebase.auth().signOut().then( () => {
     this.setState({
-      redirect:true,
       signedIn: false,
       currentUser: null
     });
@@ -33,6 +31,7 @@ class App extends Component {
         const userRef = db.collection("users");
 
         userRef.doc(user.uid).get().then(getDoc => {
+          console.log("got");
           if (!getDoc.exists){
             userRef.doc(user.uid).set({
               fullname: user.displayName,
@@ -50,41 +49,31 @@ class App extends Component {
   renderRedirect = () => {
     if(!this.state.signedIn)
       return <Redirect to='/intro' />
+    console.log("redirect")
   }
-  renderRedirect1 = () => {
-    if(this.state.redirect)
-      return <Redirect to='/introsignout' />
+  shouldComponentUpdate = () =>{
+    return false
   }
   render(){
-    if (this.state.redirect){
-      return(
-        <div>
-        {this.renderRedirect1()}
-        </div>
-      )
-    }
-    else if (!this.state.signedIn)
-    {
-      return(
-        <div>
-        {this.renderRedirect()}
-        </div>
-      )
-    }
+    console.log("Render call on Bubble");
     if (this.state.signedIn){
       return(
 
-        <div style = {{overflow: "hidden"}}>
+        <div id="mainpage" style = {{overflow: "hidden"}}>
 
-          <Bubble />
-
-
+          <Bubble/>
           <footer>
             <button id = "signout" className = "small" onClick = {this.signOut}>SIGN OUT</button>
-            <div>{this.renderRedirect()}</div>
 
           </footer>
 
+        </div>
+      );
+    }
+    else if (!this.state.signedIn){
+      return(
+        <div>
+        {this.renderRedirect()}
         </div>
       );
     }
