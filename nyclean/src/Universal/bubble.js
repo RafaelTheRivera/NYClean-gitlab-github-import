@@ -940,8 +940,9 @@ class Bubble extends Component{
                     <p id = "frienduser">{this.state.activeFriend}</p>
                     <p id = "friendinfo"><div class = "page" id = "friendBio">{this.state.activeBio}</div>
                     <a href = {"/ProfSearch/:" +this.state.activeFriend}><button id = "signoutbutactuallyprofile">Profile</button></a><br /><br />
+
+                    <ol className = "left">
                     Pins
-                    <ol>
                       {pins}
                     </ol>
                       Trash count: {this.state.activeTrash} lbs
