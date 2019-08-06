@@ -21,7 +21,7 @@ class Introduction extends Component {
   render(){
     return(
       <div>
-      <a href = "/login"><br/><center><button id = "signout" className = "large">REGISTER/SIGN IN</button></center></a><br/><br/>
+      <a href = "/login"><br/><center><button id = "signout" className = "large">REGISTER/SIGN IN</button></center></a><br/><br/><br/><br/><br/><br/><br/>
       <Aboutintro />
       <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
       <Missionintro />

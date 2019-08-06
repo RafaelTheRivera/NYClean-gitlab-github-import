@@ -789,7 +789,7 @@ class Bubble extends Component{
                   type = "text"
                   id="box"
                   name = "search"
-                  placeholder = " Search location/pin by user"
+                  placeholder = " Search location/pin by user/lat, long"
                   onChange = {this.updateSearchBar}
                   value = {this.state.search}></input>
                 <button type = "submit" id="submit" className= "headerItem">
