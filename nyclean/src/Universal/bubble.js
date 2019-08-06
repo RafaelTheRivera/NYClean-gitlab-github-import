@@ -742,11 +742,12 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
       }
       const map = this.map;
       const state = this.state;
+      const setState = this.setState;
       this.state.newMark.on('popupclose', function(){
         if (state.pinupdate === false){
           map.removeLayer(state.newMark);
         }else{
-          this.setState({pinupdate: true});
+          setState({pinupdate: true});
         }
       });
       this.map.flyTo(coords);
