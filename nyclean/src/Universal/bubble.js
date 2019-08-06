@@ -742,11 +742,12 @@ class Bubble extends Component{
             redirect:true
           })
         })
+      }).then(()=>{
+        this.setState({
+          friendplaceHolder:"USER NOT FOUND.",
+          validSearch:false
+        })
       })
-    this.setState({
-      friendplaceHolder:"USER NOT FOUND.",
-      validSearch:false
-    })
   }
   renderRedirect = (name) => {
       let redirect1 = '/ProfSearch/:' + name;

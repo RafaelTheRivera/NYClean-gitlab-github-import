@@ -60,11 +60,12 @@ class ProfSearch extends Component {
         this.getPins();
     }
   render(){
+    var noPins = ""
     var pins = this.state.pinList.map((x) =>
       <li><p class = "normalTextPins">lat: {x.lat} <br/>lng: {x.long}</p></li>)
     if (pins.length === 0)
   {
-    pins = <li><p class = "normalTextPins">no pins set</p></li>;
+    noPins = "No Pins Set"
   }
   return (
     <div class = "appText">
@@ -89,9 +90,8 @@ class ProfSearch extends Component {
       <ol>
       {pins}
       </ol>
-
-
-    </div>
+      <p class ="normalText" id = "leftleader">{noPins}</p>
+      </div>
     </div>
   );
   }
