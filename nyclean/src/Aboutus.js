@@ -31,7 +31,7 @@ class About extends Component {
         <p id = "pplinfo">I'm a rising junior attending Scarsdale High School.
         I enjoy playing chess and programming. </p>
         <h3 className = "ournames"><img id = "pindeco" src = {pin} alt= "pin"/>Ian Xiong</h3>
-        <p id = "pplinfo">underwateroverwatchweeb</p>
+        <p id = "pplinfo">Hello, I am a rising senior from Livingston Highschool. 欢迎光临.</p>
         <h3 className = "ournames"><img id = "pindeco" src = {pin} alt= "pin"/>Paige Min</h3>
         <p id = "pplinfo">Hi! I'm a rising senior attending Bergen County Academies.
         I love art and technology, and I want to use my passions to help influence

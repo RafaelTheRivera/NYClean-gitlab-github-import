@@ -18,6 +18,7 @@ class UserList extends Component {
   componentWillMount(){
     document.body.style.overflow = "hidden";
     let display = db.collection("users").get().then((querySnapshot) => {
+      console.log("got");
       querySnapshot.forEach((doc) => {
         this.setState({
           list:this.state.list.concat([doc.data().fullname])

@@ -33,6 +33,7 @@ class EditBio extends Component {
         const userRef = db.collection("users");
 
         userRef.doc(user.uid).get().then(getDoc => {
+          console.log("got");
           if (!getDoc.exists){
             userRef.doc(user.uid).set({
               fullname: user.displayName,

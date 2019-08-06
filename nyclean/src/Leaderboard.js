@@ -22,6 +22,7 @@ class Leaderboard extends React.Component {
   }
   componentDidMount(){
     db.collection("users").get().then((querySnapshot) => {
+      console.log("got");
       querySnapshot.forEach((doc) => {
         this.setState({
           list: this.state.list.concat({
