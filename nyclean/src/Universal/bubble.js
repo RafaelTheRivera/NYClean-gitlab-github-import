@@ -329,13 +329,9 @@ class Bubble extends Component{
             imageSrc: "https://i.imgur.com/Of7XNtM.png"
           })
         }
-        //same
-        userRef.doc(user.uid).get().then(getDoc => {
-          console.log("got");
         this.setState({
             imgsrc: getDoc.data().imageSrc
           });
-        })
       })
       this.setState({username: user.displayName,
                   profileWidth: user.displayName.length * 8.5 + 50 + "px"});
@@ -1195,7 +1191,7 @@ let query15 = realtime.where('name', '==', this.addCorner4(this.phraseEachUpper(
                     <img id = "friendprofile" src = {this.state.activePfp}/>
                     <p id = "frienduser">{this.state.activeFriend}</p>
                     <p id = "friendinfo"><div class = "page" id = "friendBio">{this.state.activeBio}</div>
-                    <a href = {"/ProfSearch/:" +this.state.activeFriend}><button id = "signout">Profile</button></a><br /><br />
+                    <a href = {"/ProfSearch/:" +this.state.activeFriend}><button id = "signoutbutactuallyprofile">Profile</button></a><br /><br />
                     Pins
                     <ol>
                       {pins}
