@@ -183,10 +183,10 @@ class Profile extends Component {
 
       <br/><h3>Trash Count: {this.state.Totaltrash} lbs</h3><br/><br />
       <h3>Pins:</h3>
-      <ol>
+      <ol id = "leftleader">
       {pins}
       </ol>
-      <h3 class = "normalText">{noPins}</h3>
+      <h3 class = "normalText" id = "leftleader">{noPins}</h3>
 
 
     </div>
