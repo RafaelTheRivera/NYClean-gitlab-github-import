@@ -87,7 +87,7 @@ class EditEmail extends Component {
     value = {this.state.userName}
     />
     Re-enter Current Password:
-    <input type = "text"
+    <input type = "password"
     onChange = {this.handleChangePass}
     value = {this.state.passWord}
     />
@@ -110,7 +110,7 @@ class EditEmail extends Component {
   value = {this.state.userName}
   /><br /><br />
   Re-enter Current Password:
-  <input type = "text"
+  <input type = "password"
   onChange = {this.handleChangePass}
   value = {this.state.passWord}
   />

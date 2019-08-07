@@ -81,12 +81,12 @@ class EditPass extends Component {
     <br></br><br></br>
     <form class = "editUserBar" onSubmit={e=>e.preventDefault()}>
     New Password:
-    <input type = "text"
+    <input type = "password"
     onChange = {this.handleChange}
     value = {this.state.newPass}
     />
     <br></br>Re-enter Current Password:
-    <input type = "text"
+    <input type = "password"
     onChange = {this.handleChangePass}
     value = {this.state.passWord}
     />
@@ -105,12 +105,12 @@ class EditPass extends Component {
     <br></br><br></br>
     <form class = "editUserBar" onSubmit={e=>e.preventDefault()}>
     New Password:
-    <input type = "text"
+    <input type = "password"
     onChange = {this.handleChange}
     value = {this.state.newPass}
     /><br/><br />
     Re-enter Current Password:
-    <input type = "text"
+    <input type = "password"
     onChange = {this.handleChangePass}
     value = {this.state.passWord}
     /><br/><br />

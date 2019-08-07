@@ -57,7 +57,7 @@ class App extends Component {
   }
   renderRedirect1 = () => {
     console.log("redirect")
-      return <Redirect to='/introsignout' />
+      return <Redirect to='/intro' />
   }
   render(){
     console.log("Render call on Bubble");
