@@ -474,7 +474,7 @@ footer {
   right:45px;
   border-top-style:solid;
   border-bottom-style:solid;
-  border-color:#black;
+  border-color: black;
   border-width:2px;
   z-index:1;
 }
