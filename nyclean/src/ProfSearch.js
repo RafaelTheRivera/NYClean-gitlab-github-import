@@ -88,7 +88,7 @@ class ProfSearch extends Component {
 
       <h3>Trash Count: {this.state.Totaltrash} lbs</h3>
       <h3>Pins:</h3>
-      <ol>
+      <ol id = "leftleader">
       {pins}
       </ol>
       <p class ="normalText" id = "leftleader">{noPins}</p>
