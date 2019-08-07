@@ -674,7 +674,6 @@ class Bubble extends Component{
                     )
       }
     })
-
   }
   updateCaption = e => {
     this.setState({caption: e.target.value});
