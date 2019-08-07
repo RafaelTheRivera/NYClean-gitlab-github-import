@@ -66,6 +66,7 @@ class Bubble extends Component{
                   username: "",
                   profileWidth: "",
                   height:null,
+                  width: null,
                   search: "",
                   lat: 40.748440,
                   long: -73.985664,
@@ -470,11 +471,12 @@ class Bubble extends Component{
    var documentElement = d.documentElement;
    var body = d.getElementsByTagName('body')[0];
    var height = w.innerHeight|| documentElement.clientHeight|| body.clientHeight;
-   this.setState({height: height});
+   var width = w.innerWidth || documentElement.clientWidth || body.clientWidth;
+   this.setState({height: height, width: width});
  }
   mouseDown(e){
     this.setState({mouseDown: 1});
-    this.setState({x: e.screenX - 7, y: e.screenY - 96});
+    this.setState({x: this.state.width - 50, y: 107});
     if (this.state.mouseLeavePin === false ){
       this.setState({dragEvent: true, unmergedImages: "visible"});
     }
@@ -856,7 +858,7 @@ class Bubble extends Component{
 
           </a>
 
-        <img id = "emptypin" src = {emptypin} draggable = "false" alt = {"solopin"} style = {{visibility: this.state.unmergedImages, top: this.state.y, left: this.state.x}}/>
+        <img id = "emptypin" src = {emptypin} draggable = "false" alt = {"solopin"} style = {{visibility: this.state.unmergedImages, top: this.state.y, left: this.state.x}} onMouseOver = {this.mouseEnterPin} onMouseLeave = {this.mouseExitPin}/>
         <img id = "emptypinicon" src = {emptypinicon} draggable = "false" onMouseLeave = {this.mouseExitPin} onMouseOver = {this.mouseEnterPin} alt = {"empty pin"} style = {{visibility: this.state.unmergedImages}}/>
         <img id = "pin" src = {pin} alt = {"pin"} draggable = "false" onMouseLeave = {this.mouseExitPin} onMouseOver = {this.mouseEnterPin}/>
           <span style = {{visibility: this.state.pinIsOpen}}>
@@ -886,7 +888,7 @@ class Bubble extends Component{
             </div>
 
           </div>
-          <img className = "cover" id = "cover1" src = {cover} alt = "cover"/>
+          <img className = "cover" id = "cover1" src = {cover} alt = "cover" onClick = {this.openPin} draggable = "false" />
           </span>
 
         <img id = "feed" src = {feed} alt = {"feed"} onClick = {this.openFeed} draggable = "false"/>
@@ -1003,9 +1005,9 @@ class Bubble extends Component{
                   </div>
                   </span>
           </span>
-        <a href = "./About"><img id = "aboutusicon" src = {aboutus} alt = {"aboutus"} draggable = "false"/></a>
-        <a href = "./Mission"><img id = "ourmissionicon" src = {ourmission} alt = {"ourmission"} draggable = "false"/></a>
-        <a href = "./safety"><img id = "safetyicon" src = {safetyicon} alt = {"safety"} draggable = "false"/></a>
+        <a href = "./About"><img id = "aboutusicon" src = {aboutus} alt = {"aboutus"} draggable = "false" style = {{top: this.state.height - 175, marginTop: 0}}/></a>
+        <a href = "./Mission"><img id = "ourmissionicon" src = {ourmission} alt = {"ourmission"} draggable = "false" style = {{top: this.state.height - 100, marginTop: 0}}/></a>
+        <a href = "./safety"><img id = "safetyicon" src = {safetyicon} alt = {"safety"} draggable = "false" style = {{top: this.state.height - 195, marginTop: 0}}/></a>
 
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="

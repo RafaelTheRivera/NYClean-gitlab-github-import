@@ -585,6 +585,7 @@ footer {
 #cover1{
   margin-top: 102px;
   margin-right: 44px;
+  cursor: pointer;
 }
 #cover2{
   margin-top: 167px;
