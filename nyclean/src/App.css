@@ -473,8 +473,7 @@ footer {
   background-color:white;
   position:absolute;
   right:45px;
-  border-top-style:solid;
-  border-bottom-style:solid;
+  border-style: solid;
   border-color:#black;
   border-width:2px;
   z-index:1;
