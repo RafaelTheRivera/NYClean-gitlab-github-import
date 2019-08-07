@@ -70,7 +70,6 @@ class Safety extends Component {
           <br />
         </div>
         <img id = "safetydeco" src = {safetydeco}/>
-
     </div>
     );
   }
