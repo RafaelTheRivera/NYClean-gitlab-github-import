@@ -473,22 +473,25 @@ footer {
   background-color:white;
   position:absolute;
   right:45px;
-  border-style: solid;
   border-color:#black;
   border-width:2px;
   z-index:1;
 }
 #con1{
   top: 100px;
+  border-style: solid;
 }
 #con2{
   top:165px;
+  border-style: solid;
 }
 #con3{
   top:230px;
+  border-style: solid;
 }
 #con4{
   top:660px;
+  border-style: solid;
 }
 .blocker{
   height:35.5px;
