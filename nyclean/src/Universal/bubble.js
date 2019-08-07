@@ -638,39 +638,43 @@ class Bubble extends Component{
     }
   }
   openFriendPage1 = e => {
-    var count = 0;
-    userRef.where('name', '==', this.state.userSearch).get().then((snapshot)=>{
-      snapshot.forEach((doc)=>{
-        count++;
-      })
-    })
-    if (count === 0)
-    {
-      this.setState({
-        friendplaceHolder:"USER NOT FOUND"
-      })
-    }
     e.preventDefault();
-    if (count === 0)
-      return;
-    var activeBio, activePfp, activeTrash;
-    if (this.state.FriendPageIsOpen === "hidden"){
-      this.setState({FriendSearchIsOpen: "hidden",
-                    FriendPageIsOpen: "visible",
-                    activeFriend: this.state.userSearch,
-                    listPins: []},()=>{
-                      var id = this.state.idStuff[this.state.idStuff.indexOf(this.state.activeFriend)-1];
-                      console.log(id);
-                      db.collection("users").doc(id).get().then(function(doc) {
-                          activeBio = doc.data().bio;
-                          activePfp = doc.data().imageSrc;
-                          activeTrash = doc.data().Totaltrash;
-                          this.setState({activeBio: activeBio, activePfp: activePfp, activeTrash: activeTrash});
-                          this.getPins();
-                      }.bind(this))
-                    }
-                  )
-    }
+    var count = 0;
+    userRef.where('fullname', '==', this.state.userSearch).get().then(snapshot=>{
+        if (snapshot.empty)
+        {
+          count = 1;
+        }
+    }).then(()=>{
+      if (count === 1)
+      {
+        this.setState({
+          friendplaceHolder:"USER NOT FOUND"
+        })
+      }
+      if (count === 1)
+        return;
+      e.preventDefault();
+      var activeBio, activePfp, activeTrash;
+      if (this.state.FriendPageIsOpen === "hidden"){
+        this.setState({FriendSearchIsOpen: "hidden",
+                      FriendPageIsOpen: "visible",
+                      activeFriend: this.state.userSearch,
+                      listPins: []},()=>{
+                        var id = this.state.idStuff[this.state.idStuff.indexOf(this.state.activeFriend)-1];
+                        console.log(id);
+                        db.collection("users").doc(id).get().then(function(doc) {
+                            activeBio = doc.data().bio;
+                            activePfp = doc.data().imageSrc;
+                            activeTrash = doc.data().Totaltrash;
+                            this.setState({activeBio: activeBio, activePfp: activePfp, activeTrash: activeTrash});
+                            this.getPins();
+                        }.bind(this))
+                      }
+                    )
+      }
+    })
+
   }
   updateCaption = e => {
     this.setState({caption: e.target.value});
