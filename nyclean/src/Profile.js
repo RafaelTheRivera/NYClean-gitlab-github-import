@@ -132,7 +132,7 @@ class Profile extends Component {
   render(){
     var noPins = ""
     var pins = this.state.pinList.map((x) =>
-      <li><p class = "normalTextPins">lat: {x.lat} <br/>lng: {x.long}</p></li>)
+      <li><p class = "normalTextPins" id = "leftleader">lat: {x.lat} <br/>lng: {x.long}</p></li>)
     if (pins.length === 0)
   {
     noPins = "No Pins Set"
@@ -183,7 +183,7 @@ class Profile extends Component {
 
       <br/><h3>Trash Count: {this.state.Totaltrash} lbs</h3><br/><br />
       <h3>Pins:</h3>
-      <ol id = "leftleader">
+      <ol  id = "leftleader">
       {pins}
       </ol>
       <h3 class = "normalText" id = "leftleader">{noPins}</h3>
