@@ -1165,6 +1165,17 @@ footer {
   margin-top: 260px;
   z-index: 3;
 }
+@keyframes App-logo-spin {
+  0% {
+    transform: translateY(10px)  rotate(270deg);
+  }
+  50% {
+    transform: translateY(-10px)  rotate(270deg);
+  }
+  100% {
+    transform: translateY(10px) rotate(270deg);
+  }
+}
 
 #introbutton{
   position: absolute;
@@ -1198,10 +1209,11 @@ footer {
 #down{
   position: absolute;
   z-index: 3;
-  transform: rotate(270deg);
+  transform:;
   width: 40px;
   margin-top: 52.5%;
   margin-left: 48%;
+  animation: App-logo-spin infinite 1s ease;
 }
 
 #scrolldown{
