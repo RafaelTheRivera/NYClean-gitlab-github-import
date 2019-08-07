@@ -1,3 +1,4 @@
+
 .signOut {
   position:absolute;
   left: 1135px;
@@ -480,15 +481,19 @@ footer {
 }
 #con1{
   top: 100px;
+  border-style: solid;
 }
 #con2{
   top:165px;
+  border-style: solid;
 }
 #con3{
   top:230px;
+  border-style: solid;
 }
 #con4{
   top:660px;
+  border-style: solid;
 }
 .blocker{
   height:35.5px;
@@ -1113,6 +1118,17 @@ footer {
   margin-right: 100px;
   text-align: left;
   font-size: 20px;
+}
+
+#noPin{
+  position: absolute;
+  background-color: white;
+  font-size: 1.5em;
+  border-radius: 10px;
+  height: 80px;
+  width: 200px;
+  transition-duration: 500;
+  z-index: 10;
 }
 
 #nouser{

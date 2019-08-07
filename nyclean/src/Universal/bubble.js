@@ -114,7 +114,9 @@ class Bubble extends Component{
                       iconAnchor:   [11, 34], // point of the icon which will correspond to marker's location
                       shadowAnchor: [4, 62],  // the same for the shadow
                       popupAnchor:  [0, -20] // point from which the popup should open relative to the iconAnchor
-                  })
+                  }),
+                  noPin: "hidden",
+                  noPinOpa: "opacity(0%)"
                 }
       this.mouseDown = this.mouseDown.bind(this);
       this.mouseUp = this.mouseUp.bind(this);
@@ -159,6 +161,8 @@ class Bubble extends Component{
       maxZoom: 16,
       maxBounds: this.bounds,
       zoomSnap: 0.2,
+      inertiaDeceleration: 7000,
+      maxBoundsViscosity: 1.0,
       layers: [
         L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
 	         attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
@@ -490,11 +494,12 @@ class Bubble extends Component{
       }
       const map = this.map;
       const state = this.state;
+      const setState = this.setState;
       this.state.newMark.on('popupclose', function(){
         if (state.pinupdate === false){
           map.removeLayer(state.newMark);
         }else{
-          this.setState({pinupdate: true});
+          setState({pinupdate: true});
         }
       });
       this.map.flyTo(coords);
@@ -634,59 +639,71 @@ class Bubble extends Component{
   }
   openFriendPage1 = e => {
     e.preventDefault();
-    var activeBio, activePfp, activeTrash;
-    if (this.state.FriendPageIsOpen === "hidden"){
-      this.setState({FriendSearchIsOpen: "hidden",
-                    FriendPageIsOpen: "visible",
-                    activeFriend: this.state.userSearch,
-                    listPins: []},()=>{
-                      var id = this.state.idStuff[this.state.idStuff.indexOf(this.state.activeFriend)-1];
-                      console.log(id);
-                      db.collection("users").doc(id).get().then(function(doc) {
-                          activeBio = doc.data().bio;
-                          activePfp = doc.data().imageSrc;
-                          activeTrash = doc.data().Totaltrash;
-                          this.setState({activeBio: activeBio, activePfp: activePfp, activeTrash: activeTrash});
-                          this.getPins();
-                      }.bind(this))
-                    }
-                  )
-    }
+    var count = 0;
+    userRef.where('fullname', '==', this.state.userSearch).get().then(snapshot=>{
+        if (snapshot.empty)
+        {
+          count = 1;
+        }
+    }).then(()=>{
+      if (count === 1)
+      {
+        this.setState({
+          friendplaceHolder:"USER NOT FOUND"
+        })
+      }
+      if (count === 1)
+        return;
+      e.preventDefault();
+      var activeBio, activePfp, activeTrash;
+      if (this.state.FriendPageIsOpen === "hidden"){
+        this.setState({FriendSearchIsOpen: "hidden",
+                      FriendPageIsOpen: "visible",
+                      activeFriend: this.state.userSearch,
+                      listPins: []},()=>{
+                        var id = this.state.idStuff[this.state.idStuff.indexOf(this.state.activeFriend)-1];
+                        console.log(id);
+                        db.collection("users").doc(id).get().then(function(doc) {
+                            activeBio = doc.data().bio;
+                            activePfp = doc.data().imageSrc;
+                            activeTrash = doc.data().Totaltrash;
+                            this.setState({activeBio: activeBio, activePfp: activePfp, activeTrash: activeTrash});
+                            this.getPins();
+                        }.bind(this))
+                      }
+                    )
+      }
+    })
+
   }
   updateCaption = e => {
     this.setState({caption: e.target.value});
   }
   submitCaption = e => {
     e.preventDefault();
-    const pinData = db.collection('pins');
-    pinData.doc().set({
-      username: this.state.username,
-      lat: this.state.coords.lat,
-      long: this.state.coords.lng,
-      date: Date(),
-      likes: 0,
-      afterImage: this.state.uploadImageAfter,
-      beforeImage: this.state.uploadImageBefore,
-      lbs: 3,
-      body: this.state.caption
-    })
-
-
-    this.map.removeLayer(this.state.newMark);
-    const postedMarker = L.marker([this.state.coords.lat,this.state.coords.lng], {icon: this.state.greenIcon}).addTo(this.map).bindPopup("<div id = 'popup'><p id = 'posttitle'>Post by:  "+ this.state.username +"<p id = 'date'> on "+ Date().substr(0, Date().indexOf("201" || "202")) +"</p></p><div id = 'controlbody'><p id = 'bodycaption'>"+ this.state.caption +"</p></div></div><div id='pictures'><img src = "+ this.state.uploadImageBefore +" id = 'imageBefore'/><img src = "+ this.state.uploadImageAfter +" id = 'imageAfter'/></div>", {maxWidth : 600}).openPopup();
-    this.setState({caption: "", pinupdate: true, pinIsOpen: "hidden", image2visible: "hidden", image1visible: "hidden"});
-
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-    userRef.doc(user.uid).get().then(getDoc => {
-      console.log("got");
-      userRef.doc(user.uid).update({
-          Totaltrash: getDoc.data().Totaltrash + 3
+    if(this.state.coords !== null){
+      const pinData = db.collection('pins');
+      pinData.doc().set({
+        username: this.state.username,
+        lat: this.state.coords.lat,
+        long: this.state.coords.lng,
+        date: Date(),
+        likes: 0,
+        afterImage: this.state.uploadImageAfter,
+        beforeImage: this.state.uploadImageBefore,
+        lbs: 3,
+        body: this.state.caption
       })
-    })
+      this.map.removeLayer(this.state.newMark);
+      const postedMarker = L.marker([this.state.coords.lat,this.state.coords.lng], {icon: this.state.greenIcon}).addTo(this.map).bindPopup("<div id = 'popup'><p id = 'posttitle'>Post by:  "+ this.state.username +"<p id = 'date'> on "+ Date().substr(0, Date().indexOf("201" || "202")) +"</p></p><div id = 'controlbody'><p id = 'bodycaption'>"+ this.state.caption +"</p></div></div><div id='pictures'><img src = "+ this.state.uploadImageBefore +" id = 'imageBefore'/><img src = "+ this.state.uploadImageAfter +" id = 'imageAfter'/></div>", {maxWidth : 600}).openPopup();
+      this.setState({caption: "", pinupdate: true, pinIsOpen: "hidden", image2visible: "hidden", image1visible: "hidden"});
+    }else{
+      this.setState({noPin: "visible", noPinOpa: "opacity(100%)"});
+      setTimeout(function(){
+        this.setState({noPin: "hidden", noPinOpa: "opacity(0%)"});
+      }.bind(this), 4000);
+    }
   }
-})
- }
   updateImage = e =>{
     if (this.state.image1visible === "visible"){
       this.setState({uploadImageBefore: e.target.value});
@@ -707,6 +724,7 @@ class Bubble extends Component{
                       image2visible: "hidden"});
       }
   }
+
   updateUpdate = e =>{
     this.setState({
       updateMessage: e.target.value
@@ -852,6 +870,7 @@ class Bubble extends Component{
               <center><div id="insertimage">
 
                 <img src = {insertphoto} id = "insertphoto"/>
+                <div id = "noPin" style = {{visibility: this.state.noPin, filter: this.state.noPinOpa}}>Please define a pin location before posting!</div>
                 <img src = {picarrowleft} id = "picarrowleft" onClick = {this.handleArrowClick} style = {{visibility: this.state.image2visible}}/>
                 <img src = {picarrowright} id = "picarrowright" onClick = {this.handleArrowClick} style = {{visibility: this.state.image1visible}}/>
                 <img src = {this.state.uploadImageBefore} alt = {""} className = "uploadImage" id = "uploadImageBefore" style = {{visibility: this.state.image1visible}}/>

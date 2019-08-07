@@ -12,7 +12,7 @@ class Profile extends Component {
   constructor(){
     super();
     this.state = {userName:"",
-    Totaltrash: Math.floor(Math.random()*21),
+    Totaltrash: 0,
     imageSrc: null,
     imageInput: '',
     pinList: [],
@@ -132,7 +132,7 @@ class Profile extends Component {
   render(){
     var noPins = ""
     var pins = this.state.pinList.map((x) =>
-      <li><p class = "normalTextPins">lat: {x.lat} <br/>lng: {x.long}</p></li>)
+      <li><p class = "normalTextPins" id = "leftleader">lat: {x.lat} <br/>lng: {x.long}</p></li>)
     if (pins.length === 0)
   {
     noPins = "No Pins Set"
@@ -186,7 +186,7 @@ class Profile extends Component {
       <ol>
       {pins}
       </ol>
-      <h3 class = "normalText">{noPins}</h3>
+      <h3 class = "normalText" id = "leftleader">{noPins}</h3>
 
 
     </div>
