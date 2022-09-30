@@ -24,13 +24,17 @@ class About extends Component {
         is our project.</p>
         <p id = "aboutusppl">
         <h3 className = "ournames"><img id = "pindeco" src = {pin} alt= "pin"/>Ethan Gu</h3>
-        
+        <p id = "pplinfo">I'm a rising junior.
+        I enjoy playing chess and programming. </p>
         <h3 className = "ournames"><img id = "pindeco" src = {pin} alt= "pin"/>Ian Xiong</h3>
-        
+        <p id = "pplinfo">Hello, I am a rising senior. Along with coding, I enjoy playing tennis and reading.</p>
         <h3 className = "ournames"><img id = "pindeco" src = {pin} alt= "pin"/>Paige Min</h3>
-        
+        <p id = "pplinfo">Hi! I'm a rising senior.
+        I love art and technology, and I want to use my passions to help influence
+        people and the world in a positive way. </p>
         <h3 className = "ournames"><img id = "pindeco" src = {pin} alt= "pin"/>Rafael Rivera</h3>
-        
+        <p id = "pplinfo">I'm a rising senior. Programming has been a hobby of mine for a while, so I wanted to do something cool with it for once.</p>
+        </p>
         <img id = "logodisplay" src = {logodisplay} />
         <p id = "logodescribe">This is our GREENYC logo and 2 different variations of our GREENYC icon.
         The stylized "N" means that NYC can become green! We hope our website can be a step towards that goal.
