@@ -19,26 +19,22 @@ class About extends Component {
         <center><h1 id = "safetyheader"><b>ABOUT US</b></h1></center>
         <img src = {earthdeco} id = "earthdeco"/>
         <p id = "hello">Hello!</p>
-        <p id = "aboutuscontent">We are 4 highschool students working as a <br />
+        <p id = "aboutuscontent">We are 4 students working as a <br />
         group to reduce waste in NYC. GREENYC <br />
-        is our project for the Cooper Union Summer <br />
-        STEM Program, and we have been building<br />
-        this website for 6 weeks, along with our <br />
-        other classmates in the Computer Science<br />
-        for Social Good class.</p>
+        is our project.</p>
         <p id = "aboutusppl">
         <h3 className = "ournames"><img id = "pindeco" src = {pin} alt= "pin"/>Ethan Gu</h3>
-        <p id = "pplinfo">I'm a rising junior attending Scarsdale High School.
-        I enjoy playing chess and programming. </p>
+        //<p id = "pplinfo">I'm a rising junior attending Scarsdale High School.
+        //I enjoy playing chess and programming. </p>
         <h3 className = "ournames"><img id = "pindeco" src = {pin} alt= "pin"/>Ian Xiong</h3>
-        <p id = "pplinfo">Hello, I am a rising senior from Livingston Highschool. Along with coding, I enjoy playing tennis and reading.</p>
+        //<p id = "pplinfo">Hello, I am a rising senior from Livingston Highschool. Along with coding, I enjoy playing tennis and reading.</p>
         <h3 className = "ournames"><img id = "pindeco" src = {pin} alt= "pin"/>Paige Min</h3>
-        <p id = "pplinfo">Hi! I'm a rising senior attending Bergen County Academies.
-        I love art and technology, and I want to use my passions to help influence
-        people and the world in a positive way. </p>
+        //<p id = "pplinfo">Hi! I'm a rising senior attending Bergen County Academies.
+        //I love art and technology, and I want to use my passions to help influence
+        //people and the world in a positive way. </p>
         <h3 className = "ournames"><img id = "pindeco" src = {pin} alt= "pin"/>Rafael Rivera</h3>
-        <p id = "pplinfo">I'm a rising senior from Regis High School. Programming has been a hobby of mine for a while, so I wanted to do something cool with it for once.</p>
-        </p>
+        //<p id = "pplinfo">I'm a rising senior from Regis High School. Programming has been a hobby of mine for a while, so I wanted to do something cool with it for once.</p>
+        //</p>
         <img id = "logodisplay" src = {logodisplay} />
         <p id = "logodescribe">This is our GREENYC logo and 2 different variations of our GREENYC icon.
         The stylized "N" means that NYC can become green! We hope our website can be a step towards that goal.
